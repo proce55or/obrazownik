@@ -1,34 +1,35 @@
 # Stan projektu
 Updated: 2026-11-02
-Active task: T02
+Active task: T03
 Status: IN_PROGRESS
 Environment: lokalny macOS 13.7.8, Intel x86_64, Safari 18.6
 Branch: main
-Last verified code commit: T01 — commit zawierający ten stan
+Last verified code commit: T02 — commit zawierający ten stan
 
 ## Działa
-- T00: Node 24.21.0, SQLite smoke (Unicode, transakcja, restart, backup).
-- T01: React/Vite/TypeScript, Fastify, ekran Dzisiaj i przejście do edytora.
-- Serwer wyłącznie 127.0.0.1:4317; Host/Origin/CSRF, CSP, bez CDN.
-- Folder danych poza repo, kontrola realpath i dowiązań, niezależność od cwd.
-- Kod w Obrazownik_plan; bez remote i publikacji. Na tym etapie brak zapisu.
+- T00–T02: lokalny React/Node/SQLite, Host/Origin/CSRF, CSP, bez CDN.
+- API: bootstrap, ustawienia, lista kart, tworzenie/odczyt/zapis prób.
+- CAS revision i idempotentne żądania, walidacja Zod, zachowanie Unicode.
+- Migracja 1: wszystkie encje MVP, WAL/foreign_keys, transakcje i blokada
+  katalogu. Kopia przed kolejnymi migracjami; odmowa nowszej/uszkodzonej bazy.
+- Kod w Obrazownik_plan; dane poza repo. UI jeszcze nie zapisuje tekstu.
 
 ## Ostatnia weryfikacja
-- npm run check: PASS (3 testy); npm run build: PASS; npm audit: 0 podatności.
-- Chromium lokalnie: Dzisiaj → edytor, 390 px, klawiatura, brak błędów konsoli
-  i żądań zewnętrznych. Obrazy: output/playwright/t01-*.png (ignorowane).
-- React: hooks, semantyka, lokalne zasoby, brak zewnętrznych zależności UI.
-- Overrides glob 14.0.3/minimatch 11.0.4 usuwają podatności przechodnie;
-  lint, build, statyczny frontend i testy sprawdzone z tym zestawem.
+- npm run check: PASS (8 testów); npm run build: PASS; npm audit: 0.
+- tmpdir: restart, polskie znaki, dwie karty, duplikaty, rollback migracji,
+  odczyt kopii, zachowanie uszkodzonej/nowszej bazy, drugi proces, CSRF.
+- T01: Chromium desktop/390 px, klawiatura, brak zewnętrznych żądań.
+- Overrides glob/minimatch usuwają podatności przechodnie; zestaw sprawdzony.
 
 ## Następne trzy kroki
-1. T02: schematy Zod, adapter SQLite, migracje, idempotencja i CAS revision.
-2. Testy restartu, rollbacku, konfliktu i odrzuconych zapisów w tmpdir.
-3. T03: pierwsze pełne ćwiczenie, autosave, stopniowane podpowiedzi.
+1. T03: 3 karty E1, edytor z autosave, flush i stopniowana pomoc.
+2. Bufor ratunkowy IndexedDB z odzyskaniem i ochroną konfliktu.
+3. Pełna ścieżka przeglądarka → API → baza → restart → odczyt.
 
 ## Blokady i niewiadome
-- Prywatne konto/remote GitHub nieustalone; brak push nie blokuje prac.
+- Prywatny remote GitHub nieustalony; brak push nie blokuje prac.
 - Produkcyjny ekran w rzeczywistym Safari jeszcze niesprawdzony.
+- Pozostałe rodziny, sesje, zeszyt i pełne kopie: T04–T09.
 
 ## Wznowienie
-Przeczytaj tasks/T02.md; npm run check; sprawdź git status.
+Przeczytaj tasks/T03.md; npm run check; sprawdź git status.
