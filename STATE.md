@@ -3,7 +3,7 @@ Updated: 2026-11-03, Europe/Warsaw
 Active task: T18
 Status: IN_PROGRESS — przygotowana nocna kontrola po bezczynności
 Environment: macOS13.7.8 Intel, Node24.21.0
-Branch: main
+Branch: main; zweryfikowany kod:8a4f698
 Release: 0.2.0, schema3
 Remote: proce55or/obrazownik (private, ponownie sprawdzone API)
 
@@ -42,4 +42,4 @@ Nocny test nie został jeszcze wykonany — nie raportuj go jako PASS.
 Caffeinate do08:00, PID w logs/night-awake.json; ekran może się wygasić.
 Cel zostawić20%,15% to dolna granica użytkownika. Przy>=78% lub braku
 licznika nie zaczynaj kosztownej pracy; zapisz stan i wyłącz harmonogram.
-Ostatni odczyt57%. Limit wspólny dla konta. Testy tylko na danych syntetycznych.
+Ostatni odczyt58%. Limit wspólny dla konta. Testy tylko na danych syntetycznych.
