@@ -6,6 +6,16 @@ export const FamilySchema = z.enum([
   "sense",
   "transform",
 ]);
+export const AssistanceStateSchema = z.enum(['none_confirmed', 'assisted', 'unknown']);
+export const SetRoleSchema = z.enum(['training', 'near_transfer', 'independent_writing']);
+export const MethodSchema = z.object({
+  id: z.string().min(1).max(80), version: z.number().int().positive(), language: z.literal('pl'), title: z.string().max(200),
+  sourceRefs: z.array(z.string().regex(/^R\d{2}$/)).max(22), sourceLinks: z.array(z.object({ label: z.string().max(200), url: z.url().startsWith('https://') })).max(10),
+  basisType: z.enum(['clinical_adaptation','experimental_inspiration','linguistic_resource','creative_hypothesis']),
+  adaptationNote: z.string().max(2000), validationStatus: z.literal('unvalidated_polish_app_adaptation'), contentOrigin: z.string().max(500), licenseStatus: z.string().max(500),
+  slots: z.array(z.object({ id: z.string().regex(/^[a-z0-9_-]+$/), label: z.string().max(200) })).max(12),
+}).strict();
+export type Method = z.infer<typeof MethodSchema>;
 export const PromptSchema = z
   .object({
     title: z.string().max(200),
@@ -19,6 +29,7 @@ export const RatingsSchema = z
     voice: z.number().int().min(1).max(5).optional(),
     fatigue: z.number().int().min(1).max(5).optional(),
     note: z.string().max(2000).optional(),
+    intention: z.number().int().min(1).max(5).optional(),
   })
   .strict();
 export const SettingsSchema = z
@@ -32,7 +43,8 @@ export const SettingsSchema = z
         return false;
       }
     }),
-    fontSize: z.enum(["normal", "large"]),
+    fontSize: z.enum(['normal','large']),
+    optionalMethods: z.array(z.enum(['M2','M3','M5'])).default([]),
     repeatEnabled: z.boolean(),
     repeatOffsetsDays: z.array(z.number().int().min(1).max(365)).max(6),
   })
@@ -56,6 +68,17 @@ export const AttemptSchema = z
     sourceAttemptId: z.uuid().nullable(),
     constraints: z.array(z.string().max(500)).max(10),
     selfRatings: RatingsSchema.nullable(),
+    assistanceTracking: z.enum(['known','unknown']).default('unknown'),
+    exposureTracking: z.enum(['known','unknown']).default('unknown'),
+    methodId: z.string().max(80).default('legacy-unmapped'),
+    methodVersion: z.number().int().positive().default(1),
+    methodSnapshot: MethodSchema.nullable().default(null),
+    itemFamilyId: z.string().max(150).default('legacy-unknown'),
+    setRole: SetRoleSchema.default('training'),
+    responseMode: z.enum(['open_writing','closed_naming','comprehension']).default('open_writing'),
+    noveltyStatus: z.enum(['new_confirmed','seen','unknown']).default('unknown'),
+    scaffolding: z.record(z.string().max(80), z.string().max(4000)).default({}),
+    sourceText: z.string().max(50000).nullable().default(null),
   })
   .strict();
 export const VersionSchema = z
@@ -66,6 +89,8 @@ export const VersionSchema = z
     createdAt: z.iso.datetime(),
     reason: z.enum(["pre_hint", "final", "manual", "recovery"]),
     assistanceLevelAtCapture: z.number().int().min(0).max(3),
+    assistanceStateAtCapture: AssistanceStateSchema.default('unknown'),
+    scaffolding: z.record(z.string().max(80),z.string().max(4000)).default({}),
   })
   .strict();
 export const AssistanceSchema = z
@@ -88,6 +113,7 @@ export const SaveAttemptSchema = z
     text: z.string().max(50_000),
     expectedRevision: z.number().int().nonnegative(),
     clientMutationId: z.uuid(),
+    scaffolding: z.record(z.string().max(80), z.string().max(4000)).optional(),
   })
   .strict();
 export const ActionSchema = z
@@ -106,6 +132,7 @@ export const DetailSchema = z.object({
   attempt: AttemptSchema,
   versions: z.array(VersionSchema),
   assistanceEvents: z.array(AssistanceSchema),
+  assistanceState: AssistanceStateSchema.optional(),
 });
 export const BootstrapSchema = z.object({
   version: z.string(),

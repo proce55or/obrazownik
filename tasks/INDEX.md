@@ -31,8 +31,8 @@ publikacja źródeł. Zobacz docs/08-later.md. Nie implementuj ich wyprzedzając
 | Zadanie | Etap | Status |
 | --- | --- | --- |
 | T11 | SCI-00: inwentaryzacja | DONE |
-| T12 | SCI-01: pochodzenie, pomoc, ekspozycja i wymiana danych | IN_PROGRESS |
-| T13 | SCI-02: polskie E1 i E3 | TODO |
+| T12 | SCI-01: pochodzenie, pomoc, ekspozycja i wymiana danych | DONE |
+| T13 | SCI-02: polskie E1 i E3 | IN_PROGRESS |
 | T14 | SCI-03: chronione nowe pisanie E6 | TODO |
 | T15 | SCI-04: warianty E2 i autorskie E5 | TODO |
 | T16 | SCI-05: kopia, pilotaż i przekazanie | TODO |

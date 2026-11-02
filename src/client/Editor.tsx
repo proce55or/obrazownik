@@ -50,8 +50,8 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
             await api(`/attempts/${initial.attempt.id}`, "PATCH", input),
           ),
         putRecovery,
-        clearRecovery: (text) =>
-          clearRecovery(environmentId, initial.attempt.id, text),
+        clearRecovery: (text, fields) =>
+          clearRecovery(environmentId, initial.attempt.id, text, fields),
         onStatus: (next, message) => {
           setStatus(next);
           if (message) setError(message);
@@ -63,20 +63,14 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
   );
   useEffect(() => {
     let active = true;
-    findRecovery(environmentId, initial.attempt.id)
-      .then(async (draft) => {
-        if (!active) return;
-        if (draft && draft.text !== initial.attempt.currentText)
-          setRecovery(draft);
-        else if (draft)
-          await clearRecovery(environmentId, draft.id, draft.text);
-      })
-      .catch(() => {
-        if (active) setBufferError(true);
-      })
-      .finally(() => {
-        if (active) setCheckingRecovery(false);
-      });
+    (async()=>{
+      let draft=await findRecovery(environmentId,initial.attempt.id);
+      while(draft&&draft.text===initial.attempt.currentText&&JSON.stringify(draft.scaffolding??{})===JSON.stringify(initial.attempt.scaffolding)){
+        await clearRecovery(environmentId,draft.id,draft.text,draft.scaffolding??{});
+        draft=await findRecovery(environmentId,initial.attempt.id);
+      }
+      if(active&&draft)setRecovery(draft);
+    })().catch(()=>{if(active)setBufferError(true);}).finally(()=>{if(active)setCheckingRecovery(false);});
     const preventLoss = (event: BeforeUnloadEvent) => {
       if (queue.dirty || pending.current) {
         event.preventDefault();
@@ -89,7 +83,7 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
       queue.dispose();
       window.removeEventListener("beforeunload", preventLoss);
     };
-  }, [environmentId, initial.attempt.id, initial.attempt.currentText, queue]);
+  }, [environmentId, initial.attempt.id, initial.attempt.currentText, initial.attempt.scaffolding, queue]);
   async function copy() {
     try {
       await navigator.clipboard.writeText(recovery?.text ?? text);
@@ -500,7 +494,7 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
               <p>{event.revealedContentSnapshot}</p>
             </div>
           ))}
-        <p className="assistance-label">{assistanceLabel(events)}</p>
+        <p className="assistance-label">{assistanceLabel(events, attempt)}</p>
       </aside>
       <div className="editor-actions">
         <button

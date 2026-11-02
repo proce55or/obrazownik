@@ -1,7 +1,6 @@
-import { DatabaseSync, backup } from "node:sqlite";
-import { mkdirSync, chmodSync } from "node:fs";
+import { DatabaseSync } from "node:sqlite";
 import path from "node:path";
-import { randomUUID } from "node:crypto";
+import { verifiedBackup } from "./backup.js";
 export interface Migration {
   version: number;
   sql: string;
@@ -27,6 +26,14 @@ CREATE TABLE importBatches (id TEXT PRIMARY KEY, sourceDigest TEXT NOT NULL UNIQ
 CREATE TABLE mutations (scope TEXT NOT NULL, id TEXT NOT NULL, digest TEXT NOT NULL, result TEXT NOT NULL CHECK(json_valid(result)), PRIMARY KEY(scope,id));
 `,
   },
+  { version: 2, sql: `
+CREATE TABLE methods (key TEXT PRIMARY KEY, record TEXT NOT NULL CHECK(json_valid(record)));
+CREATE TABLE cardRegistry (key TEXT PRIMARY KEY, record TEXT NOT NULL CHECK(json_valid(record)));
+CREATE TABLE contentExposure (id TEXT PRIMARY KEY, cardId TEXT NOT NULL, cardVersion INTEGER NOT NULL, itemFamilyId TEXT NOT NULL, attemptId TEXT REFERENCES attempts(id), kind TEXT NOT NULL, shownAt TEXT NOT NULL);
+CREATE INDEX exposureFamily ON contentExposure(itemFamilyId);
+INSERT INTO appMeta(key,value) VALUES ('exposureHistory', CASE WHEN EXISTS(SELECT 1 FROM attempts) THEN 'unknown' ELSE 'known' END);
+UPDATE attempts SET record=json_set(record,'$.assistanceTracking','unknown','$.exposureTracking','unknown','$.methodId','legacy-unmapped','$.methodVersion',1,'$.methodSnapshot',null,'$.itemFamilyId','legacy-unknown','$.setRole',CASE WHEN json_extract(record,'$.mode')='independent' THEN 'independent_writing' ELSE 'training' END,'$.responseMode','open_writing','$.noveltyStatus','unknown','$.scaffolding',json('{}'),'$.sourceText',null);
+` },
 ];
 export async function migrate(
   db: DatabaseSync,
@@ -42,20 +49,7 @@ export async function migrate(
     );
   if (current === latest) return;
   if (existingDatabase) {
-    mkdirSync(backupDir, { recursive: true, mode: 0o700 });
-    const target = path.join(
-      backupDir,
-      `before-migration-${current}-${randomUUID()}.sqlite`,
-    );
-    await backup(db, target);
-    chmodSync(target, 0o600);
-    const copy = new DatabaseSync(target, { readOnly: true });
-    try {
-      if (copy.prepare("PRAGMA quick_check").get()?.quick_check !== "ok")
-        throw new Error("Nie udało się sprawdzić kopii przed migracją.");
-    } finally {
-      copy.close();
-    }
+    await verifiedBackup(db, path.dirname(backupDir), `before-migration-${current}`);
   }
   db.exec("BEGIN IMMEDIATE");
   try {

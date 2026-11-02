@@ -1,10 +1,10 @@
 # Stan projektu
 Updated: 2026-11-02
-Active task: T12
+Active task: T13
 Status: IN_PROGRESS
 Environment: lokalny macOS 13.7.8, Intel, Node 24.21.0
 Branch: main
-Last verified code commit: c93e703
+Last verified code commit: SCI-01 — ten checkpoint
 
 ## Działa
 - T00–T03: E1, autosave, CAS, recovery, podpowiedzi, wersje i samoocena.
@@ -12,12 +12,14 @@ Last verified code commit: c93e703
 - Inwentaryzacja: docs/science/00-current.md. Priorytet SCI przed T04.
 
 ## Weryfikacja
-- Baseline: 15 testów, build i e2e z poprzedniego odbioru.
+- SCI-01: schemat2, pochodzenie metod/kart, jawne unknown starszej historii.
+- Eksport/import: ekspozycje, remap powiązań, skip identycznych rekordów, settings lokalne.
+- Bufor oddzielny dla kart; backup sprawdzony i odporny na dowiązania.
+- Check: 28 testów PASS; build PASS. Testy nowej migracji wyłącznie tmpdir.
 - Kopie/migracje testować wyłącznie w tmpdir; produkcję migrować po sprawdzonej kopii.
 
 ## Następny krok
-SCI-01/T12: metadane metod/kart, jawna historia unknown, ekspozycja podglądu,
-eksport/import i test migracji bez naruszenia oryginalnych tekstów.
+SCI-02/T13: polskie E1/E3 z własnymi polami; potem chronione nowe pisanie E6.
 
 ## Ograniczenia
 - Pełne MVP T04–T09 nieukończone; zakres dodatku nie oznacza ich zaliczenia.

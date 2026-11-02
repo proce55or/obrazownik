@@ -69,21 +69,21 @@ test("failed migration rolls back DDL and data, while verified backup retains pr
   const dir = temp();
   const db = new DatabaseSync(path.join(dir, "test.sqlite"));
   try {
-    await migrate(db, path.join(dir, "copies"), false);
+    await migrate(db, path.join(dir, "backups"), false);
     db.prepare("INSERT INTO appMeta VALUES (?,?)").run(
       "synthetic-marker",
       "Zażółć\nŚlad",
     );
     await expect(
-      migrate(db, path.join(dir, "copies"), true, [
+      migrate(db, path.join(dir, "backups"), true, [
         ...migrations,
         {
-          version: 2,
+          version: 3,
           sql: "CREATE TABLE temporaryTest(id INT); DELETE FROM appMeta; INVALID SQL;",
         },
       ]),
     ).rejects.toThrow();
-    expect(db.prepare("PRAGMA user_version").get()?.user_version).toBe(1);
+    expect(db.prepare("PRAGMA user_version").get()?.user_version).toBe(2);
     expect(
       db
         .prepare("SELECT value FROM appMeta WHERE key=?")
@@ -95,7 +95,7 @@ test("failed migration rolls back DDL and data, while verified backup retains pr
         .get(),
     ).toBeUndefined();
     const copy = new DatabaseSync(
-      path.join(dir, "copies", readdirSync(path.join(dir, "copies"))[0]),
+      path.join(dir, "backups", readdirSync(path.join(dir, "backups"))[0]),
       { readOnly: true },
     );
     try {

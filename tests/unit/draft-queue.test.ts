@@ -5,9 +5,9 @@ import {
   type RecoveryDraft,
   type SaveStatus,
 } from "../../src/domain/draft-queue.js";
-import type { Attempt, SaveAttempt } from "../../src/shared/schemas.js";
+import { AttemptSchema, type Attempt, type SaveAttempt } from "../../src/shared/schemas.js";
 function sample(): Attempt {
-  return {
+  return AttemptSchema.parse({
     id: randomUUID(),
     sessionId: null,
     cardId: "property-stone-01",
@@ -29,7 +29,7 @@ function sample(): Attempt {
     sourceAttemptId: null,
     constraints: [],
     selfRatings: null,
-  };
+  });
 }
 function fixture(send?: (input: SaveAttempt) => Promise<Attempt>) {
   const attempt = sample();

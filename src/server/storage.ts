@@ -14,10 +14,15 @@ import {
   type AttemptVersion,
   type AssistanceEvent,
 } from "../shared/schemas.js";
+import { assistanceState } from "../domain/assistance.js";
+import { methods, getMethod } from "./content.js";
+import { verifiedBackup } from "./backup.js";
 import type { Card } from "../domain/cards.js";
 import { createDataDir, resolveDataDir } from "./paths.js";
 import { acquireLock } from "./lock.js";
-import { migrate } from "./migrations.js";
+import { migrations, migrate } from "./migrations.js";
+import { BundleSchema } from "../shared/bundle.js";
+import { exportBundle, importBundle, importPreview, previewWithDatabase } from "./transfer.js";
 import { AppError } from "./errors.js";
 
 export class Storage {
@@ -49,7 +54,7 @@ export class Storage {
       if (db.prepare("PRAGMA quick_check").get()?.quick_check !== "ok")
         throw new Error("Baza wymaga sprawdzenia. Nie zastąpiono jej pustą.");
       // Reject newer schemas before changing journal configuration.
-      if (Number(db.prepare("PRAGMA user_version").get()!.user_version) > 1)
+      if (Number(db.prepare("PRAGMA user_version").get()!.user_version) > migrations.at(-1)!.version)
         throw new Error("Baza ma nowszy format. Nie zmieniono danych.");
       db.exec(
         "PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000; PRAGMA synchronous=FULL;",
@@ -68,9 +73,12 @@ export class Storage {
               timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
               fontSize: "normal",
               repeatEnabled: true,
-              repeatOffsetsDays: [1, 3, 7],
+              repeatOffsetsDays: [2, 7, 21],
             }),
           );
+      });
+      store.transaction(() => {
+        for(const method of methods) db!.prepare('INSERT OR IGNORE INTO methods(key,record) VALUES (?,?)').run(`${method.id}:${method.version}`,JSON.stringify(method));
       });
       return store;
     } catch (error) {
@@ -174,6 +182,7 @@ export class Storage {
   }
   createAttempt(card: Card, requestId: string): Attempt {
     return this.mutate("create-attempt", requestId, { cardId: card.id }, () => {
+      this.db.prepare('INSERT OR IGNORE INTO cardRegistry(key,record) VALUES (?,?)').run(`${card.id}:${card.version}`,JSON.stringify(card));
       const now = new Date().toISOString();
       const attempt = AttemptSchema.parse({
         id: randomUUID(),
@@ -193,6 +202,9 @@ export class Storage {
         sourceAttemptId: null,
         constraints: card.constraints,
         selfRatings: null,
+        assistanceTracking:'known',exposureTracking:'known',methodId:card.methodId,methodVersion:card.methodVersion,
+        methodSnapshot:getMethod(card.methodId,card.methodVersion)??null,itemFamilyId:card.itemFamilyId,setRole:card.setRole,
+        responseMode:card.responseMode,noveltyStatus:'seen',scaffolding:{},sourceText:null,
       });
       this.db
         .prepare(
@@ -233,6 +245,7 @@ export class Storage {
       return this.writeAttempt({
         ...attempt,
         currentText: input.text,
+        scaffolding:input.scaffolding??attempt.scaffolding,
         revision: attempt.revision + 1,
         updatedAt: new Date().toISOString(),
       });
@@ -259,6 +272,7 @@ export class Storage {
       attempt: this.getAttempt(id),
       versions: this.versions(id),
       assistanceEvents: this.assistance(id),
+      assistanceState:assistanceState(this.getAttempt(id),this.assistance(id)),
     };
   }
   private capture(
@@ -272,6 +286,8 @@ export class Storage {
       text,
       createdAt: new Date().toISOString(),
       reason,
+      assistanceStateAtCapture:assistanceState(attempt,this.assistance(attempt.id)),
+      scaffolding:attempt.scaffolding,
       assistanceLevelAtCapture: Math.max(
         0,
         ...this.assistance(attempt.id)
@@ -302,6 +318,7 @@ export class Storage {
           "INSERT OR IGNORE INTO exposures(id,attemptId,cardId,record) VALUES (?,?,?,?)",
         )
         .run(exposure.id, id, attempt.cardId, JSON.stringify(exposure));
+      this.db.prepare('INSERT OR IGNORE INTO contentExposure(id,cardId,cardVersion,itemFamilyId,attemptId,kind,shownAt) VALUES (?,?,?,?,?,?,?)').run(attempt.id,attempt.cardId,attempt.cardVersion,attempt.itemFamilyId,id,'prompt',exposure.shownAt);
       return { shown: true };
     });
   }
@@ -427,4 +444,20 @@ export class Storage {
       this.capture(this.getAttempt(id), "recovery", input.text),
     );
   }
+  backup(kind='manual') { return verifiedBackup(this.db,this.dataDir,kind); }
+  previewCards(cards: Card[]): void {
+    this.transaction(() => {
+      for(const card of cards){
+        this.db.prepare('INSERT OR IGNORE INTO cardRegistry(key,record) VALUES (?,?)').run(`${card.id}:${card.version}`,JSON.stringify(card));
+        const id=`preview:${card.id}:${card.version}`;
+        this.db.prepare('INSERT OR IGNORE INTO contentExposure(id,cardId,cardVersion,itemFamilyId,attemptId,kind,shownAt) VALUES (?,?,?,?,?,?,?)').run(id,card.id,card.version,card.itemFamilyId,null,'preview',new Date().toISOString());
+      }
+    });
+  }
+
+  exportData() {return exportBundle(this.db,this.settings());}
+  previewImport(input:unknown) {return previewWithDatabase(this.db,input);}
+  async importData(input:unknown,digest:string){const bundle=BundleSchema.parse(input);const preview=importPreview(bundle);if(preview.digest!==digest)throw new AppError(409,'import_changed','Plik zmienił się od podglądu.');await this.backup('before-import');return this.transaction(()=>importBundle(this.db,bundle));}
+  replayMutation(scope:string,id:string,payload:unknown):unknown|undefined{const row=this.db.prepare('SELECT digest,result FROM mutations WHERE scope=? AND id=?').get(scope,id);if(!row)return undefined;const digest=createHash('sha256').update(JSON.stringify(payload)).digest('hex');if(row.digest!==digest)throw new AppError(409,'mutation_reused','Identyfikator zapisu został użyty dla innych danych.');return JSON.parse(String(row.result));}
+
 }

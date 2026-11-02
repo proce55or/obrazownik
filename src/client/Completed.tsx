@@ -65,7 +65,7 @@ export function Completed({ detail, onHome }: Props) {
           {attempt.currentText || "Jeszcze bez słów."}
         </p>
         <p className="assistance-label">
-          {assistanceLabel(detail.assistanceEvents)}
+          {assistanceLabel(detail.assistanceEvents, attempt)}
         </p>
       </article>
       {!skipped && (

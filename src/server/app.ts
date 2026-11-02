@@ -133,7 +133,7 @@ export async function createApp(options: AppOptions = {}) {
   app.get("/api/health", async () => ({
     app: "obrazownik",
     version: VERSION,
-    schemaVersion: 1,
+    schemaVersion: 2,
     status: "ok",
   }));
   app.get("/api/bootstrap", async (req, reply) => {
@@ -167,7 +167,7 @@ export async function createApp(options: AppOptions = {}) {
     };
   });
   const idOf = (params: unknown) => z.object({ id: z.uuid() }).parse(params).id;
-  app.get("/api/cards", async () => ({ cards }));
+  app.get("/api/cards", async () => { storage.previewCards(cards); return { cards }; });
   app.patch("/api/settings", async (req) =>
     storage.updateSettings(SettingsSchema.parse(req.body)),
   );
@@ -207,6 +207,7 @@ export async function createApp(options: AppOptions = {}) {
   app.post("/api/attempts/:id/hints", async (req) => {
     const id = idOf(req.params),
       input = HintRequestSchema.parse(req.body);
+    const replay=storage.replayMutation(`hint:${id}`,input.clientMutationId,input);if(replay!==undefined)return replay;
     const attempt = storage.getAttempt(id),
       card = getCard(attempt.cardId);
     if (!card || card.version !== attempt.cardVersion)
@@ -244,6 +245,11 @@ export async function createApp(options: AppOptions = {}) {
         .parse(req.body),
     ),
   );
+
+  app.post('/api/backup', async () => ({filename:await storage.backup()}));
+  app.get('/api/export', async (_req,reply) => {reply.header('Content-Disposition','attachment; filename="obrazownik.json"');return storage.exportData();});
+  app.post('/api/import/preview',{bodyLimit:25*1024*1024},async req=>storage.previewImport(req.body));
+  app.post('/api/import/confirm',{bodyLimit:25*1024*1024},async req=>{const input=z.object({bundle:z.unknown(),digest:z.string().regex(/^[a-f0-9]{64}$/)}).strict().parse(req.body);return storage.importData(input.bundle,input.digest);});
   const clientRoot =
     options.clientRoot ?? path.join(projectRoot, "dist/client");
   if (

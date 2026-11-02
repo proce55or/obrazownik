@@ -6,13 +6,14 @@ export interface RecoveryDraft {
   baseRevision: number;
   text: string;
   updatedAt: string;
+  scaffolding?: Record<string,string>;
 }
 export interface DraftQueueOptions {
   attempt: Attempt;
   environmentId: string;
   send: (input: SaveAttempt) => Promise<Attempt>;
   putRecovery: (draft: RecoveryDraft) => Promise<void>;
-  clearRecovery: (text: string) => Promise<void>;
+  clearRecovery: (text: string, scaffolding?:Record<string,string>) => Promise<void>;
   onStatus: (status: SaveStatus, message?: string) => void;
   onAck: (attempt: Attempt) => void;
   onBufferError: () => void;
@@ -22,6 +23,8 @@ export class DraftQueue {
   private text: string;
   private savedText: string;
   private revision: number;
+  private scaffolding: Record<string,string>;
+  private savedScaffolding: string;
   private pending: SaveAttempt | null = null;
   private running: Promise<void> | null = null;
   private timer: ReturnType<typeof setTimeout> | undefined;
@@ -30,12 +33,13 @@ export class DraftQueue {
   constructor(private options: DraftQueueOptions) {
     this.text = this.savedText = options.attempt.currentText;
     this.revision = options.attempt.revision;
+    this.scaffolding=options.attempt.scaffolding;this.savedScaffolding=JSON.stringify(this.scaffolding);
   }
   get currentRevision() {
     return this.revision;
   }
   get dirty() {
-    return this.text !== this.savedText || this.pending !== null;
+    return this.text !== this.savedText || this.pending !== null || JSON.stringify(this.scaffolding)!==this.savedScaffolding;
   }
   setText(text: string): void {
     this.text = text;
@@ -49,6 +53,7 @@ export class DraftQueue {
         void this.flush().catch(() => {});
       }, 600);
   }
+  setScaffolding(fields:Record<string,string>):void {this.scaffolding=fields;this.setText(this.text);}
   private persistRecovery(): void {
     const draft: RecoveryDraft = {
       id: this.options.attempt.id,
@@ -56,6 +61,7 @@ export class DraftQueue {
       baseRevision: this.revision,
       text: this.text,
       updatedAt: new Date().toISOString(),
+      scaffolding:this.scaffolding,
     };
     this.recoveryChain = this.recoveryChain
       .then(() => this.options.putRecovery(draft))
@@ -86,18 +92,20 @@ export class DraftQueue {
         text: this.text,
         expectedRevision: this.revision,
         clientMutationId: crypto.randomUUID(),
+        scaffolding:this.scaffolding,
       };
       this.options.onStatus("saving");
       try {
         const saved = await this.options.send(this.pending);
         this.savedText = saved.currentText;
+        this.savedScaffolding=JSON.stringify(saved.scaffolding);
         this.revision = saved.revision;
         this.pending = null;
         this.options.onAck(saved);
-        if (this.text === this.savedText) {
+        if (this.text === this.savedText&&JSON.stringify(this.scaffolding)===this.savedScaffolding) {
           const confirmedText = this.savedText;
           this.recoveryChain = this.recoveryChain
-            .then(() => this.options.clearRecovery(confirmedText))
+            .then(() => this.options.clearRecovery(confirmedText,saved.scaffolding))
             .catch(() => {
               this.options.onBufferError();
             });
@@ -125,6 +133,7 @@ export class DraftQueue {
     this.revision = attempt.revision;
     this.savedText = attempt.currentText;
     this.text = attempt.currentText;
+    this.scaffolding=attempt.scaffolding;this.savedScaffolding=JSON.stringify(attempt.scaffolding);
     this.options.onAck(attempt);
   }
   async settleRecovery(): Promise<void> {
