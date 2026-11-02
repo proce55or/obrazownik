@@ -4,6 +4,7 @@ Active task: T10
 Status: TODO — oczekiwanie na obserwacje; MVP gotowe lokalnie
 Environment: macOS 13.7.8 Intel, Node 24.21.0
 Branch: main
+Last verified code commit: 30dfd76
 Remote: proce55or/obrazownik (private, zweryfikowane API)
 
 ## Działa
