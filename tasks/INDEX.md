@@ -25,3 +25,14 @@ działającego programu. Brak dostępu do konta GitHub nie blokuje lokalnego MVP
 
 Później, tylko jako oddzielny zakres: LLM, zasoby zewnętrzne, telefon,
 publikacja źródeł. Zobacz docs/08-later.md. Nie implementuj ich wyprzedzająco.
+
+## Dodatek naukowy (bieżący priorytet)
+
+| Zadanie | Etap | Status |
+| --- | --- | --- |
+| T11 | SCI-00: inwentaryzacja | DONE |
+| T12 | SCI-01: pochodzenie, pomoc, ekspozycja i wymiana danych | IN_PROGRESS |
+| T13 | SCI-02: polskie E1 i E3 | TODO |
+| T14 | SCI-03: chronione nowe pisanie E6 | TODO |
+| T15 | SCI-04: warianty E2 i autorskie E5 | TODO |
+| T16 | SCI-05: kopia, pilotaż i przekazanie | TODO |

@@ -1,43 +1,27 @@
 # Stan projektu
 Updated: 2026-11-02
-Active task: T04
-Status: TODO
-Environment: lokalny macOS 13.7.8, Intel x86_64, Node 24.21.0
+Active task: T12
+Status: IN_PROGRESS
+Environment: lokalny macOS 13.7.8, Intel, Node 24.21.0
 Branch: main
-Last verified code commit: T03 — commit obejmujący ten stan
+Last verified code commit: c93e703
 
 ## Działa
-- T00–T03: React/Vite/TypeScript + lokalny Fastify/SQLite, bez LLM i CDN.
-- Dzisiaj, 3 karty E1, autosave 600 ms z kolejką, przerwa, pominięcie,
-  ukończenie i opcjonalne samooceny. Powrót do szkiców i ostatnich tekstów.
-- 3 poziomy pomocy na żądanie, niezmienne pre_hint/final, trwała historia pomocy.
-- CAS i idempotencja, bufor ratunkowy IndexedDB, osobna wersja przy konflikcie.
-- Host/Origin/CSRF, CSP, blokada procesu, dane poza repo, transakcyjne migracje.
-- Kod w Obrazownik_plan; oryginalne MD/ZIP poza repo pozostają bez zmian.
+- T00–T03: E1, autosave, CAS, recovery, podpowiedzi, wersje i samoocena.
+- SCI-00/T11: porównano ZIP i 7 modułów; dodatek skopiowany bez nadpisania.
+- Inwentaryzacja: docs/science/00-current.md. Priorytet SCI przed T04.
 
-## Ostatnia weryfikacja
-- npm run check: PASS, 15 testów; npm run build: PASS.
-- npm run test:e2e: ścieżka UI/API/baza, 3 podpowiedzi, final i samoocena,
-  odświeżenie po błędzie, odzyskanie, konflikt kart, zgubiona odpowiedź,
-  restart procesu i ponowny zapis. Wyłącznie dane tymczasowe.
-- Chromium: desktop, 390/320 px, klawiatura, długi polski tekst, bez CDN.
-- npm run doctor w tmpdir: PASS; npm audit: 0 podatności.
-- Produkcyjne błędy sprawdzone także ze static plugin; zamykanie surowego
-  połączenia TCP przed HTTP nie blokuje zakończenia serwera.
-- Szczegóły: docs/10-verification.md. Instrukcja: README.md.
+## Weryfikacja
+- Baseline: 15 testów, build i e2e z poprzedniego odbioru.
+- Kopie/migracje testować wyłącznie w tmpdir; produkcję migrować po sprawdzonej kopii.
 
-## Następne trzy kroki
-1. T04: przeczytaj E2–E5 i E7 w docs/02-exercises.md.
-2. Rozszerz wspólny edytor o pozostałe rodziny, warianty i dostępne erasure.
-3. Pakiet 60 kart treningowych + 20 rezerwowych z metadanymi i walidatorem.
+## Następny krok
+SCI-01/T12: metadane metod/kart, jawna historia unknown, ekspozycja podglądu,
+eksport/import i test migracji bez naruszenia oryginalnych tekstów.
 
-## Blokady i ograniczenia
-- Pełne kopie/eksport/import dopiero T07; bufor nie jest kopią bazy.
-- Sesje, powroty i niezależne próby T05; pełny zeszyt T06.
-- Obsługa Safari przez narzędzie niedostępna (startup service failed).
-  Build celuje w Safari 16.6; ręczna kontrola tego Safari wciąż wymagana.
-- Brak ustalonego prywatnego remote GitHub; nie wykonano push ani publikacji.
+## Ograniczenia
+- Pełne MVP T04–T09 nieukończone; zakres dodatku nie oznacza ich zaliczenia.
+- Safari wciąż bez ręcznej weryfikacji; brak ustalonego prywatnego remote.
 
 ## Wznowienie
-Przeczytaj tasks/T04.md; sprawdź git status; npm run check.
-Przed npm run test:e2e zatrzymaj serwer na 4317. npm start uruchamia build.
+Czytaj tasks/T12.md i docs/science/03-integration.md, sekcje 3 i 6.
