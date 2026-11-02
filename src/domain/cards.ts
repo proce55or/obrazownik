@@ -1,11 +1,24 @@
-import type { Attempt } from '../shared/schemas.js';
-export interface Card {
-  id: string; version: number; family: Attempt['family']; partition: Attempt['partition'];
-  prompt: Attempt['promptSnapshot']; constraints: string[];
+import { z } from "zod";
+import { FamilySchema, PromptSchema } from "../shared/schemas.js";
+export const CardSchema = z
+  .object({
+    id: z.string().min(1).max(100),
+    version: z.number().int().positive(),
+    family: FamilySchema,
+    partition: z.enum(["training", "reserve"]),
+    prompt: PromptSchema,
+    constraints: z.array(z.string().max(500)).max(10),
+  })
+  .strict();
+export const ContentCardSchema = CardSchema.extend({
+  hints: z.tuple([
+    z.string().min(1).max(4000),
+    z.string().min(1).max(4000),
+    z.string().min(1).max(4000),
+  ]),
+});
+export type Card = z.infer<typeof CardSchema>;
+export type ContentCard = z.infer<typeof ContentCardSchema>;
+export function publicCard(card: ContentCard): Card {
+  return CardSchema.strip().parse(card);
 }
-export const cards: Card[] = [{
-  id: 'property-stone-01', version: 1, family: 'property', partition: 'training',
-  prompt: { title: 'Ciepło w dłoni', stimulus: 'Kamień', instruction: 'Pomyśl o kamieniu trzymanym w dłoni. Zauważ do trzech jego cech: dotyk, ciężar, temperaturę. Wybierz jedną i zbuduj z niej krótki obraz w jednym lub dwóch zdaniach.' },
-  constraints: ['Jedna cecha i jedno zdanie też wystarczą.'],
-}];
-export function getCard(id: string): Card | undefined { return cards.find(c => c.id === id); }

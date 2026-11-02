@@ -1,25 +1,212 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
+import { z } from "zod";
+import { CardSchema, type Card } from "../domain/cards";
+import {
+  AttemptSchema,
+  DetailSchema,
+  type Attempt,
+  type AttemptDetail,
+  type Bootstrap,
+} from "../shared/schemas";
+import { api, bootstrap } from "./api";
+import { Home } from "./Home";
+import { Editor } from "./Editor";
+import { Completed } from "./Completed";
 
 export function App() {
-  const [connection, setConnection] = useState<'loading' | 'ok' | 'error'>('loading');
-  const [writing, setWriting] = useState(false);
+  const [boot, setBoot] = useState<Bootstrap>(),
+    [cards, setCards] = useState<Card[]>([]),
+    [recent, setRecent] = useState<Attempt[]>([]);
+  const [detail, setDetail] = useState<AttemptDetail>(),
+    [epoch, setEpoch] = useState(0),
+    [busy, setBusy] = useState(true),
+    [error, setError] = useState("");
+  const request = useRef<{ cardId: string; clientRequestId: string } | null>(
+    null,
+  );
+  async function refreshHome() {
+    const [value, pack, history] = await Promise.all([
+      bootstrap(),
+      api("/cards"),
+      api("/attempts?status=completed&limit=5"),
+    ]);
+    setBoot(value);
+    setCards(z.object({ cards: z.array(CardSchema) }).parse(pack).cards);
+    setRecent(
+      z.object({ attempts: z.array(AttemptSchema) }).parse(history).attempts,
+    );
+    setDetail(undefined);
+    setError("");
+  }
   useEffect(() => {
     let active = true;
-    fetch('/api/bootstrap').then(r => { if (!r.ok) throw new Error(); return r.json(); })
-      .then(() => { if (active) setConnection('ok'); }).catch(() => { if (active) setConnection('error'); });
-    return () => { active = false; };
+    Promise.all([
+      bootstrap(),
+      api("/cards"),
+      api("/attempts?status=completed&limit=5"),
+    ])
+      .then(([value, pack, history]) => {
+        if (!active) return;
+        setBoot(value);
+        setCards(z.object({ cards: z.array(CardSchema) }).parse(pack).cards);
+        setRecent(
+          z.object({ attempts: z.array(AttemptSchema) }).parse(history)
+            .attempts,
+        );
+      })
+      .catch((failure) => {
+        if (active)
+          setError(
+            failure instanceof Error
+              ? failure.message
+              : "Nie udało się połączyć.",
+          );
+      })
+      .finally(() => {
+        if (active) setBusy(false);
+      });
+    return () => {
+      active = false;
+    };
   }, []);
-  return <>
-    <a className="skip-link" href="#main">Przejdź do treści</a>
-    <header className="site-header"><a className="brand" href="/" aria-label="Obrazownik — strona główna"><img src="/favicon.svg" alt="" />obrazownik<span className="brand-dot">.</span></a><span className="header-note">Miejsce na własne słowa</span><span className="local-status"><i />Tylko na Twoim Macu</span></header>
-    <main id="main" tabIndex={-1}>
-      <div className="page-top"><span className="eyebrow">TWÓJ WŁASNY RYTM</span><span className="version">Pierwsze strony · wersja 0.1</span></div>
-      {writing ? <section className="welcome"><button className="text-button" onClick={() => setWriting(false)}>← Wróć do Dzisiaj</button><h1>Od słowa do obrazu.</h1><p>Wybierz zwykły przedmiot w zasięgu wzroku. Zauważ jego kształt, fakturę lub dźwięk.</p><label htmlFor="draft">Co zauważasz?</label><textarea id="draft" placeholder="Zacznij od jednego szczegółu…" /><p className="fine-print">To ekran roboczy. Trwały zapis pojawi się w następnym etapie.</p></section> : <>
-        <section className="welcome"><p className="small-heading">Dzisiaj</p><h1>Zatrzymaj się.<br />Zobacz coś <em>po swojemu.</em></h1><p className="intro">Czasem wystarczy jeden szczegół, żeby pojawił się obraz.<br className="desktop-break" /> Zostaw tu kilka własnych słów. Tyle, ile chcesz.</p></section>
-        <section className="invitation" aria-labelledby="invitation-title"><div className="invitation-copy"><span className="eyebrow">NA POCZĄTEK · MAŁE ĆWICZENIE</span><h2 id="invitation-title">Od słowa do obrazu</h2><p>Weź zwyczajną rzecz i przyjrzyj się jej uważniej.<br />Co można zobaczyć, usłyszeć, poczuć?</p><button className="primary-button" disabled={connection !== 'ok'} onClick={() => setWriting(true)}>Zacznij pisać <span aria-hidden="true">↗</span></button><span className="button-note">Jedno zdanie też wystarczy.</span></div><div className="window-art" aria-hidden="true"><div className="sun" /><div className="hill hill-back" /><div className="hill hill-front" /><div className="window-line" /><div className="horizon" /><span className="art-caption">zauważ to, co blisko</span></div></section>
-        <div className="quiet-grid"><section><span className="note-number">01 / ZAUWAŻ</span><h3>Bez pośpiechu</h3><p>Nie ma odliczania ani normy. Możesz napisać jedno zdanie i na tym skończyć.</p></section><section><span className="note-number">02 / SPRÓBUJ</span><h3>Własnym językiem</h3><p>Nie szukaj idealnych słów. Zwykłe, konkretne szczegóły są dobrym początkiem.</p></section><section><span className="note-number">03 / ZOSTAW ŚLAD</span><h3>Przestrzeń dla Ciebie</h3><p>Twoje teksty zostają na Twoim komputerze. Nie ma ocen, punktów ani porównań.</p></section></div>
-      </>}
-      <div role="status" className={connection === 'error' ? 'connection-error' : 'fine-print'}>{connection === 'error' ? 'Brak połączenia z lokalnym serwerem. Sprawdź, czy Obrazownik jest uruchomiony, i odśwież stronę.' : connection === 'loading' ? 'Łączenie z Twoją przestrzenią…' : ''}</div>
-    </main><footer><span>Każdy obraz zaczyna się od zauważenia.</span><span>Prywatnie. Lokalnie. Po swojemu.</span></footer>
-  </>;
+  async function open(id: string) {
+    const value = DetailSchema.parse(await api(`/attempts/${id}`));
+    await api(`/attempts/${id}/shown`, "POST", {});
+    setDetail(value);
+    setEpoch((old) => old + 1);
+    setError("");
+    requestAnimationFrame(() => document.getElementById("main")?.focus());
+  }
+  async function start(cardId: string) {
+    if (busy) return;
+    setBusy(true);
+    setError("");
+    try {
+      if (request.current && request.current.cardId !== cardId)
+        throw new Error("Najpierw ponów rozpoczęcie poprzedniego ćwiczenia.");
+      request.current ??= { cardId, clientRequestId: crypto.randomUUID() };
+      const attempt = AttemptSchema.parse(
+        await api("/attempts", "POST", request.current),
+      );
+      await open(attempt.id);
+      request.current = null;
+    } catch (failure) {
+      setError(
+        failure instanceof Error
+          ? failure.message
+          : "Nie udało się otworzyć ćwiczenia.",
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
+  async function openExisting(id: string) {
+    setBusy(true);
+    setError("");
+    try {
+      await open(id);
+    } catch (failure) {
+      setError(
+        failure instanceof Error
+          ? failure.message
+          : "Nie udało się otworzyć tekstu.",
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
+  const replace = (value: AttemptDetail) => {
+    setDetail(value);
+    setEpoch((old) => old + 1);
+    requestAnimationFrame(() => document.getElementById("main")?.focus());
+  };
+  return (
+    <>
+      <a className="skip-link" href="#main">
+        Przejdź do treści
+      </a>
+      <header className="site-header">
+        <span className="brand">
+          <img src="/favicon.svg" alt="" />
+          obrazownik<span className="brand-dot">.</span>
+        </span>
+        <span className="header-note">Miejsce na własne słowa</span>
+        <span className="local-status">
+          <i />
+          Tylko na Twoim Macu
+        </span>
+      </header>
+      <main
+        id="main"
+        tabIndex={-1}
+        className={
+          boot?.settings.fontSize === "large" ? "large-type" : undefined
+        }
+      >
+        <div className="page-top">
+          <span className="eyebrow">TWÓJ WŁASNY RYTM</span>
+          <span className="version">Pierwsze strony · wersja 0.1</span>
+        </div>
+        {boot && !detail && (
+          <Home
+            cards={cards}
+            drafts={boot.drafts}
+            recent={recent}
+            busy={busy}
+            onStart={(id) => {
+              void start(id);
+            }}
+            onOpen={(id) => {
+              void openExisting(id);
+            }}
+          />
+        )}
+        {boot &&
+          detail &&
+          (detail.attempt.status === "draft" ? (
+            <Editor
+              key={`${detail.attempt.id}:${epoch}`}
+              initial={detail}
+              environmentId={boot.environmentId}
+              onHome={refreshHome}
+              onReplace={replace}
+            />
+          ) : (
+            <Completed
+              key={`${detail.attempt.id}:${epoch}`}
+              detail={detail}
+              onHome={refreshHome}
+            />
+          ))}
+        {!boot && busy && <p role="status">Otwieranie Twojej przestrzeni…</p>}
+        {error && (
+          <div role="alert" className="connection-error">
+            <p>{error}</p>
+            <button
+              className="secondary-button"
+              disabled={busy}
+              onClick={() => {
+                setBusy(true);
+                void refreshHome()
+                  .catch((failure) =>
+                    setError(
+                      failure instanceof Error
+                        ? failure.message
+                        : "Brak połączenia.",
+                    ),
+                  )
+                  .finally(() => setBusy(false));
+              }}
+            >
+              Połącz ponownie
+            </button>
+          </div>
+        )}
+      </main>
+      <footer>
+        <span>Każdy obraz zaczyna się od zauważenia.</span>
+        <span>Prywatnie. Lokalnie. Po swojemu.</span>
+      </footer>
+    </>
+  );
 }
