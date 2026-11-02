@@ -5,8 +5,8 @@ VERIFY_ON_MAC, DONE. Stan przyrostowy jest w STATE.md.
 | Zadanie | Temat | Zależność | Status |
 | --- | --- | --- | --- |
 | T00 | Zgodność środowiska i zasady projektu | brak | DONE |
-| T01 | Działający lokalny szkielet | T00, także warunkowo w chmurze | IN_PROGRESS |
-| T02 | Trwałe dane i kontrakty | T01 | TODO |
+| T01 | Działający lokalny szkielet | T00, także warunkowo w chmurze | DONE |
+| T02 | Trwałe dane i kontrakty | T01 | IN_PROGRESS |
 | T03 | Jedno pełne ćwiczenie i podpowiedzi | T02 | TODO |
 | T04 | Pozostałe ćwiczenia i pakiet treści | T03 | TODO |
 | T05 | Sesje, powroty i samodzielne próby | T04 | TODO |
