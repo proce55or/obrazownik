@@ -36,6 +36,8 @@ publikacja źródeł. Zobacz docs/08-later.md. Nie implementuj ich wyprzedzając
 | T14 | SCI-03: chronione nowe pisanie E6 | DONE |
 | T15 | SCI-04: warianty E2 i autorskie E5 | DONE |
 | T16 | SCI-05: kopia, pilotaż i przekazanie | DONE |
+| T17 | Lokalny Bielik 7B i buforowane pytania | DONE |
+| T18 | Nocny odbiór po bezczynności (jedna kontrola) | IN_PROGRESS |
 
 Odbiór lokalny: docs/11-release-verification.md. T08/T09 wymagają jeszcze
 rzeczywistego Safari i ręcznego startu z Findera. T10: instrukcja gotowa

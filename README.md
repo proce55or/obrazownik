@@ -49,9 +49,12 @@ uruchomieniach wystarczy launcher; build ponów po zmianie kodu.
 
 Pierwsza instalacja zależności wymaga Internetu. Po instalacji i buildzie
 ćwiczenia działają offline, gdy lokalny serwer pozostaje uruchomiony.
-Serwer nasłuchuje wyłącznie na 127.0.0.1. Nie ma konta, LLM, płatnego API,
+Serwer nasłuchuje wyłącznie na 127.0.0.1. Nie ma konta, płatnego API,
 CDN, telemetrii ani synchronizacji. Telefon nie łączy się z bazą tego Maca
 przez własny localhost.
+
+Opcjonalnie można włączyć lokalnego Bielika 7B; domyślnie jest wyłączony.
+Instrukcja dla tej instalacji na Macu, krok po kroku: [Bielik](docs/13-bielik-krok-po-kroku.md).
 
 ## Pierwsza sesja
 

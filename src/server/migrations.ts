@@ -34,6 +34,10 @@ CREATE INDEX exposureFamily ON contentExposure(itemFamilyId);
 INSERT INTO appMeta(key,value) VALUES ('exposureHistory', CASE WHEN EXISTS(SELECT 1 FROM attempts) THEN 'unknown' ELSE 'known' END);
 UPDATE attempts SET record=json_set(record,'$.assistanceTracking','unknown','$.exposureTracking','unknown','$.methodId','legacy-unmapped','$.methodVersion',1,'$.methodSnapshot',null,'$.itemFamilyId','legacy-unknown','$.setRole',CASE WHEN json_extract(record,'$.mode')='independent' THEN 'independent_writing' ELSE 'training' END,'$.responseMode','open_writing','$.noveltyStatus','unknown','$.scaffolding',json('{}'),'$.sourceText',null);
 ` },
+  {version:3,sql:`
+UPDATE attempts SET record=json_set(record,'$.llmMode',COALESCE(json_extract(record,'$.llmMode'),'unknown'));
+UPDATE assistanceEvents SET record=json_set(record,'$.provider',COALESCE(json_extract(record,'$.provider'),'unknown'),'$.llm',json_extract(record,'$.llm'));
+`},
 ];
 export async function migrate(
   db: DatabaseSync,

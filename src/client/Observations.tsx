@@ -7,6 +7,7 @@ import {
 } from "../shared/schemas";
 import { api } from "./api";
 import "./notebook.css";
+import { modelModeLabel, bielikAssistanceLabel, bielikAssistanceState } from "./LocalModel";
 const CategorySchema = z.enum([
   "training",
   "repeat",
@@ -30,6 +31,8 @@ const SampleSchema = z.object({
   assistanceLevel: z.number().int().min(0).max(3),
   noveltyStatus: NoveltySchema,
   selfRatings: RatingsSchema.nullable(),
+  llmMode: z.enum(["off","bielik","unknown"]).default("unknown"),
+  bielikAssistanceState: z.enum(["delivered","prepared","none","unknown"]).default("unknown"),
 });
 const ObservationsSchema = z.object({
   groups: z.array(
@@ -104,6 +107,7 @@ type ComparisonSample = {
   category: Category;
   help: string;
   novelty: string;
+  model: string;
 };
 
 export function Observations() {
@@ -180,6 +184,7 @@ export function Observations() {
             createdAt: attempt.createdAt,
             category,
             help: helpLabel(state, level),
+            model: `${modelModeLabel(attempt.llmMode)} · ${bielikAssistanceLabel(bielikAssistanceState(detail.assistanceEvents, attempt.assistanceTracking))}`,
             novelty: noveltyLabel(attempt.noveltyStatus),
           };
         });
@@ -220,7 +225,8 @@ export function Observations() {
       <p className="fine-print">
         Poniżej są ukończone próby otwartego pisania. Pomoc, wcześniejszy
         kontakt z tematem i brak pewnej historii są oznaczane osobno. Brak
-        pomocy w aplikacji nie wyklucza pomocy poza nią.
+        pomocy w aplikacji nie wyklucza pomocy poza nią. Tryb Bielika przy próbce
+        oznacza dostępność modelu; o użyciu pomocy mówi osobne oznaczenie.
       </p>
       {error && (
         <div className="connection-error" role="alert">
@@ -339,7 +345,7 @@ export function Observations() {
                       {sample.title}
                       {hiddenDates
                         ? ""
-                        : ` · ${new Date(sample.createdAt).toLocaleString("pl-PL")}`}
+                        : ` · ${modelModeLabel(sample.llmMode)} · ${bielikAssistanceLabel(sample.bielikAssistanceState)} · ${new Date(sample.createdAt).toLocaleString("pl-PL")}`}
                     </option>
                   ))}
                 </select>
@@ -360,7 +366,7 @@ export function Observations() {
                       {sample.title}
                       {hiddenDates
                         ? ""
-                        : ` · ${new Date(sample.createdAt).toLocaleString("pl-PL")}`}
+                        : ` · ${modelModeLabel(sample.llmMode)} · ${bielikAssistanceLabel(sample.bielikAssistanceState)} · ${new Date(sample.createdAt).toLocaleString("pl-PL")}`}
                     </option>
                   ))}
                 </select>
@@ -404,6 +410,8 @@ export function Observations() {
                         {categoryLabels[sample.category]}
                         <br />
                         {sample.help}
+                        <br />
+                        {sample.model}
                         <br />
                         {sample.novelty}
                       </p>

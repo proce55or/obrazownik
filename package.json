@@ -1,6 +1,6 @@
 {
   "name": "obrazownik",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "engines": {
@@ -19,8 +19,10 @@
     "validate:content": "tsx scripts/validate-content.ts"
   },
   "dependencies": {
+    "@ai-sdk/openai-compatible": "3.0.83",
     "@fastify/cookie": "11.1.5",
     "@fastify/static": "10.1.8",
+    "ai": "7.0.161",
     "fastify": "5.12.8",
     "react": "19.3.1",
     "react-dom": "19.3.1",

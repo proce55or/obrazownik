@@ -22,12 +22,14 @@ import {
   SettingsSchema,
 } from "../shared/schemas.js";
 import { cards, getCard, allCards } from "./content.js";
+import { LocalHintService, assertLlmAttempt, type LocalLlmOptions } from './local-llm.js';
 
 export interface AppOptions {
   dataDir?: string;
   localPort?:number;
   serveClient?: boolean;
   clientRoot?: string;
+  llm?: LocalLlmOptions;
 }
 export async function createApp(options: AppOptions = {}) {
   const localPort=z.number().int().min(1024).max(65535).parse(options.localPort??PORT);
@@ -94,7 +96,8 @@ export async function createApp(options: AppOptions = {}) {
   });
   await app.register(cookie);
   const storage = await Storage.open(dataDir);
-  app.addHook("onClose", async () => storage.close());
+  const llm = new LocalHintService(dataDir,options.llm);
+  app.addHook("onClose", async () => {await llm.close();await storage.close();});
   const sessions = new Map<string, { token: string; expires: number }>();
   const origins = new Set([`http://${HOST}:${localPort}`, "http://127.0.0.1:5173"]);
   const hosts = new Set([`${HOST}:${localPort}`, "127.0.0.1:5173"]);
@@ -138,7 +141,7 @@ export async function createApp(options: AppOptions = {}) {
   app.get("/api/health", async () => ({
     app: "obrazownik",
     version: VERSION,
-    schemaVersion: 2,
+    schemaVersion: 3,
     status: "ok",
   }));
   app.get("/api/bootstrap", async (req, reply) => {
@@ -231,6 +234,23 @@ export async function createApp(options: AppOptions = {}) {
       .object({ id: z.uuid(), eventId: z.uuid() })
       .parse(req.params);
     return storage.deliverHint(params.id, params.eventId);
+  });
+  app.get('/api/llm/status',async()=>llm.runtimeStatus(storage.settings().llmMode==='bielik'));
+  app.get('/api/attempts/:id/llm/status',async req=>({...llm.status(storage.getAttempt(idOf(req.params))),prefetchEnabled:storage.settings().llmPrefetch}));
+  app.post('/api/attempts/:id/llm/prefetch',async req=>{
+    z.object({}).strict().parse(req.body);
+    return llm.prefetch(storage.getAttempt(idOf(req.params)));
+  });
+  app.post('/api/attempts/:id/llm/hint',async req=>{
+    const id=idOf(req.params),input=ActionSchema.parse(req.body);
+    const replay=storage.replayMutation(`llm-hint:${id}`,input.clientMutationId,input);
+    if(replay)return replay;
+    const attempt=storage.checkRevision(id,input.expectedRevision);
+    assertLlmAttempt(attempt);
+    const prior=storage.assistance(id).find(event=>event.provider==='bielik_local'&&event.status!=='failed');
+    if(prior?.llm)return storage.prepareLlmHint(id,input,prior.revealedContentSnapshot,prior.llm);
+    const question=llm.ready(attempt);
+    return storage.prepareLlmHint(id,input,question.content,question.llm);
   });
   app.post("/api/attempts/:id/complete", async (req) =>
     storage.finish(idOf(req.params), ActionSchema.parse(req.body), "completed"),

@@ -205,6 +205,7 @@ export class Storage {
         family: card.family,
         partition: card.partition,
         mode: options.mode??"training",
+        llmMode: options.mode==='independent'?'off':this.settings().llmMode,
         status: "draft",
         revision: 0,
         currentText: "",
@@ -225,7 +226,7 @@ export class Storage {
         .run(attempt.id, 0, "draft", JSON.stringify(attempt));
       if(attempt.sourceText!==null){
         this.capture(attempt,'pre_hint');
-        const event=AssistanceSchema.parse({id:randomUUID(),attemptId:attempt.id,level:1,kind:'word_bank',revealedContentSnapshot:'Materiał źródłowy zachowany w sourceText tej próby.',requestedAt:now,deliveredAt:null,status:'prepared'});
+        const event=AssistanceSchema.parse({id:randomUUID(),attemptId:attempt.id,level:1,kind:'word_bank',provider:'curated',revealedContentSnapshot:'Materiał źródłowy zachowany w sourceText tej próby.',requestedAt:now,deliveredAt:null,status:'prepared'});
         this.db.prepare('INSERT INTO assistanceEvents(id,attemptId,record) VALUES (?,?,?)').run(event.id,attempt.id,JSON.stringify(event));
       }
       return attempt;
@@ -357,7 +358,7 @@ export class Storage {
           "Pomoc jest dostępna wyłącznie w otwartym ćwiczeniu treningowym.",
         );
       const prior = this.assistance(id).find(
-        (e) => e.level === input.level && e.kind !== 'word_bank' && e.status !== "failed",
+        (e) => e.level === input.level && e.kind !== 'word_bank' && e.provider !== 'bielik_local' && e.status !== "failed",
       );
       if (prior) return { attempt, event: prior };
       this.capture(attempt, "pre_hint");
@@ -370,6 +371,7 @@ export class Storage {
         requestedAt: new Date().toISOString(),
         deliveredAt: null,
         status: "prepared",
+        provider: 'curated',
       });
       this.db
         .prepare(
@@ -384,6 +386,18 @@ export class Storage {
         }),
         event,
       };
+    });
+  }
+  prepareLlmHint(id:string,input:{expectedRevision:number;clientMutationId:string},content:string,llm:NonNullable<AssistanceEvent['llm']>){
+    return this.mutate(`llm-hint:${id}`,input.clientMutationId,input,()=>{
+      const attempt=this.checkRevision(id,input.expectedRevision);
+      if(attempt.mode==='independent'||attempt.llmMode!=='bielik'||attempt.status!=='draft')throw new AppError(403,'llm_disabled','Ta próba nie korzysta z lokalnego modelu.');
+      const prior=this.assistance(id).find(e=>e.provider==='bielik_local'&&e.status!=='failed');
+      if(prior)return{attempt,event:prior};
+      this.capture(attempt,'pre_hint');
+      const event=AssistanceSchema.parse({id:randomUUID(),attemptId:id,level:1,kind:'question',provider:'bielik_local',llm,revealedContentSnapshot:content,requestedAt:this.clock().toISOString(),deliveredAt:null,status:'prepared'});
+      this.db.prepare('INSERT INTO assistanceEvents(id,attemptId,record) VALUES (?,?,?)').run(event.id,id,JSON.stringify(event));
+      return {attempt:this.writeAttempt({...attempt,revision:attempt.revision+1,updatedAt:this.clock().toISOString()}),event};
     });
   }
   deliverHint(id: string, eventId: string): AssistanceEvent {
@@ -495,7 +509,7 @@ export class Storage {
     return this.mutate(`assisted:${id}`,input.clientMutationId,input,()=>{
       const source=this.checkRevision(id,input.expectedRevision);if(source.mode!=='independent'||source.status!=='draft')throw new AppError(409,'not_independent','Ta próba nie jest otwartym nowym pisaniem.');
       this.capture(source,'manual');this.writeAttempt({...source,status:'abandoned',revision:source.revision+1,updatedAt:new Date().toISOString()});
-      const now=new Date().toISOString(),copy=AttemptSchema.parse({...source,id:randomUUID(),sessionId:null,mode:'training',sourceAttemptId:id,revision:0,createdAt:now,updatedAt:now,noveltyStatus:'seen',assistanceTracking:'known'});
+      const now=new Date().toISOString(),copy=AttemptSchema.parse({...source,id:randomUUID(),sessionId:null,mode:'training',llmMode:this.settings().llmMode,sourceAttemptId:id,revision:0,createdAt:now,updatedAt:now,noveltyStatus:'seen',assistanceTracking:'known'});
       this.db.prepare('INSERT INTO attempts(id,revision,status,record) VALUES (?,?,?,?)').run(copy.id,0,'draft',JSON.stringify(copy));return{attempt:copy,versions:[],assistanceEvents:[],assistanceState:'none_confirmed' as const};
     });
   }
@@ -555,6 +569,6 @@ export class Storage {
   observations(limit:number,offset:number){return this.notebook.observations(limit,offset);}
   transformDocument(id:string,requestId:string){return this.mutate(`document-transform:${id}`,requestId,{id},()=>{const document=this.notebook.getDocument(id),base=getCard('m7-source-01');if(!base)throw new AppError(409,'card_missing','Brak karty do pracy z własnym tekstem.');const card=CardSchema.strip().parse({...base,id:`own-${id}-${document.revision}`,version:document.revision+1,itemFamilyId:`own-document-${id}`,sourceText:document.currentText,prompt:{title:document.title||'Z własnego tekstu',stimulus:'Twój własny tekst',instruction:'Wybierz słowa z własnego tekstu, usuń zbędne, zmień ich kolejność i dopisz nowe. Oryginał pozostaje w zeszycie.'},contentOrigin:'Własny tekst użytkownika',licenseStatus:'Prywatny materiał autora.'});const attempt=this.insertAttempt(card);return this.writeAttempt({...attempt,sourceDocumentId:id});});}
 
-  reviseAttempt(id:string,requestId:string){return this.mutate(`revise:${id}`,requestId,{id},()=>{const source=this.getAttempt(id);if(source.status==='draft')throw new AppError(409,'still_draft','Najpierw zakończ albo zachowaj szkic.');const now=this.clock().toISOString();const copy=AttemptSchema.parse({...source,id:randomUUID(),mode:'repeat',sourceAttemptId:id,sessionId:null,status:'draft',revision:0,noveltyStatus:'seen',assistanceTracking:'unknown',createdAt:now,updatedAt:now,completedAt:null,selfRatings:null});this.db.prepare('INSERT INTO attempts(id,revision,status,record) VALUES (?,?,?,?)').run(copy.id,0,'draft',JSON.stringify(copy));this.capture(copy,'manual');return copy;});}
+  reviseAttempt(id:string,requestId:string){return this.mutate(`revise:${id}`,requestId,{id},()=>{const source=this.getAttempt(id);if(source.status==='draft')throw new AppError(409,'still_draft','Najpierw zakończ albo zachowaj szkic.');const now=this.clock().toISOString();const copy=AttemptSchema.parse({...source,id:randomUUID(),mode:'repeat',llmMode:this.settings().llmMode,sourceAttemptId:id,sessionId:null,status:'draft',revision:0,noveltyStatus:'seen',assistanceTracking:'unknown',createdAt:now,updatedAt:now,completedAt:null,selfRatings:null});this.db.prepare('INSERT INTO attempts(id,revision,status,record) VALUES (?,?,?,?)').run(copy.id,0,'draft',JSON.stringify(copy));this.capture(copy,'manual');return copy;});}
 
 }

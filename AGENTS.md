@@ -5,7 +5,7 @@ Czytaj na początku każdej sesji. Aktualne polecenie użytkownika ma pierwszeń
 2. Start kontekstu: ten plik, PROJECT.md, STATE.md, tasks/INDEX.md i jedna aktywna karta. Specyfikacje czytaj po nagłówkach wskazanych w karcie.
 3. Najpierw sprawdź git status i rzeczywiste pliki. Nie nadpisuj cudzych zmian. Brak kodu oznacza rozpoczęcie od T00.
 4. Jedno aktywne zadanie. Wykonuj kod, test i zapis stanu. Po sukcesie możesz przejść dalej bez pytania o rutynowe kroki.
-5. Kod w repo prywatnym. Dane i sekrety poza repo. Brak automatycznej publikacji, telemetrii, konta chmurowego, API i pobierania modeli.
+5. Kod w repo prywatnym. Dane i sekrety poza repo. Brak publikacji, telemetrii i płatnej chmury. T17: użytkownik jawnie zezwolił na lokalny model poza repo.
 6. MVP: React/TypeScript + lokalny Node + SQLite, bez LLM. Szczegóły w docs/03-architecture.md. Nie zamieniaj stosu bez konkretnego blokera i krótkiej decyzji.
 7. Zapisy traktuj jako trwałe dopiero po potwierdzeniu serwera. Nie usuwaj tekstu przy błędzie. Nie wykonuj migracji/resetu na danych użytkownika podczas testów.
 8. Po jednostce pracy aktualizuj STATE.md i status w indeksie, zamiast dopisywać dziennik. Nie umieszczaj rozmów, pełnych logów ani wierszy w pamięci projektu.

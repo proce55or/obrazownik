@@ -45,6 +45,8 @@ export const SettingsSchema = z
     }),
     fontSize: z.union([z.enum(['normal','large']),z.number().int().min(16).max(26)]),
     optionalMethods: z.array(z.enum(['M2','M3','M5'])).default([]),
+    llmMode: z.enum(['off','bielik']).default('off'),
+    llmPrefetch: z.boolean().default(true),
     repeatEnabled: z.boolean(),
     repeatOffsetsDays: z.array(z.number().int().min(1).max(365)).min(1).max(6).refine(days=>new Set(days).size===days.length),
   })
@@ -69,6 +71,7 @@ export const AttemptSchema = z
     sourceAttemptId: z.uuid().nullable(),
     constraints: z.array(z.string().max(500)).max(10),
     selfRatings: RatingsSchema.nullable(),
+    llmMode: z.enum(['off','bielik','unknown']).default('unknown'),
     assistanceTracking: z.enum(['known','unknown']).default('unknown'),
     exposureTracking: z.enum(['known','unknown']).default('unknown'),
     methodId: z.string().max(80).default('legacy-unmapped'),
@@ -96,6 +99,11 @@ export const VersionSchema = z
     scaffolding: ScaffoldingSchema.default({}),
   })
   .strict();
+export const LocalLlmProvenanceSchema = z.object({
+  modelId: z.string().max(200), modelSha256: z.string().regex(/^[a-f0-9]{64}$/),
+  promptVersion: z.string().max(80), generatedAt: z.iso.datetime(),
+  generationMs: z.number().nonnegative(), cacheHit: z.boolean(),
+}).strict();
 export const AssistanceSchema = z
   .object({
     id: z.uuid(),
@@ -106,8 +114,12 @@ export const AssistanceSchema = z
     requestedAt: z.iso.datetime(),
     deliveredAt: z.iso.datetime().nullable(),
     status: z.enum(["prepared", "delivered", "failed"]),
+    provider: z.enum(['curated','bielik_local','unknown']).default('unknown'),
+    llm: LocalLlmProvenanceSchema.nullable().default(null),
   })
-  .strict();
+  .strict().refine(event=>event.provider==='bielik_local'
+    ? event.llm!==null&&event.level===1&&event.kind==='question'
+    : event.llm===null,{message:'Źródło podpowiedzi i metadane modelu muszą być zgodne.'});
 export const CreateAttemptSchema = z
   .object({ cardId: z.string().min(1).max(100), clientRequestId: z.uuid(),variant:z.enum(['standard','easy']).default('standard'),useConstraint:z.boolean().default(false) })
   .strict();

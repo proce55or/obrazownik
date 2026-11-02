@@ -14,6 +14,7 @@ import {
 import { api, ApiError } from "./api";
 import { clearRecovery, findRecovery, putRecovery } from "./recovery";
 import "./notebook.css";
+import { modelModeLabel, bielikAssistanceLabel } from "./LocalModel";
 
 const DocumentDetailSchema = z.object({
   document: DocumentSchema,
@@ -23,6 +24,7 @@ type DocumentDetail = z.infer<typeof DocumentDetailSchema>;
 const NotebookAttemptSchema = AttemptSchema.extend({
   assistanceState: AssistanceStateSchema,
   assistanceLevel: z.number().int().min(0).max(3),
+  bielikAssistanceState: z.enum(["delivered","prepared","none","unknown"]).default("unknown"),
 });
 const AttemptPageSchema = z.object({
   attempts: z.array(NotebookAttemptSchema),
@@ -549,7 +551,7 @@ export function Notebook({
                   {item.currentText.slice(0, 180) || "Jeszcze bez słów."}
                 </p>
                 <p className="fine-print">
-                  {helpLabel(item.assistanceState, item.assistanceLevel)} ·{" "}
+                  {modelModeLabel(item.llmMode)} · {bielikAssistanceLabel(item.bielikAssistanceState)} · {helpLabel(item.assistanceState, item.assistanceLevel)} ·{" "}
                   {item.status === "draft"
                     ? "szkic"
                     : item.status === "completed"

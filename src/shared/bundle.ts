@@ -4,7 +4,7 @@ import { CardSchema } from '../domain/cards.js';
 import { SessionSchema, DocumentSchema, DocumentVersionSchema, ReviewSchema } from './records.js';
 export const BundleExposureSchema = z.object({id:z.string().min(1).max(300),cardId:z.string().min(1).max(100),cardVersion:z.number().int().positive(),itemFamilyId:z.string().max(150),attemptId:z.uuid().nullable(),kind:z.enum(['preview','prompt','reserved']),shownAt:z.iso.datetime()}).strict();
 export const BundleSchema = z.object({
- format:z.literal('obrazownik'),formatVersion:z.literal(1),appVersion:z.string().max(30).default('0.1.0'),schemaVersion:z.literal(2),exportedAt:z.iso.datetime(),
+ format:z.literal('obrazownik'),formatVersion:z.literal(1),appVersion:z.string().max(30).default('0.1.0'),schemaVersion:z.union([z.literal(2),z.literal(3)]),exportedAt:z.iso.datetime(),
  exposureHistory:z.enum(['known','unknown']),settings:SettingsSchema,
  attempts:z.array(AttemptSchema).max(100000),versions:z.array(VersionSchema).max(500000),assistanceEvents:z.array(AssistanceSchema).max(500000),
  exposures:z.array(BundleExposureSchema).max(500000),sessions:z.array(SessionSchema).max(100000),documents:z.array(DocumentSchema).max(100000),documentVersions:z.array(DocumentVersionSchema).max(500000),reviews:z.array(ReviewSchema).max(500000),methods:z.array(MethodSchema).max(1000),cards:z.array(CardSchema).max(10000),

@@ -16,13 +16,14 @@ import { findRecovery, putRecovery, clearRecovery } from "./recovery";
 import { AboutExercise } from "./AboutExercise";
 import { FAMILY_LABELS } from "../shared/config";
 import { assistanceLabel, Versions } from "./AttemptNotes";
+import { LocalModel, modelModeLabel, providerLabel } from "./LocalModel";
 interface Props {
   initial: AttemptDetail;
   environmentId: string;
   onHome: () => Promise<void>;
   onReplace: (detail: AttemptDetail) => void;
 }
-type Action = "hint1" | "hint2" | "hint3" | "complete" | "skip" | "recovery" | "assisted";
+type Action = "llmHint" | "hint1" | "hint2" | "hint3" | "complete" | "skip" | "recovery" | "assisted";
 export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
   const [attempt, setAttempt] = useState(initial.attempt),
     [text, setText] = useState(initial.attempt.currentText);
@@ -146,6 +147,10 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
       setError(
         failure instanceof Error ? failure.message : "Nie udało się zapisać.",
       );
+      if (kind === "llmHint" && failure instanceof ApiError && ["llm_not_ready", "llm_unavailable", "llm_disabled"].includes(failure.code)) {
+        pending.current = null;
+        setPendingKind(null);
+      }
       if (failure instanceof ApiError && failure.status === 409) {
         setStatus("conflict");
         await showConflict();
@@ -157,12 +162,12 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
       setBusy(false);
     }
   }
-  async function requestHint(level: number) {
+  async function requestHint(level: number, localModel = false) {
     try {
       const result = await perform(
-        `hint${level}` as Action,
-        `/attempts/${attempt.id}/hints`,
-        { level },
+        localModel ? "llmHint" : `hint${level}` as Action,
+        localModel ? `/attempts/${attempt.id}/llm/hint` : `/attempts/${attempt.id}/hints`,
+        localModel ? {} : { level },
       );
       if (!result) return;
       const received = z
@@ -195,8 +200,9 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
             ),
           );
       });
-    } catch {
-      /* The editor and pending mutation are preserved. */
+    } catch (failure) {
+      // Unknown transport outcomes keep the mutation id for a safe retry.
+      if (localModel) throw failure;
     }
   }
   async function finish(skip = false) {
@@ -309,6 +315,7 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
         ))}
       </div>
       {attempt.setRole!=='training'&&<p className="fine-print">{attempt.setRole==='near_transfer'?'Bliskie przeniesienie · nowy materiał':'Osobna pula tematów'} · {attempt.noveltyStatus==='new_confirmed'?'Nowość potwierdzona w historii aplikacji':attempt.noveltyStatus==='seen'?'Temat był już widziany':'Nowość niepotwierdzona — wcześniejsza historia jest nieznana'}</p>}
+      <p className="fine-print">{modelModeLabel(attempt.llmMode)}</p>
       <AboutExercise attempt={attempt}/>
       {attempt.scaffoldSlots.length>0&&<section className="scaffold"><h3>Moje kroki do własnego zdania</h3><p className="fine-print">Wybierz dowolne pole. Możesz pominąć wszystkie i od razu pisać.</p><div className="button-row">{attempt.scaffoldSlots.filter(slot=>!(slot.id in fields)).map(slot=><button className="secondary-button" key={slot.id} disabled={busy||checkingRecovery||!!recovery||status==='conflict'} onClick={()=>{const next={...fields,[slot.id]:''};setFields(next);queue.setScaffolding(next);}}>{slot.label} +</button>)}</div>{attempt.scaffoldSlots.filter(slot=>slot.id in fields).map(slot=><label className="scaffold-field" key={slot.id}>{slot.label}<textarea maxLength={4000} disabled={busy||checkingRecovery||!!recovery||status==='conflict'} value={fields[slot.id]} onChange={e=>{const next={...fields,[slot.id]:e.target.value};setFields(next);queue.setScaffolding(next);}}/></label>)}</section>}
       {attempt.sourceText!==null&&<section className="scaffold source-workshop"><h3>Tekst źródłowy — pozostaje zachowany</h3><p className="preserve-text">{attempt.sourceText}</p><p className="fine-print">Możesz wybierać słowa, przestawiać fragmenty i dopisywać dowolne własne słowa. To tekst z rusztowaniem, osobny od nowego pisania.</p><details><summary>Wybierz słowa z fragmentu</summary><div className="word-bank">{attempt.sourceText.split(/\s+/).filter(Boolean).slice(0,160).map((word,index)=><button className="secondary-button" key={index} disabled={busy||!!recovery||checkingRecovery||status==='conflict'} onClick={()=>{const next=text+(text&&!/\s$/.test(text)?' ':'')+word;setText(next);queue.setText(next);}}>{word}</button>)}</div></details></section>}
@@ -470,6 +477,7 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
             </button>
           )}
         </div>
+        {attempt.llmMode==='bielik'&&<LocalModel attemptId={attempt.id} disabled={actionDisabled("llmHint")} onReveal={()=>requestHint(1,true)}/>}
         <div className="button-row">
           <button
             className="secondary-button"
@@ -511,6 +519,7 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
                   ? "PRZYKŁAD APLIKACJI · NIE JEST WZORCEM"
                   : `POMOC ${event.level}`}
               </span>
+              <p className="fine-print">{providerLabel(event.provider)}{event.llm?` · ${event.llm.modelId} · ${event.llm.cacheHit?"z bufora":"pierwsze przygotowanie"}`:""}</p>
               <p>{event.revealedContentSnapshot}</p>
             </div>
           ))}

@@ -19,11 +19,11 @@ const data = mkdtempSync(path.join(tmpdir(), "obrazownik-e2e-"));
 const port=Number(process.env.OBRAZOWNIK_TEST_PORT??4318);
 const origin=`http://127.0.0.1:${port}`;
 let server;
-function run(args, marker) {
+function run(args, marker, timeout = 50_000) {
   const output = execFileSync(cli, [`-s=${session}`, ...args], {
     cwd: root,
     encoding: "utf8",
-    timeout: 50_000,
+    timeout,
   });
   writeFileSync(
     path.join(root, "output/playwright", `${args[0]}-result.txt`),
@@ -113,6 +113,13 @@ try {
   console.log("PASS: own document → E5, all exercise families, settings, backup, JSON export/import, comparison and session.");
   run(["run-code","--filename","tests/e2e/readability.js"],"READABILITY_PASS");
   console.log("PASS: two cards per family, optional variants, 320/390px, 200% CSS zoom and keyboard focus.");
+  if(process.env.OBRAZOWNIK_TEST_LLM==='1') {
+    console.log('Optional Bielik QA: allow up to180s for background preparation; keep writing and model disclosure separate.');
+    run(["run-code","--filename","tests/e2e/local-model.js"],"LOCAL_MODEL_PASS",240_000);
+    console.log('PASS: local question buffer, explicit disclosure, model provenance, off mode and independent isolation.');
+    run(["run-code","--filename","tests/e2e/local-model-buffer.js"],"LOCAL_MODEL_BUFFER_PASS",240_000);
+    console.log('PASS: autosave completed while the local question was preparing; disclosure captured the latest text.');
+  }
   console.log(
     "PASS: server restart preserves text, final and help; session/CSRF reconnects.",
   );

@@ -78,12 +78,12 @@ test("failed migration rolls back DDL and data, while verified backup retains pr
       migrate(db, path.join(dir, "backups"), true, [
         ...migrations,
         {
-          version: 3,
+          version: 4,
           sql: "CREATE TABLE temporaryTest(id INT); DELETE FROM appMeta; INVALID SQL;",
         },
       ]),
     ).rejects.toThrow();
-    expect(db.prepare("PRAGMA user_version").get()?.user_version).toBe(2);
+    expect(db.prepare("PRAGMA user_version").get()?.user_version).toBe(3);
     expect(
       db
         .prepare("SELECT value FROM appMeta WHERE key=?")

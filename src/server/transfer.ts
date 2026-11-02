@@ -2,7 +2,8 @@ import { createHash, randomUUID } from 'node:crypto';
 import type { DatabaseSync } from 'node:sqlite';
 import { CardSchema } from "../domain/cards.js";
 import { BundleSchema, type Bundle } from '../shared/bundle.js';
-import { AttemptSchema, VersionSchema, type Settings } from '../shared/schemas.js';
+import { AttemptSchema, VersionSchema, AssistanceSchema, type Settings } from '../shared/schemas.js';
+import { VERSION } from '../shared/config.js';
 import { AppError } from './errors.js';
 export function assertBundleSize(input:unknown){const value=JSON.stringify(input);if(typeof value!=='string'||Buffer.byteLength(value,'utf8')>25*1024*1024)throw new AppError(413,'import_size','Plik importu przekracza 25 MiB.');}
 export const digestBundle = (bundle: unknown) => createHash('sha256').update(JSON.stringify(bundle)).digest('hex');
@@ -11,13 +12,13 @@ export function exportBundle(db:DatabaseSync,settings:Settings):Bundle {
  const exposures=db.prepare('SELECT * FROM contentExposure ORDER BY rowid').all();
  // Legacy exposures have incomplete lineage: retain them as unknown item families.
  const old=db.prepare('SELECT record FROM exposures WHERE id NOT IN (SELECT id FROM contentExposure)').all().map(r=>{const e=JSON.parse(String(r.record));return {...e,itemFamilyId:'legacy-unknown',kind:'prompt'};});
- return BundleSchema.parse({format:'obrazownik',formatVersion:1,schemaVersion:2,exportedAt:new Date().toISOString(),exposureHistory:String(db.prepare("SELECT value FROM appMeta WHERE key='exposureHistory'").get()?.value??'unknown'),settings,
+ return BundleSchema.parse({format:'obrazownik',formatVersion:1,appVersion:VERSION,schemaVersion:3,exportedAt:new Date().toISOString(),exposureHistory:String(db.prepare("SELECT value FROM appMeta WHERE key='exposureHistory'").get()?.value??'unknown'),settings,
  attempts:records(db,'attempts'),versions:records(db,'attemptVersions'),assistanceEvents:records(db,'assistanceEvents'),exposures:[...exposures,...old],sessions:records(db,'sessions'),documents:records(db,'documents'),documentVersions:records(db,'documentVersions'),reviews:records(db,'dueReviews'),methods:records(db,'methods'),cards:records(db,'cardRegistry')});
 }
 export function importPreview(input:unknown){assertBundleSize(input);const bundle=BundleSchema.parse(input);return {digest:digestBundle(bundle),attempts:bundle.attempts.length,documents:bundle.documents.length,versions:bundle.versions.length,exposures:bundle.exposures.length,assistanceEvents:bundle.assistanceEvents.length};}
 function canonical(value:unknown):string {const sort=(v:unknown):unknown=>Array.isArray(v)?v.map(sort):v&&typeof v==='object'?Object.fromEntries(Object.entries(v).sort(([a],[b])=>a.localeCompare(b)).map(([k,x])=>[k,sort(x)])):v;return JSON.stringify(sort(value));}
 const groupsOf=(b:Bundle)=>[['sessions',b.sessions],['attempts',b.attempts],['attemptVersions',b.versions],['assistanceEvents',b.assistanceEvents],['documents',b.documents],['documentVersions',b.documentVersions],['dueReviews',b.reviews],['contentExposure',b.exposures]] as const;
-function existingRecord(db:DatabaseSync,table:string,id:string):unknown|undefined {const row=db.prepare(`SELECT * FROM ${table} WHERE id=?`).get(id);if(!row)return undefined;const value=table==='contentExposure'?row:JSON.parse(String(row.record));return table==='attempts'?AttemptSchema.parse(value):table==='attemptVersions'?VersionSchema.parse(value):value;}
+function existingRecord(db:DatabaseSync,table:string,id:string):unknown|undefined {const row=db.prepare(`SELECT * FROM ${table} WHERE id=?`).get(id);if(!row)return undefined;const value=table==='contentExposure'?row:JSON.parse(String(row.record));return table==='attempts'?AttemptSchema.parse(value):table==='attemptVersions'?VersionSchema.parse(value):table==='assistanceEvents'?AssistanceSchema.parse(value):value;}
 function planImport(db:DatabaseSync,bundle:Bundle){
  const groups=groupsOf(bundle),graph=new Map<string,Set<string>>(),conflicting=new Set<string>();let identical=0;
  const connect=(a:string,b:string)=>{if(!graph.has(a))graph.set(a,new Set());if(!graph.has(b))graph.set(b,new Set());graph.get(a)!.add(b);graph.get(b)!.add(a);};

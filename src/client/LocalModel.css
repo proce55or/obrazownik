@@ -1,0 +1,12 @@
+.local-model { margin-block: 1rem; padding: 1rem; border: 1px solid var(--line, #c8cec0); border-radius: .5rem; }
+.local-model h4 { margin: 0 0 .6rem; font-size: 1rem; }
+.local-model p, .model-sources { font-size: .9rem; line-height: 1.65; }
+.local-model p:last-child { margin-bottom: 0; }
+.local-model button { max-width: 100%; white-space: normal; }
+.model-sources { margin-block: 1rem; }
+.model-sources li { margin-block: .6rem; }
+.model-fingerprint { overflow-wrap: anywhere; }
+/* Fieldsets otherwise keep the intrinsic width of long select options. */
+.settings fieldset { min-inline-size: 0; max-width: 100%; }
+.settings fieldset select { max-width: 100%; }
+.local-model { min-width: 0; overflow-wrap: anywhere; }

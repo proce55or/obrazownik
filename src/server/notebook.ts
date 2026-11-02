@@ -6,6 +6,7 @@ import {
   AssistanceStateSchema,
   FamilySchema,
   RatingsSchema,
+  AssistanceSchema,
   type Attempt,
 } from "../shared/schemas.js";
 import {
@@ -75,6 +76,7 @@ export type NotebookQuery = z.infer<typeof NotebookQuerySchema>;
 export type NotebookAttempt = Attempt & {
   assistanceState: z.infer<typeof AssistanceStateSchema>;
   assistanceLevel: number;
+  bielikAssistanceState: 'delivered'|'prepared'|'none'|'unknown';
 };
 export const observationCategories = [
   "training",
@@ -99,7 +101,10 @@ const entries = `WITH help AS (
  SELECT attemptId,
  MAX(CASE WHEN json_extract(record,'$.status')='prepared' THEN 1 ELSE 0 END) uncertain,
  MAX(CASE WHEN json_extract(record,'$.status')='delivered' THEN 1 ELSE 0 END) delivered,
- MAX(CASE WHEN json_extract(record,'$.status') IN ('prepared','delivered') THEN CAST(json_extract(record,'$.level') AS INTEGER) ELSE 0 END) assistanceLevel
+ MAX(CASE WHEN json_extract(record,'$.status') IN ('prepared','delivered') THEN CAST(json_extract(record,'$.level') AS INTEGER) ELSE 0 END) assistanceLevel,
+ MAX(CASE WHEN json_extract(record,'$.provider')='bielik_local' AND json_extract(record,'$.status')='delivered' THEN 1 ELSE 0 END) bielikDelivered,
+ MAX(CASE WHEN json_extract(record,'$.provider')='bielik_local' AND json_extract(record,'$.status')='prepared' THEN 1 ELSE 0 END) bielikPrepared,
+ MAX(CASE WHEN COALESCE(json_extract(record,'$.provider'),'unknown')='unknown' AND json_extract(record,'$.status') IN ('prepared','delivered') THEN 1 ELSE 0 END) unknownProvider
  FROM assistanceEvents GROUP BY attemptId
 ), entries AS (
  SELECT a.id,a.record,
@@ -108,6 +113,11 @@ const entries = `WITH help AS (
  WHEN json_extract(a.record,'$.assistanceTracking')='known' THEN 'none_confirmed'
  ELSE 'unknown' END assistanceState,
  COALESCE(h.assistanceLevel,0) assistanceLevel,
+ CASE WHEN COALESCE(h.bielikDelivered,0)=1 THEN 'delivered'
+ WHEN COALESCE(h.bielikPrepared,0)=1 THEN 'prepared'
+ WHEN COALESCE(h.unknownProvider,0)=1 THEN 'unknown'
+ WHEN json_extract(a.record,'$.assistanceTracking')='known' THEN 'none'
+ ELSE 'unknown' END bielikAssistanceState,
  CASE WHEN json_extract(a.record,'$.mode')='repeat' THEN 'repeat'
  WHEN json_extract(a.record,'$.setRole')='near_transfer' THEN 'near_transfer'
  WHEN json_extract(a.record,'$.mode')='independent' THEN 'independent'
@@ -186,13 +196,14 @@ export class Notebook {
     );
     const rows = this.db
       .prepare(
-        `${entries} SELECT record,assistanceState,assistanceLevel FROM entries${filter} ORDER BY json_extract(record,'$.updatedAt') DESC,id LIMIT ? OFFSET ?`,
+        `${entries} SELECT record,assistanceState,assistanceLevel,bielikAssistanceState FROM entries${filter} ORDER BY json_extract(record,'$.updatedAt') DESC,id LIMIT ? OFFSET ?`,
       )
       .all(...values, query.limit, query.offset);
     const attempts: NotebookAttempt[] = rows.map((row) => ({
       ...AttemptSchema.parse(JSON.parse(String(row.record))),
       assistanceState: AssistanceStateSchema.parse(row.assistanceState),
       assistanceLevel: Number(row.assistanceLevel),
+      bielikAssistanceState: z.enum(['delivered','prepared','none','unknown']).parse(row.bielikAssistanceState),
     }));
     return { attempts, total, limit: query.limit, offset: query.offset };
   }
@@ -346,7 +357,9 @@ export class Notebook {
       .get(id);
     if (!row) throw new AppError(404, "not_found", "Nie znaleziono tej próby.");
     const attempt = AttemptSchema.parse(JSON.parse(String(row.record)));
-    return `# ${heading(attempt.promptSnapshot.title)}\n\n${stateLabel(String(row.assistanceState), Number(row.assistanceLevel))}\n\nTryb: ${attempt.mode}; materiał: ${attempt.setRole}\nZapis: ${attempt.updatedAt}\n\n## Polecenie\n\n${attempt.promptSnapshot.instruction}\n\n## Własny tekst\n\n${codeBlock(attempt.currentText)}\n`;
+    const llmHelp=this.db.prepare('SELECT record FROM assistanceEvents WHERE attemptId=?').all(id).map(r=>AssistanceSchema.parse(JSON.parse(String(r.record)))).filter(e=>e.provider==='bielik_local'&&e.status!=='failed');
+    const sources=llmHelp.map(e=>`Lokalny model: ${e.llm!.modelId}; SHA256: ${e.llm!.modelSha256}; prompt: ${e.llm!.promptVersion}; odbiór: ${e.status}; przygotowano: ${e.llm!.generatedAt}`).join('\n');
+    return `# ${heading(attempt.promptSnapshot.title)}\n\n${stateLabel(String(row.assistanceState), Number(row.assistanceLevel))}\n\nTryb: ${attempt.mode}; materiał: ${attempt.setRole}; tryb LLM: ${attempt.llmMode}\n${sources?`${sources}\n`:''}Zapis: ${attempt.updatedAt}\n\n## Polecenie\n\n${attempt.promptSnapshot.instruction}\n\n## Własny tekst\n\n${codeBlock(attempt.currentText)}\n`;
   }
   observations(limit = 30, offset = 0) {
     const page = DocumentListQuerySchema.parse({ limit, offset });
@@ -389,12 +402,14 @@ export class Notebook {
     }
     const samples = this.db
       .prepare(
-        `${entries} SELECT id,category,assistanceState,assistanceLevel,COALESCE(json_extract(record,'$.noveltyStatus'),'unknown') noveltyStatus,json_extract(record,'$.promptSnapshot.title') title,json_extract(record,'$.createdAt') createdAt,json_extract(record,'$.selfRatings') selfRatings FROM entries WHERE ${complete} ORDER BY json_extract(record,'$.createdAt') DESC,id LIMIT ? OFFSET ?`,
+        `${entries} SELECT id,category,assistanceState,assistanceLevel,bielikAssistanceState,COALESCE(json_extract(record,'$.llmMode'),'unknown') llmMode,COALESCE(json_extract(record,'$.noveltyStatus'),'unknown') noveltyStatus,json_extract(record,'$.promptSnapshot.title') title,json_extract(record,'$.createdAt') createdAt,json_extract(record,'$.selfRatings') selfRatings FROM entries WHERE ${complete} ORDER BY json_extract(record,'$.createdAt') DESC,id LIMIT ? OFFSET ?`,
       )
       .all(page.limit, page.offset)
       .map((row) => ({
         id: String(row.id),
         category: row.category as ObservationCategory,
+        llmMode: z.enum(['off','bielik','unknown']).parse(row.llmMode),
+        bielikAssistanceState: z.enum(['delivered','prepared','none','unknown']).parse(row.bielikAssistanceState),
         assistanceState: AssistanceStateSchema.parse(row.assistanceState),
         assistanceLevel: Number(row.assistanceLevel),
         noveltyStatus: z

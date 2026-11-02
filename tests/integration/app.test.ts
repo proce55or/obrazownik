@@ -30,7 +30,7 @@ test("health, bootstrap and loopback listener are real", async () => {
   const app = await setup();
   expect(
     (await app.inject({ url: "/api/health", headers })).json(),
-  ).toMatchObject({ app: "obrazownik", status: "ok", version: "0.1.0" });
+  ).toMatchObject({ app: "obrazownik", status: "ok", version: "0.2.0" });
   const bootstrap = await app.inject({ url: "/api/bootstrap", headers });
   expect(bootstrap.json().csrfToken).toMatch(/^[a-f0-9]{64}$/);
   expect(bootstrap.headers["set-cookie"]).toContain("HttpOnly");

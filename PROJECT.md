@@ -4,6 +4,8 @@ Obrazownik, nazwa robocza. Plan v1.0, 2026-11-02.
 Cel: pomagać autorowi samodzielnie tworzyć obrazy, skojarzenia i sceny
 po polsku oraz sprawdzać, czy łatwiej pisze bez pomocy na nowych tematach.
 Nie obiecujemy odtworzenia dawnego stylu ani efektu terapeutycznego.
+T17 (zlecone03.11): opcjonalny lokalny Bielik7B i bufor pytań; domyślnieoff,
+próby samodzielne bez modelu. Instrukcja: docs/13-bielik-krok-po-kroku.md.
 
 MVP: 5 rodzin ćwiczeń, dobrowolne stopniowane podpowiedzi, prywatny
 zeszyt tekstów, łagodne powroty do zadań, osobne próby bez podpowiedzi,

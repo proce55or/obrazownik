@@ -1,43 +1,45 @@
 # Stan projektu
-Updated: 2026-11-02
-Active task: T10
-Status: TODO — oczekiwanie na obserwacje; MVP gotowe lokalnie
-Environment: macOS 13.7.8 Intel, Node 24.21.0
+Updated: 2026-11-03, Europe/Warsaw
+Active task: T18
+Status: IN_PROGRESS — przygotowana nocna kontrola po bezczynności
+Environment: macOS13.7.8 Intel, Node24.21.0
 Branch: main
-Last verified code commit: 30dfd76
-Remote: proce55or/obrazownik (private, zweryfikowane API)
+Release: 0.2.0, schema3
+Remote: proce55or/obrazownik (private, ponownie sprawdzone API)
 
-## Działa
-- Pełny lokalny MVP: pięć rodzin, 60 bazowych +6 opcjonalnych +5 near
-  +20 chronionych tematów, trzy archiwalne wersje E1, dziewięć metod.
-- SCI-00–05: źródła i ograniczenia metod, własne polskie pola E1/E3,
-  pre_hint/final, osobna wersja wspomagana, zachowany oryginał E5.
-- Sesje, powroty2/7/21, trwały zeszyt, wersje, porównanie i obserwacje,
-  kopie, JSON export/import, restore i launcher. Brak LLM/telemetrii.
-- Produkcja4317 działa z schema2, dane ~/Obrazownik-dane. Sprawdzona
-  kopia schema1 przed migracją; odciski tekstów/dat/wersji zgodne po niej.
+## Działa i jest wdrożone
+MVP + SCI-00–05 oraz T17. Produkcja127.0.0.1:4317 działa z istniejącą
+bazą ~/Obrazownik-dane. Przed migracją sprawdzona kopia schema2;
+po migracji schema3: integralnośćOK i zgodne odciski wszystkich rekordów
+użytkownika (teksty, wersje, pomoc, daty, powiązania, ustawienia).
+Start przez Launch Services otworzył rzeczywisty launcher w Terminalu,
+Bielik4320 i aplikacja4317 mają wspólnego właściciela launchera. Stary proces
+sprzed aktualizacji Codex był martwy; jego blokadę zachowano pod inną nazwą.
+
+Bielik7B Q4_K_M poza repo, SHA256PASS, CPU4/ctx2048/slot1. Domyślnieoff;
+nowe próby zapamiętują tryb, samodzielne blokują model. Bufor nie ujawnia
+pytania; jawny pokaz zachowuje pre_hint i źródło/model. Timeout/offline
+nie blokują zapisu. Jakość pytań eksperymentalna, czas zwykle kilka–kilkanaście
+sekund w pomiarze. Instrukcja krok po kroku: docs/13-bielik-krok-po-kroku.md.
+Pomiary: docs/14-bielik-benchmark.md; kontrakt: docs/15-bielik-resume.md.
 
 ## Weryfikacja
-- npm run check: 94 testy/19 plików PASS; walidator91+3 PASS,
-  TypeScript/lint/context/repo-check PASS. Build i pełne E2E PASS.
-- E2E: autosave/restart/recovery/konflikt/pomoc/pola, nowe pisanie,
-  zeszyt→E5, pięć rodzin po2 karty, opcjonalne metody, ustawienia,
-  kopia, JSON/importx2, porównanie, sesja i kopia dnia: PASS.
-- 320/390px, CSS zoom200%, fokus klawiatury: PASS. Kontrast opisów
-  poprawiony i sprawdzony. Dodatkowo zapis bez IndexedDB i sieci zewnętrznej PASS.
-- Restore/migracje/import i 10k rekordów zeszytu: testy tmpdir PASS.
-  npm audit i audit --omit=dev: 0 podatności.
-- Szczegóły: docs/11-release-verification.md; instrukcja README.md.
+- npm run check:101 testów/20 plików PASS, lint/typy/treści/context/repo PASS.
+- Build0.2.0 PASS. Pełne E2E z rzeczywistym modelem PASS.
+- Osobno autosave podczas preparing oraz najnowszy tekst w pre_hint PASS.
+- 320/390px, powiększenie CSS200%, klawiatura i zrzuty: PASS.
+- npm audit --omit=dev:0 podatności. Wagi i logi nie są w Git.
+- Ręczne Safari i literalny dwuklik Findera pozostają VERIFY_ON_MAC;
+  T10 czeka na rzeczywiste obserwacje autora. Brak dowodu skuteczności klinicznej.
 
-## Pozostało świadomie
-- Rzeczywiste Safari/powiększenie przeglądarki i dwuklik Findera:
-  VERIFY_ON_MAC, automatyzacja Safari niedostępna. Chromium na Macu działa.
-- T10: pilotaż przygotowany w docs/12-pilot.md, czeka na obserwacje autora.
-  Nie udowodniono skuteczności klinicznej. Nie wymyślać wyników pilotażu.
-
-## Zasoby i wznowienie
-Użytkownik nakazał pozostawić co najmniej20% limitu: sprawdzaj licznik
-Codex, zatrzymuj pracę z zapasem przed80% zużycia; limit wspólny dla konta.
-Ostatni odczyt54%. Nie kontynuuj tylko po to, aby zużywać limit.
-Po zgłoszeniu problemu: git status, właściwa karta i dowód; nie cofaj T00.
-Testy mają własny port4318 i tmpdir. Nigdy nie resetuj produkcyjnej bazy.
+## Nocny nadzór i limit
+Harmonogram `obrazownik-nocne-doko-czenie-i-kontrola`: ACTIVE w tej rozmowie,
+co godzinę, maksymalnie7 razy, najpóźniej03.11 o08:00. T18 opisuje jedną
+kontrolę po bezczynności i wyłączenie harmonogramu po sukcesie.
+Baseline w ~/Obrazownik-modele/bielik-7b/qa-night przygotowany; komenda:
+`node scripts/check-bielik-idle.mjs --verify`. Nie powtarzaj --prepare.
+Nocny test nie został jeszcze wykonany — nie raportuj go jako PASS.
+Caffeinate do08:00, PID w logs/night-awake.json; ekran może się wygasić.
+Cel zostawić20%,15% to dolna granica użytkownika. Przy>=78% lub braku
+licznika nie zaczynaj kosztownej pracy; zapisz stan i wyłącz harmonogram.
+Ostatni odczyt57%. Limit wspólny dla konta. Testy tylko na danych syntetycznych.

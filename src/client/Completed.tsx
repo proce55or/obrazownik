@@ -7,6 +7,7 @@ import {
 import { api } from "./api";
 import { AboutExercise } from "./AboutExercise";
 import { assistanceLabel, Versions } from "./AttemptNotes";
+import { modelModeLabel, ModelSources } from "./LocalModel";
 interface Props {
   detail: AttemptDetail;
   onHome: () => Promise<void>;
@@ -73,6 +74,8 @@ export function Completed({ detail, onHome,onRevise }: Props) {
         <p className="assistance-label">
           {assistanceLabel(detail.assistanceEvents, attempt)}
         </p>
+        <p className="fine-print">{modelModeLabel(attempt.llmMode)}</p>
+        <ModelSources events={detail.assistanceEvents}/>
       </article>
       {attempt.status==='completed' && (
         <details className="reflection">
