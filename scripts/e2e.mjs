@@ -16,6 +16,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const cli = path.join(root, "node_modules/.bin/playwright-cli");
 const session = `obrazownik-test-${process.pid}`;
 const data = mkdtempSync(path.join(tmpdir(), "obrazownik-e2e-"));
+const port=Number(process.env.OBRAZOWNIK_TEST_PORT??4318);
+const origin=`http://127.0.0.1:${port}`;
 let server;
 function run(args, marker) {
   const output = execFileSync(cli, [`-s=${session}`, ...args], {
@@ -37,7 +39,7 @@ function run(args, marker) {
 async function start() {
   server = spawn(process.execPath, ["dist/server/server/index.js"], {
     cwd: root,
-    env: { ...process.env, OBRAZOWNIK_DATA_DIR: data },
+    env: { ...process.env, OBRAZOWNIK_DATA_DIR: data, OBRAZOWNIK_PORT:String(port) },
     stdio: ["ignore", "pipe", "pipe"],
   });
   let output = "";
@@ -50,10 +52,10 @@ async function start() {
   for (let i = 0; i < 100; i++) {
     if (server.exitCode !== null) throw new Error(output);
     try {
-      const response = await fetch("http://127.0.0.1:4317/api/health");
+      const response = await fetch(`${origin}/api/health`);
       if (response.ok) {
         const boot = await (
-          await fetch("http://127.0.0.1:4317/api/bootstrap")
+          await fetch(`${origin}/api/bootstrap`)
         ).json();
         if (boot.dataDir !== realpathSync(data))
           throw new Error(
@@ -82,15 +84,15 @@ try {
     probe.once("error", () =>
       reject(
         new Error(
-          "Port 4317 jest zajęty. Zatrzymaj lokalny serwer przed npm run test:e2e. Nie zamknięto żadnego procesu.",
+          "Port testowy jest zajęty. Zatrzymaj lokalny serwer przed npm run test:e2e. Nie zamknięto żadnego procesu.",
         ),
       ),
     );
-    probe.listen(4317, "127.0.0.1", () => probe.close(resolve));
+    probe.listen(port, "127.0.0.1", () => probe.close(resolve));
   });
   mkdirSync(path.join(root, "output/playwright"), { recursive: true });
   await start();
-  run(["open", "http://127.0.0.1:4317"]);
+  run(["open", origin]);
   run(["snapshot"]);
   run(["run-code", "--filename", "tests/e2e/core.js"], "BEFORE_RELOAD_PASS");
   const navigation = run(["reload"]);
@@ -105,6 +107,8 @@ try {
   run(["reload"]);
   run(["snapshot"]);
   run(["run-code", "--filename", "tests/e2e/restart.js"], "RESTART_PASS");
+  run(["run-code","--filename","tests/e2e/science.js"],"SCIENCE_PASS");
+  console.log("PASS: Polish verb fields, snapshots, provenance and independent-to-assisted writing.");
   console.log(
     "PASS: server restart preserves text, final and help; session/CSRF reconnects.",
   );

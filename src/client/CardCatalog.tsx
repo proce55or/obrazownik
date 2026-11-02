@@ -1,0 +1,8 @@
+import { useState } from 'react';
+import type { Card } from '../domain/cards';
+import { FAMILY_LABELS } from '../shared/config';
+export function CardCatalog({cards,busy,onStart}:{cards:Card[];busy:boolean;onStart:(id:string,variant?:'standard'|'easy',constraint?:boolean)=>void}){
+ const [family,setFamily]=useState<Card['family']>('property'),[selected,setSelected]=useState(''),[easy,setEasy]=useState(false),[constraint,setConstraint]=useState(false);
+ const group=cards.filter(c=>c.family===family),card=group.find(c=>c.id===selected)??group[0];
+ return <details className="versions card-catalog"><summary>Wybierz rodzinę i własne tempo</summary><div className="ratings-grid"><label>Rodzina ćwiczeń<select value={family} onChange={e=>{setFamily(e.target.value as Card['family']);setSelected('');}}>{Object.entries(FAMILY_LABELS).map(([id,label])=><option value={id} key={id}>{label}</option>)}</select></label><label>Karta<select value={card?.id??''} onChange={e=>setSelected(e.target.value)}>{group.map(c=><option value={c.id} key={c.id}>{c.prompt.stimulus} · {c.prompt.title}</option>)}</select></label></div>{card?<><p>{easy?card.easierInstruction:card.prompt.instruction}</p><label className="choice"><input type="checkbox" checked={easy} onChange={e=>setEasy(e.target.checked)}/> Łatwiejszy wariant — jeden szczegół</label>{card.optionalConstraint&&<label className="choice"><input type="checkbox" checked={constraint} onChange={e=>setConstraint(e.target.checked)}/> Dobrowolne ograniczenie: {card.optionalConstraint}</label>}<button className="secondary-button" disabled={busy} onClick={()=>onStart(card.id,easy?'easy':'standard',constraint)}>Otwórz wybraną kartę ↗</button></>:<p>Ta rodzina będzie dostępna po dodaniu paczki kart.</p>}</details>;
+}

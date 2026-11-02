@@ -1,3 +1,269 @@
 [
- {"id":"M1","version":1,"language":"pl","title":"Cechy, relacje i obraz","sourceRefs":["R02","R03","R21"],"sourceLinks":[{"label":"Przegląd SFA — Efstratiadou i in. (2018)","url":"https://openaccess.city.ac.uk/id/eprint/19317/"}],"basisType":"clinical_adaptation","adaptationNote":"Inspiracją jest praca nad cechami znaczeniowymi. Własne zdanie i obraz to adaptacja twórcza, a nie odtworzenie protokołu SFA. Obrazownik nie był badany jako terapia.","validationStatus":"unvalidated_polish_app_adaptation","contentOrigin":"Autorskie polskie instrukcje Obrazownika.","licenseStatus":"Prywatne materiały autorskie; licencja wydania do ustalenia.","slots":[{"id":"use","label":"Zastosowanie lub sytuacja"},{"id":"touch","label":"Dotyk lub temperatura"},{"id":"sound","label":"Dźwięk"},{"id":"relation","label":"Relacja z człowiekiem"}]}
+  {
+    "id": "M1",
+    "version": 1,
+    "language": "pl",
+    "title": "Cechy, relacje i obraz",
+    "sourceRefs": [
+      "R02",
+      "R03",
+      "R21"
+    ],
+    "sourceLinks": [
+      {
+        "label": "Przegląd SFA — Efstratiadou i in. (2018)",
+        "url": "https://openaccess.city.ac.uk/id/eprint/19317/"
+      }
+    ],
+    "basisType": "clinical_adaptation",
+    "adaptationNote": "Inspiracją jest praca nad cechami znaczeniowymi. Własne zdanie i obraz to adaptacja twórcza, a nie odtworzenie protokołu SFA. Obrazownik nie był badany jako terapia.",
+    "validationStatus": "unvalidated_polish_app_adaptation",
+    "contentOrigin": "Autorskie polskie instrukcje Obrazownika.",
+    "licenseStatus": "Prywatne materiały autorskie; licencja wydania do ustalenia.",
+    "slots": [
+      {
+        "id": "use",
+        "label": "Zastosowanie lub sytuacja"
+      },
+      {
+        "id": "touch",
+        "label": "Dotyk lub temperatura"
+      },
+      {
+        "id": "sound",
+        "label": "Dźwięk"
+      },
+      {
+        "id": "relation",
+        "label": "Relacja z człowiekiem"
+      }
+    ]
+  },
+  {
+    "id": "M4",
+    "version": 1,
+    "language": "pl",
+    "title": "Czasownik otwiera scenę",
+    "sourceRefs": [
+      "R04",
+      "R05"
+    ],
+    "sourceLinks": [
+      {
+        "label": "VNeST — Edmonds i in. (2014)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/24687125/"
+      }
+    ],
+    "basisType": "clinical_adaptation",
+    "adaptationNote": "Inspiracją jest VNeST: łączenie działania, uczestników i okoliczności. Własne polskie sceny i dopuszczenie metafory są adaptacją twórczą, nie protokołem terapii.",
+    "validationStatus": "unvalidated_polish_app_adaptation",
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "slots": []
+  },
+  {
+    "id": "E2",
+    "version": 1,
+    "language": "pl",
+    "title": "Most między pojęciami",
+    "sourceRefs": [],
+    "sourceLinks": [],
+    "basisType": "creative_hypothesis",
+    "adaptationNote": "Autorskie ćwiczenie łączenia dwóch pojęć. Nie ustalono skuteczności klinicznej tej wersji. Zrozumiałość i własny głos ocenia autor.",
+    "validationStatus": "unvalidated_polish_app_adaptation",
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "slots": [
+      {
+        "id": "relation",
+        "label": "Co je łączy?"
+      },
+      {
+        "id": "scene",
+        "label": "W jakiej sytuacji mogą się spotkać?"
+      }
+    ]
+  },
+  {
+    "id": "M2",
+    "version": 1,
+    "language": "pl",
+    "title": "Jedno słowo, kilka dróg",
+    "sourceRefs": [
+      "R07"
+    ],
+    "sourceLinks": [
+      {
+        "label": "Elastyczne wydobywanie znaczeń — Stampacchia i in.",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7614451/"
+      }
+    ],
+    "basisType": "experimental_inspiration",
+    "adaptationNote": "Inspiracją jest badanie elastycznego wydobywania znaczeń. Otwarte polskie pisanie różni się od zadań badania; nie stosujemy wyniku odległości skojarzeń.",
+    "validationStatus": "unvalidated_polish_app_adaptation",
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "slots": [
+      {
+        "id": "first",
+        "label": "Pierwsze własne skojarzenie"
+      },
+      {
+        "id": "path",
+        "label": "Inna droga: wspomnienie, czynność, dźwięk lub relacja"
+      },
+      {
+        "id": "link",
+        "label": "Moje wyjaśnienie związku"
+      }
+    ]
+  },
+  {
+    "id": "M3",
+    "version": 1,
+    "language": "pl",
+    "title": "Pojęcie w sytuacji",
+    "sourceRefs": [
+      "R06"
+    ],
+    "sourceLinks": [
+      {
+        "label": "AbSANT — przegląd",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10441547/"
+      }
+    ],
+    "basisType": "clinical_adaptation",
+    "adaptationNote": "Inspiracją jest AbSANT. Przejście od pojęcia do konkretnej sceny nie odtwarza tej terapii. Możesz wybrać neutralny temat; trudniejszy materiał nie oznacza lepszego ćwiczenia.",
+    "validationStatus": "unvalidated_polish_app_adaptation",
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "slots": [
+      {
+        "id": "concept",
+        "label": "Wybrane pojęcie"
+      },
+      {
+        "id": "sign",
+        "label": "Co w tej sytuacji na nie wskazuje?"
+      },
+      {
+        "id": "move",
+        "label": "Inna sytuacja — tylko jeśli chcesz"
+      }
+    ]
+  },
+  {
+    "id": "M5",
+    "version": 1,
+    "language": "pl",
+    "title": "Wspólna cecha i metafora",
+    "sourceRefs": [
+      "R11",
+      "R12"
+    ],
+    "sourceLinks": [
+      {
+        "label": "Przetwarzanie języka figuratywnego — Cieślicka i in. (2011)",
+        "url": "https://www.termedia.pl/Artykul-oryginalny-Zaburzenia-przetwarzania-jezyka-figuratywnego-w-afazji,46,17088,1,0.html"
+      },
+      {
+        "label": "Polskie i angielskie normy metafor — Jankowiak (2020)",
+        "url": "https://link.springer.com/article/10.1007/s10936-020-09695-7"
+      }
+    ],
+    "basisType": "experimental_inspiration",
+    "adaptationNote": "Polskie badania przetwarzania i normowania metafor inspirują dobór materiału. Nie dowodzą skuteczności treningu tworzenia metafor. Porównanie z „jak” jest równie dopuszczalne jak metafora.",
+    "validationStatus": "unvalidated_polish_app_adaptation",
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "slots": [
+      {
+        "id": "shared",
+        "label": "Wspólna cecha lub działanie"
+      },
+      {
+        "id": "comparison",
+        "label": "Porównanie z „jak”"
+      },
+      {
+        "id": "meaning",
+        "label": "Moje wyjaśnienie obrazu"
+      }
+    ]
+  },
+  {
+    "id": "M6",
+    "version": 1,
+    "language": "pl",
+    "title": "Zmysł i perspektywa",
+    "sourceRefs": [],
+    "sourceLinks": [],
+    "basisType": "creative_hypothesis",
+    "adaptationNote": "Eksperyment twórczy zmiany zmysłu lub punktu widzenia. W dodatku nie ustalono bezpośredniego klinicznego potwierdzenia takiego polskiego treningu. Można oprzeć opis na słowach i relacjach bez wizualizacji.",
+    "validationStatus": "unvalidated_polish_app_adaptation",
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "slots": [
+      {
+        "id": "channel",
+        "label": "Wybrany zmysł lub punkt widzenia"
+      },
+      {
+        "id": "detail",
+        "label": "Jeden zauważony szczegół"
+      }
+    ]
+  },
+  {
+    "id": "M7",
+    "version": 1,
+    "language": "pl",
+    "title": "Wybierz, usuń, dopisz",
+    "sourceRefs": [
+      "R10"
+    ],
+    "sourceLinks": [
+      {
+        "label": "MakeWrite — Neate i in. (2019)",
+        "url": "https://openaccess.city.ac.uk/id/eprint/21272/"
+      }
+    ],
+    "basisType": "experimental_inspiration",
+    "adaptationNote": "Inspiracja projektowa: MakeWrite. Wybieranie i przekształcanie słów pozostaje autorskim rusztowaniem, bez dowodu rehabilitacji. Możesz dopisać dowolne własne słowa i odrzucić materiał.",
+    "validationStatus": "unvalidated_polish_app_adaptation",
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "slots": [
+      {
+        "id": "ownership",
+        "label": "Co chcę zachować po swojemu?"
+      }
+    ]
+  },
+  {
+    "id": "M8",
+    "version": 1,
+    "language": "pl",
+    "title": "Nowe samodzielne pisanie",
+    "sourceRefs": [
+      "R01",
+      "R17"
+    ],
+    "sourceLinks": [
+      {
+        "label": "Big CACTUS — Palmer i in. (2019)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/31397288/"
+      },
+      {
+        "label": "Przegląd pracy nad wypowiedzią — Dipper i in.",
+        "url": "https://doi.org/10.1080/02687038.2020.1765305"
+      }
+    ],
+    "basisType": "creative_hypothesis",
+    "adaptationNote": "Oddzielna obserwacja pisania poza treningiem. Nowy temat i brak pomocy w aplikacji nie dowodzą skuteczności klinicznej ani braku pomocy poza aplikacją. Samooceny nie są standaryzowanym testem.",
+    "validationStatus": "unvalidated_polish_app_adaptation",
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "slots": []
+  }
 ]

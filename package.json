@@ -11,9 +11,12 @@
     "build": "tsc --noEmit && vite build && tsc -p tsconfig.server.json",
     "start": "node dist/server/server/index.js",
     "doctor": "tsx scripts/doctor.ts",
-    "check": "tsc --noEmit && eslint . && vitest run && node scripts/check-context.mjs",
+    "check": "tsc --noEmit && eslint . && vitest run && tsx scripts/validate-content.ts && node scripts/check-context.mjs && node scripts/repo-check.mjs",
     "test": "vitest run",
-    "test:e2e": "node scripts/e2e.mjs"
+    "test:e2e": "node scripts/e2e.mjs",
+    "restore": "tsx scripts/restore.ts",
+    "repo:check": "node scripts/repo-check.mjs",
+    "validate:content": "tsx scripts/validate-content.ts"
   },
   "dependencies": {
     "@fastify/cookie": "11.1.5",

@@ -8,6 +8,8 @@ export const CardSchema = z
     partition: z.enum(["training", "reserve"]),
     prompt: PromptSchema,
     constraints: z.array(z.string().max(500)).max(10),
+    sourceText:z.string().max(50000).nullable().default(null),
+    slots:z.array(z.object({id:z.string().regex(/^[a-z0-9_-]+$/),label:z.string().max(200)})).max(12).optional(),
     methodId: z.string().min(1).max(80), methodVersion: z.number().int().positive().default(1),
     language: z.literal('pl'), responseMode: z.enum(['open_writing','closed_naming','comprehension']),
     itemFamilyId: z.string().min(1).max(150), setRole: SetRoleSchema,
@@ -16,13 +18,7 @@ export const CardSchema = z
     easierInstruction: z.string().min(1).max(4000), optionalConstraint: z.string().max(500).nullable().default(null),
   })
   .strict();
-export const ContentCardSchema = CardSchema.extend({
-  hints: z.tuple([
-    z.string().min(1).max(4000),
-    z.string().min(1).max(4000),
-    z.string().min(1).max(4000),
-  ]),
-});
+export const ContentCardSchema = CardSchema.extend({ hints:z.array(z.string().min(1).max(4000)).max(3) }).superRefine((card,ctx)=>{if(card.setRole==='independent_writing'&&card.hints.length)ctx.addIssue({code:'custom',message:'Chroniona rezerwa nie zawiera pomocy'});if(card.setRole!=='independent_writing'&&card.hints.length!==3)ctx.addIssue({code:'custom',message:'Karta treningowa wymaga 3 poziomów pomocy'});});
 export type Card = z.infer<typeof CardSchema>;
 export type ContentCard = z.infer<typeof ContentCardSchema>;
 export function publicCard(card: ContentCard): Card {

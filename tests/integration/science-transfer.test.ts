@@ -252,8 +252,8 @@ test("ID collision remaps connected session, attempts, versions, document and re
   altered.reviews.push({
     id: randomUUID(),
     sourceAttemptId: attempt.id,
-    offsetDays: 2,
-    dueLocalDate: "2026-11-04",
+    offsetDays: 42,
+    dueLocalDate: "2026-12-14",
     timezone: "Europe/Warsaw",
     state: "due",
     attemptId: attempt.id,
@@ -274,7 +274,7 @@ test("ID collision remaps connected session, attempts, versions, document and re
   expect(
     merged.assistanceEvents.find((e) => e.attemptId === imported.id)?.status,
   ).toBe("prepared");
-  expect(merged.reviews[0]).toMatchObject({
+  expect(merged.reviews.find(r=>r.offsetDays===42)).toMatchObject({
     sourceAttemptId: imported.id,
     attemptId: imported.id,
   });

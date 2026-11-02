@@ -2,13 +2,14 @@ import { createApp } from "./app.js";
 import { HOST, PORT } from "../shared/config.js";
 let app: Awaited<ReturnType<typeof createApp>> | undefined;
 try {
-  app = await createApp();
+  const port=process.env.OBRAZOWNIK_PORT?Number(process.env.OBRAZOWNIK_PORT):PORT;
+  app = await createApp({localPort:port});
   for (const signal of ["SIGINT", "SIGTERM"] as const)
     process.once(signal, () => {
       void app?.close();
     });
-  await app.listen({ host: HOST, port: PORT });
-  console.log(`Obrazownik działa lokalnie: http://${HOST}:${PORT}`);
+  await app.listen({ host: HOST, port });
+  console.log(`Obrazownik działa lokalnie: http://${HOST}:${port}`);
 } catch (error) {
   await app?.close();
   console.error(

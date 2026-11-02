@@ -182,7 +182,7 @@ test("cards hide examples; shown, help and finish cross the real API boundary", 
     "x-csrf-token": boot.json().csrfToken,
   };
   const pack = await app.inject({ url: "/api/cards", headers });
-  expect(pack.json().cards).toHaveLength(3);
+  expect(pack.json().cards.length).toBeGreaterThanOrEqual(24);
   expect(pack.body).not.toContain("hints");
   const attempt = (
     await app.inject({

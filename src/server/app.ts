@@ -7,25 +7,30 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { HOST, PORT, VERSION } from "../shared/config.js";
 import { projectRoot, resolveDataDir } from "./paths.js";
+import { NotebookQuerySchema,DocumentListQuerySchema,CreateDocumentSchema,SaveDocumentSchema,DocumentVersionRequestSchema } from "./notebook.js";
 import { Storage } from "./storage.js";
 import { AppError } from "./errors.js";
 import { z, ZodError } from "zod";
 import {
   ActionSchema,
+  FamilySchema,
+  ScaffoldingSchema,
   CreateAttemptSchema,
   HintRequestSchema,
   RatingsSchema,
   SaveAttemptSchema,
   SettingsSchema,
 } from "../shared/schemas.js";
-import { cards, getCard } from "./content.js";
+import { cards, getCard, allCards } from "./content.js";
 
 export interface AppOptions {
   dataDir?: string;
+  localPort?:number;
   serveClient?: boolean;
   clientRoot?: string;
 }
 export async function createApp(options: AppOptions = {}) {
+  const localPort=z.number().int().min(1024).max(65535).parse(options.localPort??PORT);
   const dataDir = resolveDataDir(
     options.dataDir ?? process.env.OBRAZOWNIK_DATA_DIR,
   );
@@ -91,8 +96,8 @@ export async function createApp(options: AppOptions = {}) {
   const storage = await Storage.open(dataDir);
   app.addHook("onClose", async () => storage.close());
   const sessions = new Map<string, { token: string; expires: number }>();
-  const origins = new Set([`http://${HOST}:${PORT}`, "http://127.0.0.1:5173"]);
-  const hosts = new Set([`${HOST}:${PORT}`, "127.0.0.1:5173"]);
+  const origins = new Set([`http://${HOST}:${localPort}`, "http://127.0.0.1:5173"]);
+  const hosts = new Set([`${HOST}:${localPort}`, "127.0.0.1:5173"]);
   app.addHook("onRequest", async (req, reply) => {
     reply.header("X-Content-Type-Options", "nosniff");
     reply.header("Referrer-Policy", "no-referrer");
@@ -163,11 +168,11 @@ export async function createApp(options: AppOptions = {}) {
       dataDir,
       environmentId: storage.environmentId,
       settings: storage.settings(),
-      drafts: storage.listAttempts(100, 0, "draft"),
+      drafts: storage.listAttempts(3, 0, "draft"),
     };
   });
   const idOf = (params: unknown) => z.object({ id: z.uuid() }).parse(params).id;
-  app.get("/api/cards", async () => { storage.previewCards(cards); return { cards }; });
+  app.get('/api/cards',async req=>{const query=z.object({family:FamilySchema.optional()}).strict().parse(req.query),enabled=storage.settings().optionalMethods;const visible=cards.filter(c=>(!query.family||c.family===query.family)&&(!['M2','M3','M5'].includes(c.methodId)||enabled.includes(c.methodId as 'M2'|'M3'|'M5')));storage.previewCards(visible);return{cards:visible};});
   app.patch("/api/settings", async (req) =>
     storage.updateSettings(SettingsSchema.parse(req.body)),
   );
@@ -180,7 +185,8 @@ export async function createApp(options: AppOptions = {}) {
         "card_not_found",
         "Nie znaleziono karty ćwiczenia.",
       );
-    return storage.createAttempt(card, input.clientRequestId);
+    if(['M2','M3','M5'].includes(card.methodId)&&!storage.settings().optionalMethods.includes(card.methodId as 'M2'|'M3'|'M5'))throw new AppError(409,'method_disabled','Włącz ten opcjonalny wariant w ustawieniach.');
+    return storage.createAttempt(card, input.clientRequestId,input);
   });
   app.get("/api/attempts", async (req) => {
     const query = z
@@ -209,14 +215,16 @@ export async function createApp(options: AppOptions = {}) {
       input = HintRequestSchema.parse(req.body);
     const replay=storage.replayMutation(`hint:${id}`,input.clientMutationId,input);if(replay!==undefined)return replay;
     const attempt = storage.getAttempt(id),
-      card = getCard(attempt.cardId);
-    if (!card || card.version !== attempt.cardVersion)
+      card = getCard(attempt.cardId,attempt.cardVersion);
+    const archived=!card?storage.lookupCard(attempt.cardId,attempt.cardVersion):undefined;
+    if ((!card&&!archived) || (card&&card.version !== attempt.cardVersion))
       throw new AppError(
         409,
         "card_version",
         "Ta wersja karty nie jest już dostępna. Możesz nadal zapisać tekst.",
       );
-    return storage.prepareHint(id, input, card.hints[input.level - 1]);
+    if(!card&&input.level===3)throw new AppError(409,'archive_example_unavailable','Ta archiwalna karta nie udostępnia przykładu. Twój tekst pozostaje zapisany.');
+    return storage.prepareHint(id, input, !card?['Który szczegół chcesz zachować?','Zostań przy jednym zdarzeniu i jednym własnym zdaniu.'][input.level-1]:card.setRole==='independent_writing' ? ['Który szczegół tej sytuacji chcesz zachować?', 'Możesz zostać przy jednym zdarzeniu i jednym własnym zdaniu.', 'Zostań przy swoich słowach — ta wersja nie podaje gotowego rozwiązania.'][input.level-1] : card.hints[input.level - 1]);
   });
   app.post("/api/attempts/:id/hints/:eventId/delivered", async (req) => {
     const params = z
@@ -240,7 +248,7 @@ export async function createApp(options: AppOptions = {}) {
     storage.recover(
       idOf(req.params),
       z
-        .object({ text: z.string().max(50_000), clientMutationId: z.uuid() })
+        .object({ text: z.string().max(50_000), clientMutationId: z.uuid(),scaffolding:ScaffoldingSchema.optional() })
         .strict()
         .parse(req.body),
     ),
@@ -249,7 +257,30 @@ export async function createApp(options: AppOptions = {}) {
   app.post('/api/backup', async () => ({filename:await storage.backup()}));
   app.get('/api/export', async (_req,reply) => {reply.header('Content-Disposition','attachment; filename="obrazownik.json"');return storage.exportData();});
   app.post('/api/import/preview',{bodyLimit:25*1024*1024},async req=>storage.previewImport(req.body));
-  app.post('/api/import/confirm',{bodyLimit:25*1024*1024},async req=>{const input=z.object({bundle:z.unknown(),digest:z.string().regex(/^[a-f0-9]{64}$/)}).strict().parse(req.body);return storage.importData(input.bundle,input.digest);});
+  app.post('/api/import/confirm',{bodyLimit:25*1024*1024+4096},async req=>{const input=z.object({bundle:z.unknown(),digest:z.string().regex(/^[a-f0-9]{64}$/)}).strict().parse(req.body);return storage.importData(input.bundle,input.digest);});
+
+  app.get('/api/independent/status',async()=>storage.independentStatus(allCards));
+  app.post('/api/independent',async req=>{const input=z.object({clientRequestId:z.uuid(),role:z.enum(['independent_writing','near_transfer']).default('independent_writing')}).strict().parse(req.body);return storage.createIndependent(allCards,input.clientRequestId,input.role);});
+  app.post('/api/attempts/:id/assisted',async req=>storage.assistedCopy(idOf(req.params),ActionSchema.parse(req.body)));
+
+  app.get('/api/sessions/active',async()=>({session:storage.activeSession()}));
+  app.post('/api/sessions',async req=>{const input=z.object({clientRequestId:z.uuid(),energy:z.enum(['low','medium','high']).optional(),family:FamilySchema.optional()}).strict().parse(req.body);const enabled=storage.settings().optionalMethods;return storage.createSession(cards.filter(c=>!['M2','M3','M5'].includes(c.methodId)||enabled.includes(c.methodId as 'M2'|'M3'|'M5')),input);});
+  app.get('/api/sessions/:id',async req=>storage.getSession(idOf(req.params)));
+  app.patch('/api/sessions/:id',async req=>storage.endSession(idOf(req.params),z.object({clientMutationId:z.uuid(),status:z.enum(['completed','abandoned'])}).strict().parse(req.body)));
+  app.get('/api/reviews',async()=>({reviews:storage.reviews()}));
+  app.get('/api/backups',async()=>({backups:storage.backupList()}));
+
+  app.get('/api/notebook',async req=>storage.notebookAttempts(NotebookQuerySchema.parse(req.query)));
+  app.get('/api/documents',async req=>storage.listDocuments(DocumentListQuerySchema.parse(req.query)));
+  app.post('/api/documents',async req=>storage.createDocument(CreateDocumentSchema.parse(req.body)));
+  app.get('/api/documents/:id',async req=>storage.documentDetail(idOf(req.params)));
+  app.patch('/api/documents/:id',async req=>storage.saveDocument(idOf(req.params),SaveDocumentSchema.parse(req.body)));
+  app.post('/api/documents/:id/versions',async req=>storage.documentVersion(idOf(req.params),DocumentVersionRequestSchema.parse(req.body)));
+  app.get('/api/documents/:id/markdown',async(req,reply)=>{reply.type('text/markdown; charset=utf-8').header('Content-Disposition','attachment; filename="moj-tekst.md"');return storage.documentMarkdown(idOf(req.params));});
+  app.get('/api/attempts/:id/markdown',async(req,reply)=>{reply.type('text/markdown; charset=utf-8').header('Content-Disposition','attachment; filename="cwiczenie.md"');return storage.attemptMarkdown(idOf(req.params));});
+  app.post('/api/documents/:id/transform',async req=>{const input=z.object({clientRequestId:z.uuid()}).strict().parse(req.body);return storage.transformDocument(idOf(req.params),input.clientRequestId);});
+  app.get('/api/observations',async req=>{const query=DocumentListQuerySchema.omit({query:true}).parse(req.query);return storage.observations(query.limit,query.offset);});
+  app.post('/api/attempts/:id/revise',async req=>{const input=z.object({clientRequestId:z.uuid()}).strict().parse(req.body);return storage.reviseAttempt(idOf(req.params),input.clientRequestId);});
   const clientRoot =
     options.clientRoot ?? path.join(projectRoot, "dist/client");
   if (

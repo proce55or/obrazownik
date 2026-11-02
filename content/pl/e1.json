@@ -1,6 +1,108 @@
 [
   {
     "id": "property-stone-01",
+    "version": 2,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Ciepło w dłoni",
+      "stimulus": "Kamień",
+      "instruction": "Pomyśl o kamieniu trzymanym w dłoni. Zauważ do trzech jego cech: dotyk, ciężar, temperaturę. Wybierz jedną i zbuduj z niej krótki obraz w jednym lub dwóch zdaniach."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co zmienia się, kiedy trzymasz kamień w dłoni?",
+      "Wybierz jeden szczegół: temperaturę, ciężar albo ślad pozostawiony na skórze. Zacznij od jego opisania.",
+      "Kamień powoli oddaje chłód mojej dłoni. Po chwili nie wiem już, po której stronie zaczyna się ciepło."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "property-stone",
+    "setRole": "training",
+    "difficultyTags": [
+      "konkret",
+      "jedno-zdanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Zapisz jedną cechę tego przedmiotu. Potem, jeśli chcesz, ułóż jedno własne zdanie.",
+    "optionalConstraint": "Jeśli chcesz, pokaż cechę przez działanie bez jej nazywania."
+  },
+  {
+    "id": "property-glove-01",
+    "version": 2,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Pamięć materiału",
+      "stimulus": "Zużyta rękawiczka",
+      "instruction": "Pomyśl o znoszonej rękawiczce. Zapisz do trzech obserwacji: fakturę, kształt lub ślad używania. Wybierz jedną i zamień ją w krótki obraz w jednym lub dwóch zdaniach."
+    },
+    "constraints": [
+      "Możesz zacząć od jednej cechy i jednego zdania."
+    ],
+    "hints": [
+      "W którym miejscu materiał najbardziej się zmienił?",
+      "Przyjrzyj się szwowi, przetartemu palcowi albo zagięciu. Opisz jeden ślad ruchu dłoni.",
+      "Na kciuku została gładka plama. Materiał wytarł się od trzymania rzeczy, których już nie pamiętam."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "property-glove",
+    "setRole": "training",
+    "difficultyTags": [
+      "konkret",
+      "jedno-zdanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Zapisz jedną cechę tego przedmiotu. Potem, jeśli chcesz, ułóż jedno własne zdanie.",
+    "optionalConstraint": "Jeśli chcesz, pokaż cechę przez działanie bez jej nazywania."
+  },
+  {
+    "id": "property-cup-01",
+    "version": 2,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Ślad po herbacie",
+      "stimulus": "Pusta filiżanka",
+      "instruction": "Pomyśl o filiżance po wypitej herbacie. Zauważ do trzech szczegółów: zapach, temperaturę, ślad na dnie. Wybierz jeden i zbuduj krótki obraz w jednym lub dwóch zdaniach."
+    },
+    "constraints": [
+      "Jedna obserwacja jest dobrym początkiem."
+    ],
+    "hints": [
+      "Co zostaje w filiżance, kiedy nie ma w niej już napoju?",
+      "Wybierz zapach, chłód porcelany albo kształt osadu. Zapisz jeden konkretny szczegół.",
+      "Na dnie filiżanki wysechł cienki brązowy krąg. Herbata zostawiła po sobie mały brzeg."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "property-cup",
+    "setRole": "training",
+    "difficultyTags": [
+      "konkret",
+      "jedno-zdanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Zapisz jedną cechę tego przedmiotu. Potem, jeśli chcesz, ułóż jedno własne zdanie.",
+    "optionalConstraint": "Jeśli chcesz, pokaż cechę przez działanie bez jej nazywania."
+  },
+  {
+    "id": "property-stone-01",
     "version": 1,
     "family": "property",
     "partition": "training",

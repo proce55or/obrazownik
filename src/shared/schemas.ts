@@ -43,12 +43,13 @@ export const SettingsSchema = z
         return false;
       }
     }),
-    fontSize: z.enum(['normal','large']),
+    fontSize: z.union([z.enum(['normal','large']),z.number().int().min(16).max(26)]),
     optionalMethods: z.array(z.enum(['M2','M3','M5'])).default([]),
     repeatEnabled: z.boolean(),
-    repeatOffsetsDays: z.array(z.number().int().min(1).max(365)).max(6),
+    repeatOffsetsDays: z.array(z.number().int().min(1).max(365)).min(1).max(6).refine(days=>new Set(days).size===days.length),
   })
   .strict();
+export const ScaffoldingSchema=z.record(z.string().max(80),z.string().max(4000)).refine(fields=>Object.keys(fields).length<=12,{message:'Maksymalnie 12 pól pomocniczych.'});
 export const AttemptSchema = z
   .object({
     id: z.uuid(),
@@ -77,8 +78,10 @@ export const AttemptSchema = z
     setRole: SetRoleSchema.default('training'),
     responseMode: z.enum(['open_writing','closed_naming','comprehension']).default('open_writing'),
     noveltyStatus: z.enum(['new_confirmed','seen','unknown']).default('unknown'),
-    scaffolding: z.record(z.string().max(80), z.string().max(4000)).default({}),
+    scaffolding: ScaffoldingSchema.default({}),
     sourceText: z.string().max(50000).nullable().default(null),
+    sourceDocumentId:z.uuid().nullable().default(null),
+    scaffoldSlots:z.array(z.object({id:z.string().regex(/^[a-z0-9_-]+$/),label:z.string().max(200)})).max(12).default([]),
   })
   .strict();
 export const VersionSchema = z
@@ -90,7 +93,7 @@ export const VersionSchema = z
     reason: z.enum(["pre_hint", "final", "manual", "recovery"]),
     assistanceLevelAtCapture: z.number().int().min(0).max(3),
     assistanceStateAtCapture: AssistanceStateSchema.default('unknown'),
-    scaffolding: z.record(z.string().max(80),z.string().max(4000)).default({}),
+    scaffolding: ScaffoldingSchema.default({}),
   })
   .strict();
 export const AssistanceSchema = z
@@ -98,7 +101,7 @@ export const AssistanceSchema = z
     id: z.uuid(),
     attemptId: z.uuid(),
     level: z.number().int().min(1).max(3),
-    kind: z.enum(["question", "direction", "example"]),
+    kind: z.enum(["question", "direction", "example", "word_bank"]),
     revealedContentSnapshot: z.string().max(4000),
     requestedAt: z.iso.datetime(),
     deliveredAt: z.iso.datetime().nullable(),
@@ -106,14 +109,14 @@ export const AssistanceSchema = z
   })
   .strict();
 export const CreateAttemptSchema = z
-  .object({ cardId: z.string().min(1).max(100), clientRequestId: z.uuid() })
+  .object({ cardId: z.string().min(1).max(100), clientRequestId: z.uuid(),variant:z.enum(['standard','easy']).default('standard'),useConstraint:z.boolean().default(false) })
   .strict();
 export const SaveAttemptSchema = z
   .object({
     text: z.string().max(50_000),
     expectedRevision: z.number().int().nonnegative(),
     clientMutationId: z.uuid(),
-    scaffolding: z.record(z.string().max(80), z.string().max(4000)).optional(),
+    scaffolding: ScaffoldingSchema.optional(),
   })
   .strict();
 export const ActionSchema = z

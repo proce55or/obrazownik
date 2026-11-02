@@ -1,0 +1,953 @@
+[
+  {
+    "id": "m1-extra-01",
+    "version": 1,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Pod zimnym zamkiem",
+      "stimulus": "Klucz",
+      "instruction": "Zauważ zastosowanie klucza, ślad dłoni lub jego dźwięk. Wybierz jedną cechę i opisz ją przez małe zdarzenie."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-01",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": null,
+    "hints": [
+      "Co klucz robi lub zmienia, gdy dotyka zamka?",
+      "Wybierz dotyk, metaliczny dźwięk albo sytuację powrotu.",
+      "Klucz ogrzany dłonią zatrzymał się pod zimnym zamkiem."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m1-extra-02",
+    "version": 1,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Ślad mieszania",
+      "stimulus": "Drewniana łyżka",
+      "instruction": "Przyjrzyj się zużytej drewnianej łyżce. Co mówią o niej brzeg, zapach albo ruch? Zapisz krótki obraz."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-02",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": null,
+    "hints": [
+      "Które miejsce jest gładsze od pozostałych?",
+      "Możesz opisać brzeg, ciężar lub ruch w pustym garnku.",
+      "Łyżka obiega pusty garnek i zbiera z dna ostatni zapach."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m1-extra-03",
+    "version": 1,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Małe połączenie",
+      "stimulus": "Guzik",
+      "instruction": "Zauważ, jak guzik łączy materiał. Opisz jego dotyk, napięcie nitki albo mały ruch."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-03",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": null,
+    "hints": [
+      "Co trzyma się razem dzięki temu przedmiotowi?",
+      "Wybierz nitkę, dziurkę albo krawędź materiału.",
+      "Guzik pociągnął dwie strony płaszcza ku sobie."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m1-extra-04",
+    "version": 1,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Zagięcie papieru",
+      "stimulus": "Koperta",
+      "instruction": "Pomyśl o pustej kopercie. Wybierz dźwięk papieru, fakturę lub zamkniętą przestrzeń i zbuduj obraz."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-04",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": null,
+    "hints": [
+      "Co słychać, kiedy rozkładasz zagięcie?",
+      "Możesz zostać przy rogu, fałdzie lub pustym wnętrzu.",
+      "Róg koperty zaszeleścił, zanim wydostało się z niej powietrze."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m1-extra-05",
+    "version": 1,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Ślad włosia",
+      "stimulus": "Szczotka",
+      "instruction": "Wybierz jedną właściwość szczotki: sprężystość, opór lub ślad ruchu. Pokaż ją w krótkiej scenie."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-05",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": null,
+    "hints": [
+      "Co zmienia kierunek, gdy przesuniesz dłonią po włosiu?",
+      "Wybierz pojedynczy ruch albo opór włosia.",
+      "Włosie ugięło się pod palcem i natychmiast wróciło na miejsce."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m1-extra-06",
+    "version": 1,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Przez szkło",
+      "stimulus": "Słoik",
+      "instruction": "Przyjrzyj się pustemu słoikowi. Opisz ciężar, przejrzystość albo dźwięk szkła w relacji z otoczeniem."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-06",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": null,
+    "hints": [
+      "Co zmienia się, kiedy podnosisz go ze stołu?",
+      "Zacznij od odbicia światła, dna albo krótkiego stuknięcia.",
+      "Dno słoika stuknęło w blat i zostawiło w kuchni krótki dźwięk."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m1-extra-07",
+    "version": 1,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Między włóknami",
+      "stimulus": "Szalik",
+      "instruction": "Zauważ, jak układa się szalik. Wybierz miękkość, zagięcie lub ciepło i stwórz obraz."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-07",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": null,
+    "hints": [
+      "Gdzie materiał zatrzymuje ciepło?",
+      "Możesz pokazać cechę przez złożenie lub rozwinięcie.",
+      "W zagięciu szalika zostało jeszcze ciepło karku."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m1-extra-08",
+    "version": 1,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Kruchy ślad",
+      "stimulus": "Kreda",
+      "instruction": "Pomyśl o kawałku kredy. Wybierz kruchość, pył albo tarcie i zapisz jedno zdarzenie."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-08",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": null,
+    "hints": [
+      "Co zostaje po przesunięciu kredy?",
+      "Wybierz ślad na palcu albo odgłos tarcia.",
+      "Kreda skróciła się o biały pył na moim kciuku."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m1-extra-09",
+    "version": 1,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Mały ruch czasu",
+      "stimulus": "Zegar kuchenny",
+      "instruction": "Przyjrzyj się zegarowi bez odmierzania ćwiczenia. Wybierz ruch wskazówki, dźwięk lub relację ze ścianą."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-09",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": null,
+    "hints": [
+      "Który szczegół powraca, choć wszystko wydaje się stać?",
+      "Zacznij od jednego tyknięcia lub ruchu cienia.",
+      "Wskazówka przeszła nad cyfrą, a cień został odrobinę z tyłu."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m4-verb-01",
+    "version": 1,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Nieść — mała scena",
+      "stimulus": "nieść",
+      "instruction": "Zacznij od czasownika „nieść”. Wybierz lub wpisz uczestników i okoliczność. Możesz stworzyć drugi wariant z innym uczestnikiem, a potem zapisać własne zdanie. Nie trzeba wypełniać wszystkich pól."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-01",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": "Jeśli chcesz, napisz drugi wariant z innym uczestnikiem.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? co? dokąd? Zostań przy jednej sytuacji.",
+      "Wiatr niesie zapach chleba przez podwórze."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Co?"
+      },
+      {
+        "id": "where",
+        "label": "Dokąd?"
+      },
+      {
+        "id": "other",
+        "label": "Drugi wariant z innym uczestnikiem — opcjonalnie"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-02",
+    "version": 1,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Szukać — mała scena",
+      "stimulus": "szukać",
+      "instruction": "Zacznij od czasownika „szukać”. Wybierz lub wpisz uczestników i okoliczność. Możesz stworzyć drugi wariant z innym uczestnikiem, a potem zapisać własne zdanie. Nie trzeba wypełniać wszystkich pól."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-02",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": "Jeśli chcesz, napisz drugi wariant z innym uczestnikiem.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? czego? gdzie? Zostań przy jednej sytuacji.",
+      "Dziecko szuka klucza w kieszeni płaszcza."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Czego?"
+      },
+      {
+        "id": "where",
+        "label": "Gdzie?"
+      },
+      {
+        "id": "other",
+        "label": "Drugi wariant z innym uczestnikiem — opcjonalnie"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-03",
+    "version": 1,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Przyglądać się — mała scena",
+      "stimulus": "przyglądać się",
+      "instruction": "Zacznij od czasownika „przyglądać się”. Wybierz lub wpisz uczestników i okoliczność. Możesz stworzyć drugi wariant z innym uczestnikiem, a potem zapisać własne zdanie. Nie trzeba wypełniać wszystkich pól."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-03",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": "Jeśli chcesz, napisz drugi wariant z innym uczestnikiem.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? czemu? skąd lub w jakiej sytuacji? Zostań przy jednej sytuacji.",
+      "Kot przygląda się oknu z oparcia fotela."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Komu lub czemu?"
+      },
+      {
+        "id": "where",
+        "label": "Skąd lub w jakiej sytuacji?"
+      },
+      {
+        "id": "other",
+        "label": "Drugi wariant z innym uczestnikiem — opcjonalnie"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-04",
+    "version": 1,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Opiekować się — mała scena",
+      "stimulus": "opiekować się",
+      "instruction": "Zacznij od czasownika „opiekować się”. Wybierz lub wpisz uczestników i okoliczność. Możesz stworzyć drugi wariant z innym uczestnikiem, a potem zapisać własne zdanie. Nie trzeba wypełniać wszystkich pól."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-04",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": "Jeśli chcesz, napisz drugi wariant z innym uczestnikiem.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? kim lub czym? w jakiej sytuacji? Zostań przy jednej sytuacji.",
+      "Sąsiadka opiekuje się ogrodem podczas suchego lata."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Kim lub czym?"
+      },
+      {
+        "id": "where",
+        "label": "W jakiej sytuacji?"
+      },
+      {
+        "id": "other",
+        "label": "Drugi wariant z innym uczestnikiem — opcjonalnie"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-05",
+    "version": 1,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Tęsknić za — mała scena",
+      "stimulus": "tęsknić za",
+      "instruction": "Zacznij od czasownika „tęsknić za”. Wybierz lub wpisz uczestników i okoliczność. Możesz stworzyć drugi wariant z innym uczestnikiem, a potem zapisać własne zdanie. Nie trzeba wypełniać wszystkich pól."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-05",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": "Jeśli chcesz, napisz drugi wariant z innym uczestnikiem.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? za kim lub za czym? w jakiej sytuacji? Zostań przy jednej sytuacji.",
+      "Ktoś tęskni za domem na pustym peronie."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Za kim lub za czym?"
+      },
+      {
+        "id": "where",
+        "label": "W jakiej sytuacji?"
+      },
+      {
+        "id": "other",
+        "label": "Drugi wariant z innym uczestnikiem — opcjonalnie"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-06",
+    "version": 1,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Czekać na — mała scena",
+      "stimulus": "czekać na",
+      "instruction": "Zacznij od czasownika „czekać na”. Wybierz lub wpisz uczestników i okoliczność. Możesz stworzyć drugi wariant z innym uczestnikiem, a potem zapisać własne zdanie. Nie trzeba wypełniać wszystkich pól."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-06",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": "Jeśli chcesz, napisz drugi wariant z innym uczestnikiem.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? na kogo lub na co? gdzie? Zostań przy jednej sytuacji.",
+      "Mężczyzna czeka na autobus pod mokrym daszkiem."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Na kogo lub na co?"
+      },
+      {
+        "id": "where",
+        "label": "Gdzie?"
+      },
+      {
+        "id": "other",
+        "label": "Drugi wariant z innym uczestnikiem — opcjonalnie"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-07",
+    "version": 1,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Pomagać — mała scena",
+      "stimulus": "pomagać",
+      "instruction": "Zacznij od czasownika „pomagać”. Wybierz lub wpisz uczestników i okoliczność. Możesz stworzyć drugi wariant z innym uczestnikiem, a potem zapisać własne zdanie. Nie trzeba wypełniać wszystkich pól."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-07",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": "Jeśli chcesz, napisz drugi wariant z innym uczestnikiem.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? komu lub czemu? w czym? Zostań przy jednej sytuacji.",
+      "Dziewczyna pomaga bratu w składaniu papierowej łodzi."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Komu lub czemu?"
+      },
+      {
+        "id": "where",
+        "label": "W czym?"
+      },
+      {
+        "id": "other",
+        "label": "Drugi wariant z innym uczestnikiem — opcjonalnie"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-08",
+    "version": 1,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Wracać — mała scena",
+      "stimulus": "wracać",
+      "instruction": "Zacznij od czasownika „wracać”. Wybierz lub wpisz uczestników i okoliczność. Możesz stworzyć drugi wariant z innym uczestnikiem, a potem zapisać własne zdanie. Nie trzeba wypełniać wszystkich pól."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-08",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": "Jeśli chcesz, napisz drugi wariant z innym uczestnikiem.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? dokąd lub do czego? skąd? Zostań przy jednej sytuacji.",
+      "Zapach deszczu wraca do pokoju przez uchylone drzwi."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Dokąd lub do czego?"
+      },
+      {
+        "id": "where",
+        "label": "Skąd?"
+      },
+      {
+        "id": "other",
+        "label": "Drugi wariant z innym uczestnikiem — opcjonalnie"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-09",
+    "version": 1,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Rozmawiać z — mała scena",
+      "stimulus": "rozmawiać z",
+      "instruction": "Zacznij od czasownika „rozmawiać z”. Wybierz lub wpisz uczestników i okoliczność. Możesz stworzyć drugi wariant z innym uczestnikiem, a potem zapisać własne zdanie. Nie trzeba wypełniać wszystkich pól."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-09",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": "Jeśli chcesz, napisz drugi wariant z innym uczestnikiem.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? z kim? o czym? Zostań przy jednej sytuacji.",
+      "Ogrodnik rozmawia z sąsiadem o pierwszych liściach."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Z kim?"
+      },
+      {
+        "id": "where",
+        "label": "O czym?"
+      },
+      {
+        "id": "other",
+        "label": "Drugi wariant z innym uczestnikiem — opcjonalnie"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-10",
+    "version": 1,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Wyciągać — mała scena",
+      "stimulus": "wyciągać",
+      "instruction": "Zacznij od czasownika „wyciągać”. Wybierz lub wpisz uczestników i okoliczność. Możesz stworzyć drugi wariant z innym uczestnikiem, a potem zapisać własne zdanie. Nie trzeba wypełniać wszystkich pól."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-10",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": "Jeśli chcesz, napisz drugi wariant z innym uczestnikiem.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? co? skąd? Zostań przy jednej sytuacji.",
+      "Babcia wyciąga list z dolnej szuflady."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Co?"
+      },
+      {
+        "id": "where",
+        "label": "Skąd?"
+      },
+      {
+        "id": "other",
+        "label": "Drugi wariant z innym uczestnikiem — opcjonalnie"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-11",
+    "version": 1,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Chronić — mała scena",
+      "stimulus": "chronić",
+      "instruction": "Zacznij od czasownika „chronić”. Wybierz lub wpisz uczestników i okoliczność. Możesz stworzyć drugi wariant z innym uczestnikiem, a potem zapisać własne zdanie. Nie trzeba wypełniać wszystkich pól."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-11",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": "Jeśli chcesz, napisz drugi wariant z innym uczestnikiem.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? kogo lub co? przed czym? Zostań przy jednej sytuacji.",
+      "Płaszcz chroni ramiona przed chłodnym wiatrem."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Kogo lub co?"
+      },
+      {
+        "id": "where",
+        "label": "Przed czym?"
+      },
+      {
+        "id": "other",
+        "label": "Drugi wariant z innym uczestnikiem — opcjonalnie"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-12",
+    "version": 1,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Odsuwać — mała scena",
+      "stimulus": "odsuwać",
+      "instruction": "Zacznij od czasownika „odsuwać”. Wybierz lub wpisz uczestników i okoliczność. Możesz stworzyć drugi wariant z innym uczestnikiem, a potem zapisać własne zdanie. Nie trzeba wypełniać wszystkich pól."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-12",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorskie polskie karty Obrazownika; materiał zredagowany ręcznie, bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół i zapisz jedno własne zdanie. Możesz na nim skończyć.",
+    "optionalConstraint": "Jeśli chcesz, napisz drugi wariant z innym uczestnikiem.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? co? od czego lub dokąd? Zostań przy jednej sytuacji.",
+      "Dziewczynka odsuwa krzesło od stołu."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Co?"
+      },
+      {
+        "id": "where",
+        "label": "Od czego lub dokąd?"
+      },
+      {
+        "id": "other",
+        "label": "Drugi wariant z innym uczestnikiem — opcjonalnie"
+      }
+    ]
+  }
+]

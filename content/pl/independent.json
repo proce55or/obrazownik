@@ -1,0 +1,582 @@
+[
+  {
+    "id": "iw-0001",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Ślad po czymś, co przesunięto z półki",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0001",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0002",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Dwa różne kroki na tej samej klatce schodowej",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0002",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0003",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Podwórko tuż po wyjeździe wozu z węglem",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0003",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0004",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Brak jednego krzesła w znajomym pomieszczeniu",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0004",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0005",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Szczelina światła w drzwiach magazynu",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0005",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0006",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Przystanek, na którym zatrzymał się tylko rowerzysta",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0006",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0007",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Ostatnia śliwka na gałęzi",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0007",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0008",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Cień anteny na innym budynku",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0008",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0009",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Pies, który zatrzymał się przed pustą furtką",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0009",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0010",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Kurz na opakowaniu dawnego zakupu",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0010",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0011",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Dźwięk rolety z sąsiedniego mieszkania",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0011",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0012",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Niedopasowane kafelki przy progu",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0012",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0013",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Rzeka oglądana spod mostu",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0013",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0014",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Chwila przed otwarciem sali gimnastycznej",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0014",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0015",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Wstążka zaczepiona o krzew",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0015",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0016",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Osoba licząca schody w obcym budynku",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0016",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0017",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Ruch powietrza po odsunięciu ciężkiej zasłony",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0017",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0018",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Puste miejsce na tablicy ogłoszeń",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0018",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0019",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Pierwszy dźwięk z warsztatu przed świtem",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0019",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0020",
+    "version": 1,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Mała zmiana na znanej trasie spaceru",
+      "instruction": "Zapisz własny tekst na ten temat: prozę, wiersz albo fragment. Możesz pisać ze słów, pamięci i relacji. Nie ma odliczania ani wymaganej długości."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0020",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz krótki własny tekst. Możesz zostać przy jednym zdaniu.",
+    "optionalConstraint": null,
+    "sourceText": null
+  }
+]

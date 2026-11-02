@@ -1,14 +1,17 @@
+import { SessionPanel } from "./SessionPanel";
+import { CardCatalog } from "./CardCatalog";
 import type { Card } from "../domain/cards";
 import type { Attempt } from "../shared/schemas";
 interface Props {
+  onIndependent?:(role?:'independent_writing'|'near_transfer')=>void;
   cards: Card[];
   drafts: Attempt[];
   recent: Attempt[];
   busy: boolean;
-  onStart: (cardId: string) => void;
+  onStart: (cardId: string, variant?:'standard'|'easy',constraint?:boolean) => void;
   onOpen: (id: string) => void;
 }
-export function Home({ cards, drafts, recent, busy, onStart, onOpen }: Props) {
+export function Home({ cards, drafts, recent, busy, onStart, onOpen,onIndependent }: Props) {
   return (
     <>
       <section className="welcome">
@@ -24,6 +27,7 @@ export function Home({ cards, drafts, recent, busy, onStart, onOpen }: Props) {
           ile chcesz.
         </p>
       </section>
+      <SessionPanel onOpen={onOpen}/>
       {drafts.length > 0 && (
         <section className="draft-list" aria-label="Twoje szkice">
           <h2>Możesz wrócić</h2>
@@ -77,7 +81,7 @@ export function Home({ cards, drafts, recent, busy, onStart, onOpen }: Props) {
       <section className="other-starts" aria-label="Inne punkty wyjścia">
         <span className="eyebrow">ALBO ZACZNIJ OD INNEGO SZCZEGÓŁU</span>
         <div>
-          {cards.slice(1).map((card) => (
+          {cards.slice(1,3).map((card) => (
             <button
               className="secondary-button"
               disabled={busy}
@@ -89,6 +93,8 @@ export function Home({ cards, drafts, recent, busy, onStart, onOpen }: Props) {
           ))}
         </div>
       </section>
+      {onIndependent&&<section className="new-writing"><span className="eyebrow">OSOBNY TEMAT · WŁASNE SŁOWA</span><h2>Nowe pisanie</h2><p>Temat z osobnej puli. Bez przykładu i banku słów na wejściu. Możesz skończyć po jednym zdaniu albo przerwać.</p><div className="button-row"><button className="secondary-button" disabled={busy} onClick={()=>onIndependent('independent_writing')}>Zacznij nowy tekst ↗</button><button className="text-button" disabled={busy} onClick={()=>onIndependent('near_transfer')}>Podobna umiejętność, nowy materiał</button></div></section>}
+      <CardCatalog cards={cards} busy={busy} onStart={onStart}/>
       {recent.length > 0 && (
         <section className="draft-list" aria-label="Zapisane ćwiczenia">
           <h2>Ostatnio zapisane</h2>

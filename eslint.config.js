@@ -14,7 +14,7 @@ export default ts.config(
         console: "readonly",
         document: "readonly",
         innerWidth: "readonly",
-        fetch: "readonly",
+        fetch: "readonly", URL:"readonly",
       },
     },
     rules: {

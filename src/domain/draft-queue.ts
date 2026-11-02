@@ -8,18 +8,19 @@ export interface RecoveryDraft {
   updatedAt: string;
   scaffolding?: Record<string,string>;
 }
-export interface DraftQueueOptions {
-  attempt: Attempt;
+export interface DraftTarget {id:string;currentText:string;revision:number;scaffolding?:Record<string,string>}
+export interface DraftQueueOptions<T extends DraftTarget=Attempt> {
+  attempt: T;
   environmentId: string;
-  send: (input: SaveAttempt) => Promise<Attempt>;
+  send: (input: SaveAttempt) => Promise<T>;
   putRecovery: (draft: RecoveryDraft) => Promise<void>;
   clearRecovery: (text: string, scaffolding?:Record<string,string>) => Promise<void>;
   onStatus: (status: SaveStatus, message?: string) => void;
-  onAck: (attempt: Attempt) => void;
+  onAck: (attempt: T) => void;
   onBufferError: () => void;
 }
 // One in-flight write. An uncertain response retains the exact mutation for retry.
-export class DraftQueue {
+export class DraftQueue<T extends DraftTarget=Attempt> {
   private text: string;
   private savedText: string;
   private revision: number;
@@ -30,10 +31,10 @@ export class DraftQueue {
   private timer: ReturnType<typeof setTimeout> | undefined;
   private recoveryChain: Promise<void> = Promise.resolve();
   private conflict = false;
-  constructor(private options: DraftQueueOptions) {
+  constructor(private options: DraftQueueOptions<T>) {
     this.text = this.savedText = options.attempt.currentText;
     this.revision = options.attempt.revision;
-    this.scaffolding=options.attempt.scaffolding;this.savedScaffolding=JSON.stringify(this.scaffolding);
+    this.scaffolding=options.attempt.scaffolding??{};this.savedScaffolding=JSON.stringify(this.scaffolding);
   }
   get currentRevision() {
     return this.revision;
@@ -98,7 +99,7 @@ export class DraftQueue {
       try {
         const saved = await this.options.send(this.pending);
         this.savedText = saved.currentText;
-        this.savedScaffolding=JSON.stringify(saved.scaffolding);
+        this.savedScaffolding=JSON.stringify(saved.scaffolding??{});
         this.revision = saved.revision;
         this.pending = null;
         this.options.onAck(saved);
@@ -127,13 +128,13 @@ export class DraftQueue {
     }
     this.options.onStatus("saved");
   }
-  acceptRevision(attempt: Attempt): void {
+  acceptRevision(attempt: T): void {
     if (this.dirty || this.running)
       throw new Error("Zapisz szkic przed kolejną operacją.");
     this.revision = attempt.revision;
     this.savedText = attempt.currentText;
     this.text = attempt.currentText;
-    this.scaffolding=attempt.scaffolding;this.savedScaffolding=JSON.stringify(attempt.scaffolding);
+    this.scaffolding=attempt.scaffolding??{};this.savedScaffolding=JSON.stringify(attempt.scaffolding??{});
     this.options.onAck(attempt);
   }
   async settleRecovery(): Promise<void> {

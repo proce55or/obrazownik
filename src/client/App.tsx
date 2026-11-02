@@ -11,6 +11,9 @@ import {
 import { api, bootstrap } from "./api";
 import { Home } from "./Home";
 import { Editor } from "./Editor";
+import { Notebook } from "./Notebook";
+import { Observations } from "./Observations";
+import { Settings } from "./Settings";
 import { Completed } from "./Completed";
 
 export function App() {
@@ -21,7 +24,9 @@ export function App() {
     [epoch, setEpoch] = useState(0),
     [busy, setBusy] = useState(true),
     [error, setError] = useState("");
-  const request = useRef<{ cardId: string; clientRequestId: string } | null>(
+  const [view,setView]=useState<'home'|'notebook'|'observations'|'settings'>('home');
+  const [notebookEditing,setNotebookEditing]=useState(false);
+  const request = useRef<{ cardId: string; clientRequestId: string; variant:'standard'|'easy';useConstraint:boolean; createdId?:string } | null>(
     null,
   );
   async function refreshHome() {
@@ -77,17 +82,18 @@ export function App() {
     setError("");
     requestAnimationFrame(() => document.getElementById("main")?.focus());
   }
-  async function start(cardId: string) {
+  async function start(cardId: string,variant:'standard'|'easy'='standard',useConstraint=false) {
     if (busy) return;
     setBusy(true);
     setError("");
     try {
       if (request.current && request.current.cardId !== cardId)
         throw new Error("Najpierw ponów rozpoczęcie poprzedniego ćwiczenia.");
-      request.current ??= { cardId, clientRequestId: crypto.randomUUID() };
+      request.current ??= { cardId, clientRequestId: crypto.randomUUID(),variant,useConstraint };
       const attempt = AttemptSchema.parse(
-        await api("/attempts", "POST", request.current),
+        await api("/attempts", "POST", {cardId:request.current.cardId,clientRequestId:request.current.clientRequestId,variant:request.current.variant,useConstraint:request.current.useConstraint}),
       );
+      request.current.createdId=attempt.id;
       await open(attempt.id);
       request.current = null;
     } catch (failure) {
@@ -100,11 +106,16 @@ export function App() {
       setBusy(false);
     }
   }
+  const independentRequest=useRef<{clientRequestId:string;role:'independent_writing'|'near_transfer'}|null>(null);
+  async function startIndependent(role:'independent_writing'|'near_transfer'='independent_writing'){
+    setBusy(true);setError('');try{independentRequest.current??={clientRequestId:crypto.randomUUID(),role};const value=AttemptSchema.parse(await api('/independent','POST',independentRequest.current));await open(value.id);independentRequest.current=null;}catch(failure){setError(failure instanceof Error?failure.message:'Nie udało się rozpocząć.');}finally{setBusy(false);}
+  }
   async function openExisting(id: string) {
     setBusy(true);
     setError("");
     try {
       await open(id);
+      if(request.current?.createdId===id)request.current=null;
     } catch (failure) {
       setError(
         failure instanceof Error
@@ -115,6 +126,10 @@ export function App() {
       setBusy(false);
     }
   }
+  const reviseRequests=useRef(new Map<string,string>()),transformRequests=useRef(new Map<string,string>());
+  async function reviseAttempt(id:string){const requestId=reviseRequests.current.get(id)??crypto.randomUUID();reviseRequests.current.set(id,requestId);const created=AttemptSchema.parse(await api(`/attempts/${id}/revise`,'POST',{clientRequestId:requestId}));await open(created.id);reviseRequests.current.delete(id);}
+  async function transformDocument(id:string){const requestId=transformRequests.current.get(id)??crypto.randomUUID();transformRequests.current.set(id,requestId);const created=AttemptSchema.parse(await api(`/documents/${id}/transform`,'POST',{clientRequestId:requestId}));await open(created.id);transformRequests.current.delete(id);}
+  async function goHome(){await refreshHome();setView('home');}
   const replace = (value: AttemptDetail) => {
     setDetail(value);
     setEpoch((old) => old + 1);
@@ -139,22 +154,25 @@ export function App() {
       <main
         id="main"
         tabIndex={-1}
-        className={
-          boot?.settings.fontSize === "large" ? "large-type" : undefined
-        }
+        className={boot?`font-${typeof boot.settings.fontSize==='number'?boot.settings.fontSize:boot.settings.fontSize==='large'?24:18}`:undefined}
       >
         <div className="page-top">
           <span className="eyebrow">TWÓJ WŁASNY RYTM</span>
           <span className="version">Pierwsze strony · wersja 0.1</span>
         </div>
-        {boot && !detail && (
+        {boot&&!detail&&!notebookEditing&&<nav className="site-nav" aria-label="Główna nawigacja">{([{id:'home',label:'Dzisiaj'},{id:'notebook',label:'Zeszyt'},{id:'observations',label:'Obserwacje'},{id:'settings',label:'Ustawienia i kopie'}] as const).map(tab=><button className="secondary-button" aria-current={view===tab.id?'page':undefined} key={tab.id} onClick={()=>{setView(tab.id);if(tab.id==='home')void refreshHome().catch(error=>setError(error instanceof Error?error.message:'Brak połączenia.'));}}>{tab.label}</button>)}</nav>}
+        {boot&&!detail&&view==='notebook'&&<Notebook environmentId={boot.environmentId} onEditingChange={setNotebookEditing} onOpenAttempt={openExisting} onTransformDocument={transformDocument}/>}
+        {boot&&!detail&&view==='observations'&&<Observations/>}
+        {boot&&!detail&&view==='settings'&&<Settings boot={boot} onSaved={settings=>setBoot(old=>old?{...old,settings}:old)}/>}
+        {boot && !detail && view==='home' && (
           <Home
+            onIndependent={role=>{void startIndependent(role);}}
             cards={cards}
             drafts={boot.drafts}
             recent={recent}
             busy={busy}
-            onStart={(id) => {
-              void start(id);
+            onStart={(id,variant,constraint) => {
+              void start(id,variant,constraint);
             }}
             onOpen={(id) => {
               void openExisting(id);
@@ -168,14 +186,15 @@ export function App() {
               key={`${detail.attempt.id}:${epoch}`}
               initial={detail}
               environmentId={boot.environmentId}
-              onHome={refreshHome}
+              onHome={goHome}
               onReplace={replace}
             />
           ) : (
             <Completed
               key={`${detail.attempt.id}:${epoch}`}
               detail={detail}
-              onHome={refreshHome}
+              onRevise={reviseAttempt}
+              onHome={goHome}
             />
           ))}
         {!boot && busy && <p role="status">Otwieranie Twojej przestrzeni…</p>}

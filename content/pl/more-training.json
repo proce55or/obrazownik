@@ -1,0 +1,1647 @@
+[
+  {
+    "id": "e2-bridge-01",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Między wnętrzem a zewnętrzem",
+      "stimulus": "Okno i oddech",
+      "instruction": "Zastanów się, jaki ruch lub relacja może łączyć okno i oddech. Wybierz własne połączenie i zbuduj krótki obraz."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co przechodzi przez granicę między środkiem a zewnętrzem?",
+      "Możesz wybrać otwieranie, rytm albo zatrzymanie.",
+      "Oddech osiadł na oknie, zanim wyszedł na zewnątrz."
+    ],
+    "methodId": "E2",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "e2-bridge-01",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "e2-bridge-02",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Dwie strony",
+      "stimulus": "Most i rozmowa",
+      "instruction": "Znajdź wspólną relację mostu i rozmowy. Zapisz scenę, która ją pokazuje, dosłownie lub metaforycznie."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Kto lub co jest po obu stronach?",
+      "Wybierz zbliżenie, podtrzymywanie albo przerwę.",
+      "Rozmowa utrzymała dwie strony nad płynącą między nimi ciszą."
+    ],
+    "methodId": "E2",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "e2-bridge-02",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "e2-bridge-03",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Co pozostaje połączone",
+      "stimulus": "Nić i pamięć",
+      "instruction": "Pomyśl o nici i pamięci. Wybierz ich wspólną cechę albo sposób działania i zapisz własny obraz."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co może się splątać albo poprowadzić dalej?",
+      "Możesz zostać przy jednym połączeniu lub przerwaniu.",
+      "Pamięć wyciągnęła ze zdania cienką nić zapachu."
+    ],
+    "methodId": "E2",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "e2-bridge-03",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "e2-bridge-04",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Po kolei",
+      "stimulus": "Schody i poranek",
+      "instruction": "Znajdź połączenie między schodami a porankiem przez ruch, kolejność albo zmianę. Zbuduj krótką scenę."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co odbywa się stopniowo?",
+      "Wybierz jeden krok, pierwsze światło albo drogę w górę.",
+      "Poranek wszedł po schodach od pierwszej jasnej krawędzi."
+    ],
+    "methodId": "E2",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "e2-bridge-04",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "e2-bridge-05",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Ślad drogi",
+      "stimulus": "Mapa i blizna",
+      "instruction": "Połącz mapę i bliznę przez ich cechę lub historię. Możesz wybrać neutralną bliznę na korze drzewa."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co jest śladem czegoś wcześniejszego?",
+      "Zacznij od linii, zakrętu lub miejsca, które można rozpoznać.",
+      "Rysa na korze pokazywała drogę dawnej gałęzi."
+    ],
+    "methodId": "E2",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "e2-bridge-05",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "e2-bridge-06",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Czekanie na zmianę",
+      "stimulus": "Parasol i cisza",
+      "instruction": "Znajdź własny związek parasola i ciszy. Nie musisz szukać zaskakującego rozwiązania; wybierz czytelne połączenie."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co może się otworzyć albo osłonić?",
+      "Wybierz czekanie, składanie albo osłonę.",
+      "Cisza złożyła się przy drzwiach jak parasol po deszczu."
+    ],
+    "methodId": "E2",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "shared-cisza-parasol",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "e2-bridge-07",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Punkt odniesienia",
+      "stimulus": "Latarnia i obietnica",
+      "instruction": "Połącz latarnię i obietnicę przez ich działanie wobec kogoś. Zapisz własne zdanie."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co pomaga komuś iść dalej?",
+      "Możesz wybrać widoczność, odległość albo powracający znak.",
+      "Obietnica pozostała jasnym punktem po drugiej stronie drogi."
+    ],
+    "methodId": "E2",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "e2-bridge-07",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "e2-bridge-08",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Mały obrót",
+      "stimulus": "Zawias i decyzja",
+      "instruction": "Wybierz relację, którą mogą dzielić zawias i decyzja. Pokaż ją jako konkretne zdarzenie."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co zmienia położenie, choć pozostaje połączone?",
+      "Pomyśl o otwarciu, oporze albo niewielkim ruchu.",
+      "Decyzja obróciła się na jednym cichym słowie."
+    ],
+    "methodId": "E2",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "e2-bridge-08",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "e2-bridge-09",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Co prowadzi",
+      "stimulus": "Rękaw i droga",
+      "instruction": "Połącz rękaw i drogę przez ruch lub kształt. Możesz zacząć od codziennej czynności wkładania płaszcza."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co prowadzi coś w określonym kierunku?",
+      "Wybierz zagięcie, wejście lub odcinek do pokonania.",
+      "Dłoń przeszła ciemną drogą rękawa i znalazła światło."
+    ],
+    "methodId": "E2",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "e2-bridge-09",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "e2-bridge-10",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Małe drobiny",
+      "stimulus": "Piasek i szept",
+      "instruction": "Znajdź cechę albo ruch wspólny dla piasku i szeptu. Zapisz krótki obraz."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co jest drobne albo łatwo się rozsypuje?",
+      "Wybierz tarcie, przesypywanie lub cichy przepływ.",
+      "Szept przesypał się między palcami rozmowy."
+    ],
+    "methodId": "E2",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "e2-bridge-10",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "e2-bridge-11",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Powrót",
+      "stimulus": "Lustro i pytanie",
+      "instruction": "Połącz lustro i pytanie przez sposób, w jaki wracają do patrzącej lub pytającej osoby."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co dostajemy z powrotem?",
+      "Możesz zacząć od odbicia, przerwy albo zmienionego spojrzenia.",
+      "Pytanie wróciło z lustra z lekko inną twarzą."
+    ],
+    "methodId": "E2",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "e2-bridge-11",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "e2-bridge-12",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Miejsce przecięcia",
+      "stimulus": "Węzeł i spotkanie",
+      "instruction": "Znajdź wspólną relację węzła i spotkania. Pokaż ją przez prostą scenę."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co schodzi się w jednym miejscu?",
+      "Wybierz połączenie, napięcie lub możliwość rozplątania.",
+      "Spotkanie związało na chwilę dwie oddzielne drogi."
+    ],
+    "methodId": "E2",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "e2-bridge-12",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "m6-sense-01",
+    "version": 1,
+    "family": "sense",
+    "partition": "training",
+    "prompt": {
+      "title": "Ruch zamiast temperatury",
+      "stimulus": "Chłód przez ruch",
+      "instruction": "Opisz chłód przez ruch przedmiotu. Możesz pominąć słowo „zimny”, jeśli to pomaga."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co kurczy się, drży albo zwalnia?",
+      "Wybierz jeden mały ruch, bez szukania wielu epitetów.",
+      "Łyżeczka zadrżała w dłoni, zanim dotknęła talerza."
+    ],
+    "methodId": "M6",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m6-sense-01",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "m6-sense-02",
+    "version": 1,
+    "family": "sense",
+    "partition": "training",
+    "prompt": {
+      "title": "Co słychać",
+      "stimulus": "Ciepło przez dźwięk",
+      "instruction": "Spróbuj opisać ciepło, korzystając z dźwięku. Możesz oprzeć tekst na pamięci, bez wizualizacji."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Jaki dźwięk kojarzy Ci się z ciepłym miejscem?",
+      "Wybierz trzask, szmer albo spokojne powtarzanie.",
+      "W piecu coś cicho strzeliło i pokój odetchnął szerzej."
+    ],
+    "methodId": "M6",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m6-sense-02",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "m6-sense-03",
+    "version": 1,
+    "family": "sense",
+    "partition": "training",
+    "prompt": {
+      "title": "Jasność na skórze",
+      "stimulus": "Światło przez dotyk",
+      "instruction": "Napisz o świetle przez dotyk powierzchni lub skóry. Dosłowne zdanie jest równie dobre jak metafora."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Gdzie światło coś ogrzewa albo odsłania?",
+      "Wybierz jeden punkt dotknięcia lub zmianę faktury.",
+      "Słońce przesunęło po przedramieniu ciepłą smugę."
+    ],
+    "methodId": "M6",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m6-sense-03",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "m6-sense-04",
+    "version": 1,
+    "family": "sense",
+    "partition": "training",
+    "prompt": {
+      "title": "Gdzie zostaje",
+      "stimulus": "Dźwięk przez przestrzeń",
+      "instruction": "Opisz krótki dźwięk przez miejsce, w którym się rozchodzi albo zatrzymuje."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co jest blisko, co daleko?",
+      "Możesz wybrać korytarz, róg lub powierzchnię.",
+      "Stuknięcie zostało za zakrętem pustego korytarza."
+    ],
+    "methodId": "M6",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m6-sense-04",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "m6-sense-05",
+    "version": 1,
+    "family": "sense",
+    "partition": "training",
+    "prompt": {
+      "title": "Skąd przychodzi",
+      "stimulus": "Zapach przez drogę",
+      "instruction": "Pokaż zapach jako drogę lub ruch w przestrzeni. Wybierz jeden kierunek."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Skąd coś dociera?",
+      "Zostań przy drzwiach, szczelinie albo ruchu powietrza.",
+      "Zapach jabłek wyszedł z torby i przeszedł przez kuchnię."
+    ],
+    "methodId": "M6",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m6-sense-05",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "m6-sense-06",
+    "version": 1,
+    "family": "sense",
+    "partition": "training",
+    "prompt": {
+      "title": "Tempo podnoszenia",
+      "stimulus": "Ciężar przez rytm",
+      "instruction": "Opisz ciężar przedmiotu przez rytm ruchu osoby, która go podnosi."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "W którym momencie ruch się zmienia?",
+      "Wybierz zatrzymanie, oddech albo powolne uniesienie.",
+      "Podnosił skrzynkę w dwóch oddechach, z przerwą między nimi."
+    ],
+    "methodId": "M6",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m6-sense-06",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "m6-sense-07",
+    "version": 1,
+    "family": "sense",
+    "partition": "training",
+    "prompt": {
+      "title": "Tarcie",
+      "stimulus": "Szorstkość przez dźwięk",
+      "instruction": "Opisz szorstką powierzchnię za pomocą dźwięku lub oporu. Możesz zostać przy codziennym przedmiocie."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co słychać przy przesuwaniu dłoni?",
+      "Wybierz tarcie albo krótkie zatrzymanie.",
+      "Palec zaszeleścił na brzegu surowej deski."
+    ],
+    "methodId": "M6",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m6-sense-07",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "m6-sense-08",
+    "version": 1,
+    "family": "sense",
+    "partition": "training",
+    "prompt": {
+      "title": "Inny punkt widzenia",
+      "stimulus": "Cisza z perspektywy drzwi",
+      "instruction": "Napisz o ciszy z perspektywy drzwi. Możesz pokazać tylko ich relację z pokojem."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co przy drzwiach przestało się zmieniać?",
+      "Wybierz klamkę, szczelinę lub bezruch.",
+      "Drzwi trzymały klamkę nieruchomo, choć za nimi zapadł wieczór."
+    ],
+    "methodId": "M6",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m6-sense-08",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "m6-sense-09",
+    "version": 1,
+    "family": "sense",
+    "partition": "training",
+    "prompt": {
+      "title": "Patrzeć od dołu",
+      "stimulus": "Deszcz z perspektywy daszku",
+      "instruction": "Opisz deszcz z perspektywy małego daszku nad wejściem. Nie trzeba widzieć obrazu w wyobraźni."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co dociera od góry, a co spływa dalej?",
+      "Wybierz jeden brzeg albo powtarzający się ruch.",
+      "Daszek zbierał uderzenia i oddawał je w jednej strużce."
+    ],
+    "methodId": "M6",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m6-sense-09",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "m6-sense-10",
+    "version": 1,
+    "family": "sense",
+    "partition": "training",
+    "prompt": {
+      "title": "Blisko i daleko",
+      "stimulus": "Odległość przez głos",
+      "instruction": "Pokaż odległość za pomocą zmiany głosu lub tego, jak jest słyszany."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Który szczegół dźwięku ginie pierwszy?",
+      "Zostań przy głośności, przerwie lub urwanym słowie.",
+      "Imię dotarło jeszcze wyraźnie, reszta zdania została po drugiej stronie ulicy."
+    ],
+    "methodId": "M6",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m6-sense-10",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "m6-sense-11",
+    "version": 1,
+    "family": "sense",
+    "partition": "training",
+    "prompt": {
+      "title": "Powrót do kształtu",
+      "stimulus": "Miękkość przez ruch",
+      "instruction": "Opisz miękkość przez to, co przedmiot robi pod naciskiem i po nim."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Jak wraca albo nie wraca do kształtu?",
+      "Wybierz jedno ugięcie, fałdę lub powolny powrót.",
+      "Poduszka przyjęła kształt dłoni i dopiero po chwili go oddała."
+    ],
+    "methodId": "M6",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m6-sense-11",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "m6-sense-12",
+    "version": 1,
+    "family": "sense",
+    "partition": "training",
+    "prompt": {
+      "title": "Zanim spojrzysz",
+      "stimulus": "Poranek przez zapach",
+      "instruction": "Napisz o poranku przez zapach. Możesz użyć obserwacji, wspomnienia albo wymyślonej relacji."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co dociera przed pierwszym spojrzeniem?",
+      "Wybierz jeden zapach i jego miejsce.",
+      "Zanim odsunął zasłonę, rano pachniało już skórką chleba."
+    ],
+    "methodId": "M6",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m6-sense-12",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "m7-source-01",
+    "version": 1,
+    "family": "transform",
+    "partition": "training",
+    "prompt": {
+      "title": "Na parapecie",
+      "stimulus": "Autorski fragment do przekształcenia",
+      "instruction": "Wybierz słowa z tekstu źródłowego, usuń zbędne, zmień kolejność i dopisz własne. Możesz też napisać zupełnie nową wersję. Oryginał pozostanie zachowany."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Który szczegół chcesz zachować po swojemu?",
+      "Wybierz kilka słów albo zacznij od własnego dopisku. Nie musisz korzystać z banku.",
+      "Na brzegu dnia zostało coś małego. To tylko przykład aplikacji; możesz go odrzucić."
+    ],
+    "methodId": "M7",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m7-source-01",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": "Na parapecie leży ziarnko ziemi. Ktoś przed chwilą przesadzał kwiat i zostawił otwarte okno."
+  },
+  {
+    "id": "m7-source-02",
+    "version": 1,
+    "family": "transform",
+    "partition": "training",
+    "prompt": {
+      "title": "Po naprawie",
+      "stimulus": "Autorski fragment do przekształcenia",
+      "instruction": "Wybierz słowa z tekstu źródłowego, usuń zbędne, zmień kolejność i dopisz własne. Możesz też napisać zupełnie nową wersję. Oryginał pozostanie zachowany."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Który szczegół chcesz zachować po swojemu?",
+      "Wybierz kilka słów albo zacznij od własnego dopisku. Nie musisz korzystać z banku.",
+      "Na brzegu dnia zostało coś małego. To tylko przykład aplikacji; możesz go odrzucić."
+    ],
+    "methodId": "M7",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m7-source-02",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": "Na podłodze został mały gwóźdź. Naprawione krzesło stoi już prosto przy stole."
+  },
+  {
+    "id": "m7-source-03",
+    "version": 1,
+    "family": "transform",
+    "partition": "training",
+    "prompt": {
+      "title": "Pod wieczór",
+      "stimulus": "Autorski fragment do przekształcenia",
+      "instruction": "Wybierz słowa z tekstu źródłowego, usuń zbędne, zmień kolejność i dopisz własne. Możesz też napisać zupełnie nową wersję. Oryginał pozostanie zachowany."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Który szczegół chcesz zachować po swojemu?",
+      "Wybierz kilka słów albo zacznij od własnego dopisku. Nie musisz korzystać z banku.",
+      "Na brzegu dnia zostało coś małego. To tylko przykład aplikacji; możesz go odrzucić."
+    ],
+    "methodId": "M7",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m7-source-03",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": "Sąsiad zwinął wąż ogrodowy. Na jednym liściu trzyma się jeszcze duża kropla."
+  },
+  {
+    "id": "m7-source-04",
+    "version": 1,
+    "family": "transform",
+    "partition": "training",
+    "prompt": {
+      "title": "W kieszeni",
+      "stimulus": "Autorski fragment do przekształcenia",
+      "instruction": "Wybierz słowa z tekstu źródłowego, usuń zbędne, zmień kolejność i dopisz własne. Możesz też napisać zupełnie nową wersję. Oryginał pozostanie zachowany."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Który szczegół chcesz zachować po swojemu?",
+      "Wybierz kilka słów albo zacznij od własnego dopisku. Nie musisz korzystać z banku.",
+      "Na brzegu dnia zostało coś małego. To tylko przykład aplikacji; możesz go odrzucić."
+    ],
+    "methodId": "M7",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m7-source-04",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": "W kieszeni płaszcza został papierowy bilet. Brzeg jest miękki od wielokrotnego składania."
+  },
+  {
+    "id": "m7-source-05",
+    "version": 1,
+    "family": "transform",
+    "partition": "training",
+    "prompt": {
+      "title": "Przed sklepem",
+      "stimulus": "Autorski fragment do przekształcenia",
+      "instruction": "Wybierz słowa z tekstu źródłowego, usuń zbędne, zmień kolejność i dopisz własne. Możesz też napisać zupełnie nową wersję. Oryginał pozostanie zachowany."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Który szczegół chcesz zachować po swojemu?",
+      "Wybierz kilka słów albo zacznij od własnego dopisku. Nie musisz korzystać z banku.",
+      "Na brzegu dnia zostało coś małego. To tylko przykład aplikacji; możesz go odrzucić."
+    ],
+    "methodId": "M7",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m7-source-05",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": "Przed zamkniętym sklepem ktoś przestawił skrzynkę. Jej prostokątny ślad jest jaśniejszy niż reszta chodnika."
+  },
+  {
+    "id": "m7-source-06",
+    "version": 1,
+    "family": "transform",
+    "partition": "training",
+    "prompt": {
+      "title": "W pralni",
+      "stimulus": "Autorski fragment do przekształcenia",
+      "instruction": "Wybierz słowa z tekstu źródłowego, usuń zbędne, zmień kolejność i dopisz własne. Możesz też napisać zupełnie nową wersję. Oryginał pozostanie zachowany."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Który szczegół chcesz zachować po swojemu?",
+      "Wybierz kilka słów albo zacznij od własnego dopisku. Nie musisz korzystać z banku.",
+      "Na brzegu dnia zostało coś małego. To tylko przykład aplikacji; możesz go odrzucić."
+    ],
+    "methodId": "M7",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m7-source-06",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": "Na sznurku nie ma już ubrań. Dwa drewniane spinacze kołyszą się obok siebie."
+  },
+  {
+    "id": "m7-source-07",
+    "version": 1,
+    "family": "transform",
+    "partition": "training",
+    "prompt": {
+      "title": "W pracowni",
+      "stimulus": "Autorski fragment do przekształcenia",
+      "instruction": "Wybierz słowa z tekstu źródłowego, usuń zbędne, zmień kolejność i dopisz własne. Możesz też napisać zupełnie nową wersję. Oryginał pozostanie zachowany."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Który szczegół chcesz zachować po swojemu?",
+      "Wybierz kilka słów albo zacznij od własnego dopisku. Nie musisz korzystać z banku.",
+      "Na brzegu dnia zostało coś małego. To tylko przykład aplikacji; możesz go odrzucić."
+    ],
+    "methodId": "M7",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m7-source-07",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": "Stolarz odłożył narzędzie i wyszedł. Cienki wiór pozostał na krawędzi blatu."
+  },
+  {
+    "id": "m7-source-08",
+    "version": 1,
+    "family": "transform",
+    "partition": "training",
+    "prompt": {
+      "title": "Na ławce",
+      "stimulus": "Autorski fragment do przekształcenia",
+      "instruction": "Wybierz słowa z tekstu źródłowego, usuń zbędne, zmień kolejność i dopisz własne. Możesz też napisać zupełnie nową wersję. Oryginał pozostanie zachowany."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Który szczegół chcesz zachować po swojemu?",
+      "Wybierz kilka słów albo zacznij od własnego dopisku. Nie musisz korzystać z banku.",
+      "Na brzegu dnia zostało coś małego. To tylko przykład aplikacji; możesz go odrzucić."
+    ],
+    "methodId": "M7",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m7-source-08",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": "Na ławce leży gazeta z zeszłego tygodnia. Wiatr co chwilę otwiera tę samą stronę."
+  },
+  {
+    "id": "m7-source-09",
+    "version": 1,
+    "family": "transform",
+    "partition": "training",
+    "prompt": {
+      "title": "W sieni",
+      "stimulus": "Autorski fragment do przekształcenia",
+      "instruction": "Wybierz słowa z tekstu źródłowego, usuń zbędne, zmień kolejność i dopisz własne. Możesz też napisać zupełnie nową wersję. Oryginał pozostanie zachowany."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Który szczegół chcesz zachować po swojemu?",
+      "Wybierz kilka słów albo zacznij od własnego dopisku. Nie musisz korzystać z banku.",
+      "Na brzegu dnia zostało coś małego. To tylko przykład aplikacji; możesz go odrzucić."
+    ],
+    "methodId": "M7",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m7-source-09",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": "W sieni schną mokre buty. Jedna sznurówka dotyka chłodnej podłogi."
+  },
+  {
+    "id": "m7-source-10",
+    "version": 1,
+    "family": "transform",
+    "partition": "training",
+    "prompt": {
+      "title": "Przy płocie",
+      "stimulus": "Autorski fragment do przekształcenia",
+      "instruction": "Wybierz słowa z tekstu źródłowego, usuń zbędne, zmień kolejność i dopisz własne. Możesz też napisać zupełnie nową wersję. Oryginał pozostanie zachowany."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Który szczegół chcesz zachować po swojemu?",
+      "Wybierz kilka słów albo zacznij od własnego dopisku. Nie musisz korzystać z banku.",
+      "Na brzegu dnia zostało coś małego. To tylko przykład aplikacji; możesz go odrzucić."
+    ],
+    "methodId": "M7",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m7-source-10",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": "Wzdłuż płotu ktoś grabił liście. Jeden liść utknął po drugiej stronie siatki."
+  },
+  {
+    "id": "m7-source-11",
+    "version": 1,
+    "family": "transform",
+    "partition": "training",
+    "prompt": {
+      "title": "W szufladzie",
+      "stimulus": "Autorski fragment do przekształcenia",
+      "instruction": "Wybierz słowa z tekstu źródłowego, usuń zbędne, zmień kolejność i dopisz własne. Możesz też napisać zupełnie nową wersję. Oryginał pozostanie zachowany."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Który szczegół chcesz zachować po swojemu?",
+      "Wybierz kilka słów albo zacznij od własnego dopisku. Nie musisz korzystać z banku.",
+      "Na brzegu dnia zostało coś małego. To tylko przykład aplikacji; możesz go odrzucić."
+    ],
+    "methodId": "M7",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m7-source-11",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": "W szufladzie obok ołówków leży kawałek sznurka. Jego końce rozchodzą się na cienkie włókna."
+  },
+  {
+    "id": "m7-source-12",
+    "version": 1,
+    "family": "transform",
+    "partition": "training",
+    "prompt": {
+      "title": "Na balkonie",
+      "stimulus": "Autorski fragment do przekształcenia",
+      "instruction": "Wybierz słowa z tekstu źródłowego, usuń zbędne, zmień kolejność i dopisz własne. Możesz też napisać zupełnie nową wersję. Oryginał pozostanie zachowany."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Który szczegół chcesz zachować po swojemu?",
+      "Wybierz kilka słów albo zacznij od własnego dopisku. Nie musisz korzystać z banku.",
+      "Na brzegu dnia zostało coś małego. To tylko przykład aplikacji; możesz go odrzucić."
+    ],
+    "methodId": "M7",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m7-source-12",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": "Na balkonie stoi pusta doniczka. Na dnie został ciemny okrąg po wodzie."
+  },
+  {
+    "id": "optional-m2-01",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Kilka dróg od okna",
+      "stimulus": "Okno",
+      "instruction": "Zapisz pierwsze skojarzenie ze słowem „okno”. Potem wybierz inną drogę: wspomnienie, czynność, dźwięk lub relację. Wyjaśnij własne połączenie i zbuduj scenę."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Jaka droga była pierwsza? Czy chcesz zmienić punkt widzenia?",
+      "Możesz przejść od kształtu do czynności lub od dźwięku do wspomnienia.",
+      "Światło w oknie wyprzedziło czyjś powrót."
+    ],
+    "methodId": "M2",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "optional-m2-01",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "optional-m2-02",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Inna droga od plecaka",
+      "stimulus": "Plecak",
+      "instruction": "Zapisz pierwsze skojarzenie z plecakiem. Następnie spójrz na niego przez czynność albo relację z człowiekiem i stwórz obraz."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co zmienia się, gdy ktoś go zakłada lub odkłada?",
+      "Możesz wybrać drogę, ciężar albo gest pożegnania.",
+      "Plecak osiadł przy drzwiach, zanim podróż się skończyła."
+    ],
+    "methodId": "M2",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "optional-m2-02",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "optional-m3-03",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Pojęcie i mały gest",
+      "stimulus": "Niepewność w poczekalni",
+      "instruction": "Wybierz neutralną poczekalnię i pojęcie: niepewność lub cierpliwość. Pokaż je przez zachowanie, relację albo zdarzenie. Możesz zastąpić sytuację inną."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co w tej sytuacji wskazuje na wybrane pojęcie?",
+      "Wybierz jeden gest, powtarzany ruch albo zmianę uwagi.",
+      "Palec wracał do zagięcia kartki przy każdym otwarciu drzwi."
+    ],
+    "methodId": "M3",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "optional-m3-03",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "optional-m3-04",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Co wskazuje na pojęcie",
+      "stimulus": "Nadzieja przy sadzeniu nasion",
+      "instruction": "Wybierz nadzieję albo ciekawość w neutralnej sytuacji sadzenia nasion. Napisz scenę opartą na jednym szczególe. Możesz wybrać inne pojęcie."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Jakie zachowanie może wskazywać na to pojęcie?",
+      "Pokaż ruch dłoni, przygotowanie miejsca lub powrót do doniczki.",
+      "Codziennie przesuwała doniczkę o kawałek bliżej światła."
+    ],
+    "methodId": "M3",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "optional-m3-04",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "optional-m5-05",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Od cechy do porównania",
+      "stimulus": "Cisza i parasol",
+      "instruction": "Wybierz wspólną cechę albo działanie ciszy i parasola. Spróbuj porównania z „jak”. Możesz przy nim zostać lub skrócić je do metafory."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co mogłoby je łączyć w Twojej scenie?",
+      "Pomyśl o czekaniu, osłonie albo otwieraniu. Wybierz jeden związek.",
+      "Cisza jest jak złożony parasol, bo czeka na coś, co ją otworzy."
+    ],
+    "methodId": "M5",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "shared-cisza-parasol",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "optional-m5-06",
+    "version": 1,
+    "family": "bridge",
+    "partition": "training",
+    "prompt": {
+      "title": "Związek, który ma sens",
+      "stimulus": "Pytanie i klamka",
+      "instruction": "Znajdź wspólną relację pytania i klamki. Napisz porównanie z „jak” albo własną metaforę. Możesz dopisać wyjaśnienie lub odrzucić obraz."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co może coś otworzyć albo zatrzymać na granicy?",
+      "Zacznij od działania: nacisku, otwarcia lub oczekiwania.",
+      "Pytanie nacisnęło klamkę rozmowy i poczekało na odpowiedź."
+    ],
+    "methodId": "M5",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "optional-m5-06",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "near-001",
+    "version": 1,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Warstwy i ślad ruchu",
+      "stimulus": "Szyszka",
+      "instruction": "Na nowym materiale skorzystaj z pracy nad cechami: wybierz jeden szczegół i ułóż własny krótki obraz. To bliskie przeniesienie, nie ta sama kategoria co nowe samodzielne pisanie."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co zmienia się przy dotyku albo poruszeniu?",
+      "Wybierz jedną cechę, relację lub dźwięk.",
+      "Przedmiot zostawił na dłoni mały ślad swojego kształtu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "near-001",
+    "setRole": "near_transfer",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "near-002",
+    "version": 1,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Miejsce na palec",
+      "stimulus": "Metalowy naparstek",
+      "instruction": "Na nowym materiale skorzystaj z pracy nad cechami: wybierz jeden szczegół i ułóż własny krótki obraz. To bliskie przeniesienie, nie ta sama kategoria co nowe samodzielne pisanie."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co zmienia się przy dotyku albo poruszeniu?",
+      "Wybierz jedną cechę, relację lub dźwięk.",
+      "Przedmiot zostawił na dłoni mały ślad swojego kształtu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "near-002",
+    "setRole": "near_transfer",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "near-003",
+    "version": 1,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Co unosi splot",
+      "stimulus": "Pusty koszyk",
+      "instruction": "Na nowym materiale skorzystaj z pracy nad cechami: wybierz jeden szczegół i ułóż własny krótki obraz. To bliskie przeniesienie, nie ta sama kategoria co nowe samodzielne pisanie."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co zmienia się przy dotyku albo poruszeniu?",
+      "Wybierz jedną cechę, relację lub dźwięk.",
+      "Przedmiot zostawił na dłoni mały ślad swojego kształtu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "near-003",
+    "setRole": "near_transfer",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "near-004",
+    "version": 1,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Pamięć zakrętu",
+      "stimulus": "Zwinięty przewód",
+      "instruction": "Na nowym materiale skorzystaj z pracy nad cechami: wybierz jeden szczegół i ułóż własny krótki obraz. To bliskie przeniesienie, nie ta sama kategoria co nowe samodzielne pisanie."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co zmienia się przy dotyku albo poruszeniu?",
+      "Wybierz jedną cechę, relację lub dźwięk.",
+      "Przedmiot zostawił na dłoni mały ślad swojego kształtu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "near-004",
+    "setRole": "near_transfer",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  },
+  {
+    "id": "near-005",
+    "version": 1,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Drobne zagłębienia",
+      "stimulus": "Kawałek pumeksu",
+      "instruction": "Na nowym materiale skorzystaj z pracy nad cechami: wybierz jeden szczegół i ułóż własny krótki obraz. To bliskie przeniesienie, nie ta sama kategoria co nowe samodzielne pisanie."
+    },
+    "constraints": [
+      "Jedna cecha i jedno zdanie też wystarczą."
+    ],
+    "hints": [
+      "Co zmienia się przy dotyku albo poruszeniu?",
+      "Wybierz jedną cechę, relację lub dźwięk.",
+      "Przedmiot zostawił na dłoni mały ślad swojego kształtu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "near-005",
+    "setRole": "near_transfer",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "materiał-autorski"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski, prywatny; licencja wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jeden szczegół. Zapisz jedno własne zdanie; pozostałe kroki możesz pominąć.",
+    "optionalConstraint": "Jeśli chcesz, ogranicz tekst do dwóch zdań.",
+    "sourceText": null
+  }
+]

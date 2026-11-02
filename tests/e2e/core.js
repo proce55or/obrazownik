@@ -1,4 +1,5 @@
 async function scenario(page) {
+  const origin=new URL(page.url()).origin;
   const assert = (value, message) => {
     if (!value) throw new Error(message);
   };
@@ -11,7 +12,7 @@ async function scenario(page) {
   const network = [],
     errors = [];
   page.on("request", (request) => {
-    if (!request.url().startsWith("http://127.0.0.1:4317/"))
+    if (!request.url().startsWith(origin+"/"))
       network.push(request.url());
   });
   page.on("pageerror", (error) => errors.push(error.message));

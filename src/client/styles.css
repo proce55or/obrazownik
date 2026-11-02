@@ -899,3 +899,20 @@ footer {
   overflow: hidden;
   white-space: nowrap;
 }
+.scaffold{border:1px solid var(--border);padding:22px;border-radius:6px;margin:26px 0}.scaffold h3{margin-bottom:8px}.scaffold-field{display:block;margin-top:18px;font-size:.86rem}.scaffold-field textarea{display:block;width:100%;min-height:85px;border:1px solid #c9d1c1;border-radius:5px;background:#fffdf8;padding:12px;color:inherit;resize:vertical;margin-top:8px}.about-exercise{margin:18px 0;font-size:.86rem}.about-exercise p{max-width:750px}.other-starts{margin-bottom:32px}
+.choice{display:flex;align-items:flex-start;gap:12px;font-size:.88rem;margin:14px 0;min-height:44px}.choice input{width:20px;height:20px;margin-top:4px;flex-shrink:0}.card-catalog{margin-bottom:34px}.card-catalog .ratings-grid{grid-template-columns:1fr 1fr}.card-catalog p{font-size:.9rem;margin-top:18px}@media(max-width:600px){.card-catalog .ratings-grid{grid-template-columns:1fr}}
+.new-writing{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:28px 0;margin-top:32px}.new-writing h2{font-size:1.9rem;margin:12px 0}.new-writing p{font-size:.9rem;color:var(--muted);max-width:700px}
+.word-bank{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}.word-bank button{min-height:44px;padding:6px 10px}.source-workshop .preserve-text{font-size:1rem}.source-workshop summary{cursor:pointer;min-height:44px}
+.site-nav{display:flex;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:18px;margin-bottom:30px}.site-nav button[aria-current=page]{background:var(--green);color:white}.settings h2{font-size:1.8rem}.settings input:not([type=checkbox]),.settings select{display:block;padding:10px;border:1px solid #c9d1c1;background:#fffdf8;border-radius:5px;width:100%;font:inherit;color:inherit;margin-top:8px;min-width:0}.settings label{display:block;font-size:.85rem}.settings fieldset{border:1px solid var(--border);border-radius:6px;margin:20px 0;padding:15px}.settings legend{font-size:.85rem}.settings .choice{display:flex}.data-path{overflow-wrap:anywhere;font-size:.9rem}.backup-row{display:grid;gap:5px;border-bottom:1px solid var(--border);padding:10px 0;font-size:.75rem;overflow-wrap:anywhere}.session-panel{padding:24px;background:#eef0e6;border:1px solid var(--border);border-radius:6px;margin:30px 0}.session-panel h2{font-size:1.7rem}.session-panel label{font-size:.85rem}.session-panel select{display:block;min-height:44px;background:#fffdf8;border:1px solid var(--border);border-radius:5px;padding:9px;color:inherit}.session-panel .draft-link{font-size:.85rem}
+
+.font-16 .writing-field,.font-16 .preserve-text,.font-16 .prompt-card p,.font-16 .notebook-editor textarea{font-size:16px}
+.font-17 .writing-field,.font-17 .preserve-text,.font-17 .prompt-card p,.font-17 .notebook-editor textarea{font-size:17px}
+.font-18 .writing-field,.font-18 .preserve-text,.font-18 .prompt-card p,.font-18 .notebook-editor textarea{font-size:18px}
+.font-19 .writing-field,.font-19 .preserve-text,.font-19 .prompt-card p,.font-19 .notebook-editor textarea{font-size:19px}
+.font-20 .writing-field,.font-20 .preserve-text,.font-20 .prompt-card p,.font-20 .notebook-editor textarea{font-size:20px}
+.font-21 .writing-field,.font-21 .preserve-text,.font-21 .prompt-card p,.font-21 .notebook-editor textarea{font-size:21px}
+.font-22 .writing-field,.font-22 .preserve-text,.font-22 .prompt-card p,.font-22 .notebook-editor textarea{font-size:22px}
+.font-23 .writing-field,.font-23 .preserve-text,.font-23 .prompt-card p,.font-23 .notebook-editor textarea{font-size:23px}
+.font-24 .writing-field,.font-24 .preserve-text,.font-24 .prompt-card p,.font-24 .notebook-editor textarea{font-size:24px}
+.font-25 .writing-field,.font-25 .preserve-text,.font-25 .prompt-card p,.font-25 .notebook-editor textarea{font-size:25px}
+.font-26 .writing-field,.font-26 .preserve-text,.font-26 .prompt-card p,.font-26 .notebook-editor textarea{font-size:26px}

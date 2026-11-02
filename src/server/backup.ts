@@ -17,10 +17,15 @@ export async function verifiedBackup(db: DatabaseSync, dataDir: string, kind: st
   const dir = safeSubdir(dataDir,'backups');
   const filename=`${kind}-${new Date().toISOString().replace(/[:.]/g,'-')}-${randomUUID()}.sqlite`;
   const target=path.join(dir,filename), temp=target+'.tmp';
+  const sourcePath=String(db.prepare('PRAGMA database_list').all().find(row=>row.name==='main')?.file??'');
+  // A separate read connection avoids using the writing connection concurrently
+  // with node:sqlite's asynchronous backup steps. WAL is included by SQLite.
+  const source=sourcePath?new DatabaseSync(sourcePath,{readOnly:true}):db;
   try {
-    await backup(db,temp);chmodSync(temp,0o600);
+    await backup(source,temp);chmodSync(temp,0o600);
     const copy=new DatabaseSync(temp,{readOnly:true});
     try{if(copy.prepare('PRAGMA integrity_check').get()?.integrity_check!=='ok')throw new Error('Kontrola kopii nie powiodła się.');}finally{copy.close();}
     renameSync(temp,target);return filename;
   }catch(error){if(existsSync(temp))rmSync(temp);throw error;}
+  finally{if(source!==db)source.close();}
 }

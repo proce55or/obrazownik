@@ -13,6 +13,8 @@ import {
 } from "../domain/draft-queue";
 import { api, ApiError } from "./api";
 import { findRecovery, putRecovery, clearRecovery } from "./recovery";
+import { AboutExercise } from "./AboutExercise";
+import { FAMILY_LABELS } from "../shared/config";
 import { assistanceLabel, Versions } from "./AttemptNotes";
 interface Props {
   initial: AttemptDetail;
@@ -20,10 +22,11 @@ interface Props {
   onHome: () => Promise<void>;
   onReplace: (detail: AttemptDetail) => void;
 }
-type Action = "hint1" | "hint2" | "hint3" | "complete" | "skip" | "recovery";
+type Action = "hint1" | "hint2" | "hint3" | "complete" | "skip" | "recovery" | "assisted";
 export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
   const [attempt, setAttempt] = useState(initial.attempt),
     [text, setText] = useState(initial.attempt.currentText);
+  const [fields,setFields]=useState(initial.attempt.scaffolding);
   const [status, setStatus] = useState<SaveStatus>("saved"),
     [error, setError] = useState("");
   const [events, setEvents] = useState(initial.assistanceEvents),
@@ -84,9 +87,17 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
       window.removeEventListener("beforeunload", preventLoss);
     };
   }, [environmentId, initial.attempt.id, initial.attempt.currentText, initial.attempt.scaffolding, queue]);
+  useEffect(()=>{
+    const bank=initial.assistanceEvents.filter(event=>event.kind==='word_bank'&&event.status==='prepared');
+    const frame=requestAnimationFrame(()=>{for(const event of bank)void api(`/attempts/${initial.attempt.id}/hints/${event.id}/delivered`,'POST',{}).then(value=>{const delivered=AssistanceSchema.parse(value);setEvents(old=>old.map(e=>e.id===delivered.id?delivered:e));}).catch(()=>setError('Materiał źródłowy mógł zostać ujawniony; potwierdzenie nie dotarło.'));});return()=>cancelAnimationFrame(frame);
+  },[initial.attempt.id,initial.assistanceEvents]);
+  const writingRef=useRef<HTMLTextAreaElement>(null),[selection,setSelection]=useState({start:0,end:0});
+  function moveSelection(front:boolean){if(selection.end<=selection.start)return;const piece=text.slice(selection.start,selection.end),rest=text.slice(0,selection.start)+text.slice(selection.end),next=front?piece+' '+rest:rest+' '+piece;setText(next);queue.setText(next);setSelection({start:0,end:0});}
   async function copy() {
     try {
-      await navigator.clipboard.writeText(recovery?.text ?? text);
+      const localFields=recovery?.scaffolding??fields,body=recovery?.text??text;
+      const rendered=Object.entries(localFields).map(([id,value])=>`${attempt.scaffoldSlots.find(s=>s.id===id)?.label??id}: ${value}`).join('\n');
+      await navigator.clipboard.writeText(body+(rendered?'\n\nMoje pola:\n'+rendered:''));
       setError("Tekst skopiowany.");
     } catch {
       setError("Zaznacz tekst w polu i skopiuj go skrótem ⌘C.");
@@ -204,6 +215,7 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
       /* Status explains why the editor remains open. */
     }
   }
+  async function chooseAssistance(){try{const value=await perform('assisted',`/attempts/${attempt.id}/assisted`);if(value)onReplace(DetailSchema.parse(value));}catch{/* Original text remains in its own attempt. */}}
   async function pause() {
     setBusy(true);
     try {
@@ -230,13 +242,13 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
         pending.current = {
           kind: "recovery",
           path: `/attempts/${attempt.id}/recovery`,
-          body: { text: local, clientMutationId: crypto.randomUUID() },
+          body: { text: local, scaffolding:recovery?.scaffolding??fields, clientMutationId: crypto.randomUUID() },
         };
       setPendingKind("recovery");
       await api(pending.current.path, "POST", pending.current.body);
       pending.current = null;
       setPendingKind(null);
-      await clearRecovery(environmentId, attempt.id, local);
+      await clearRecovery(environmentId, attempt.id, local,recovery?.scaffolding??fields);
       onReplace(DetailSchema.parse(await api(`/attempts/${attempt.id}`)));
     } catch (failure) {
       setError(
@@ -269,7 +281,7 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
   }[status];
   const maxLevel = Math.max(
     0,
-    ...events.filter((e) => e.status !== "failed").map((e) => e.level),
+    ...events.filter((e) => e.status !== "failed"&&e.kind!=='word_bank').map((e) => e.level),
   );
   return (
     <section className="exercise">
@@ -283,7 +295,7 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
         >
           ← Zapisz szkic i wróć
         </button>
-        <span className="eyebrow">WŁAŚCIWOŚĆ I OBRAZ</span>
+        <span className="eyebrow">{attempt.mode==='independent'?'NOWE SAMODZIELNE PISANIE':attempt.setRole==='independent_writing'?'WERSJA WSPOMAGANA':FAMILY_LABELS[attempt.family]}</span>
       </div>
       <h1>{attempt.promptSnapshot.title}</h1>
       <div className="prompt-card">
@@ -296,6 +308,10 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
           </p>
         ))}
       </div>
+      {attempt.setRole!=='training'&&<p className="fine-print">{attempt.setRole==='near_transfer'?'Bliskie przeniesienie · nowy materiał':'Osobna pula tematów'} · {attempt.noveltyStatus==='new_confirmed'?'Nowość potwierdzona w historii aplikacji':attempt.noveltyStatus==='seen'?'Temat był już widziany':'Nowość niepotwierdzona — wcześniejsza historia jest nieznana'}</p>}
+      <AboutExercise attempt={attempt}/>
+      {attempt.scaffoldSlots.length>0&&<section className="scaffold"><h3>Moje kroki do własnego zdania</h3><p className="fine-print">Wybierz dowolne pole. Możesz pominąć wszystkie i od razu pisać.</p><div className="button-row">{attempt.scaffoldSlots.filter(slot=>!(slot.id in fields)).map(slot=><button className="secondary-button" key={slot.id} disabled={busy||checkingRecovery||!!recovery||status==='conflict'} onClick={()=>{const next={...fields,[slot.id]:''};setFields(next);queue.setScaffolding(next);}}>{slot.label} +</button>)}</div>{attempt.scaffoldSlots.filter(slot=>slot.id in fields).map(slot=><label className="scaffold-field" key={slot.id}>{slot.label}<textarea maxLength={4000} disabled={busy||checkingRecovery||!!recovery||status==='conflict'} value={fields[slot.id]} onChange={e=>{const next={...fields,[slot.id]:e.target.value};setFields(next);queue.setScaffolding(next);}}/></label>)}</section>}
+      {attempt.sourceText!==null&&<section className="scaffold source-workshop"><h3>Tekst źródłowy — pozostaje zachowany</h3><p className="preserve-text">{attempt.sourceText}</p><p className="fine-print">Możesz wybierać słowa, przestawiać fragmenty i dopisywać dowolne własne słowa. To tekst z rusztowaniem, osobny od nowego pisania.</p><details><summary>Wybierz słowa z fragmentu</summary><div className="word-bank">{attempt.sourceText.split(/\s+/).filter(Boolean).slice(0,160).map((word,index)=><button className="secondary-button" key={index} disabled={busy||!!recovery||checkingRecovery||status==='conflict'} onClick={()=>{const next=text+(text&&!/\s$/.test(text)?' ':'')+word;setText(next);queue.setText(next);}}>{word}</button>)}</div></details></section>}
       {recovery && (
         <aside className="recovery-panel" aria-label="Odzyskiwanie szkicu">
           <h2>Został tu niezapisany tekst</h2>
@@ -317,6 +333,7 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
                 onClick={() => {
                   setText(recovery.text);
                   queue.setText(recovery.text);
+                  setFields(recovery.scaffolding??{});queue.setScaffolding(recovery.scaffolding??{});
                   setRecovery(undefined);
                 }}
               >
@@ -356,6 +373,8 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
       </div>
       <textarea
         id="response"
+        ref={writingRef}
+        onSelect={()=>{const area=writingRef.current;if(area)setSelection({start:area.selectionStart,end:area.selectionEnd});}}
         className="writing-field"
         disabled={blocked}
         maxLength={50_000}
@@ -367,6 +386,7 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
         placeholder="Zacznij od jednego szczegółu…"
         aria-describedby="writing-note"
       />
+      {attempt.sourceText!==null&&<div className="button-row"><button className="secondary-button" disabled={blocked||selection.end<=selection.start} onClick={()=>moveSelection(true)}>Zaznaczenie na początek</button><button className="secondary-button" disabled={blocked||selection.end<=selection.start} onClick={()=>moveSelection(false)}>Zaznaczenie na koniec</button></div>}
       <div className="writing-meta">
         <p id="writing-note">
           Możesz pisać z pamięci, ze słów albo z obserwacji. Bez pośpiechu.
@@ -435,7 +455,7 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
           )}
         </div>
       )}
-      <aside className="hint-panel">
+      {attempt.mode==='independent'?<aside className="hint-panel"><h3>Twoje pierwsze słowa bez podpowiedzi</h3><p>Jeśli chcesz pomocy, zachowamy tę próbę osobno i otworzymy wersję wspomaganą. Możesz też po prostu przerwać.</p><button className="text-button" disabled={actionDisabled('assisted')} onClick={()=>{void chooseAssistance();}}>Potrzebuję pomocy — otwórz osobną wersję</button></aside>:<aside className="hint-panel">
         <div className="hint-top">
           <div>
             <h3>Gdy przyda się mały krok</h3>
@@ -471,7 +491,7 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
               2 · Prostszy krok
             </button>
           )}
-          {maxLevel >= 2 && (
+          {maxLevel >= 2 && attempt.setRole!=='independent_writing' && (
             <button
               className="secondary-button"
               disabled={actionDisabled("hint3")}
@@ -495,7 +515,7 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
             </div>
           ))}
         <p className="assistance-label">{assistanceLabel(events, attempt)}</p>
-      </aside>
+      </aside>}
       <div className="editor-actions">
         <button
           className="primary-button"
@@ -516,7 +536,7 @@ export function Editor({ initial, environmentId, onHome, onReplace }: Props) {
           Pomiń bez kary
         </button>
       </div>
-      <Versions versions={versions} />
+      <Versions versions={versions} slots={attempt.scaffoldSlots}/>
     </section>
   );
 }
