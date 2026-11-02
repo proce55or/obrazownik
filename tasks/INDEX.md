@@ -8,12 +8,12 @@ VERIFY_ON_MAC, DONE. Stan przyrostowy jest w STATE.md.
 | T01 | Działający lokalny szkielet | T00, także warunkowo w chmurze | DONE |
 | T02 | Trwałe dane i kontrakty | T01 | DONE |
 | T03 | Jedno pełne ćwiczenie i podpowiedzi | T02 | DONE |
-| T04 | Pozostałe ćwiczenia i pakiet treści | T03 | TODO |
-| T05 | Sesje, powroty i samodzielne próby | T04 | TODO |
-| T06 | Zeszyt i praca z własnym tekstem | T05 | TODO |
-| T07 | Kopie, import, odzyskanie i prywatność | T06 | TODO |
-| T08 | Dostępność, błędy, kompletne testy | T07 | TODO |
-| T09 | Uruchamianie na Macu i prywatny GitHub | T08 | TODO |
+| T04 | Pozostałe ćwiczenia i pakiet treści | T03 | DONE |
+| T05 | Sesje, powroty i samodzielne próby | T04 | DONE |
+| T06 | Zeszyt i praca z własnym tekstem | T05 | DONE |
+| T07 | Kopie, import, odzyskanie i prywatność | T06 | DONE |
+| T08 | Dostępność, błędy, kompletne testy | T07 | VERIFY_ON_MAC |
+| T09 | Uruchamianie na Macu i prywatny GitHub | T08 | VERIFY_ON_MAC |
 | T10 | Pilotaż i decyzja o kolejnych zmianach | T09 | TODO |
 
 T00 może pozostawić kontrolę sprzętu jako VERIFY_ON_MAC. Pozostałe zadania
@@ -34,5 +34,9 @@ publikacja źródeł. Zobacz docs/08-later.md. Nie implementuj ich wyprzedzając
 | T12 | SCI-01: pochodzenie, pomoc, ekspozycja i wymiana danych | DONE |
 | T13 | SCI-02: polskie E1 i E3 | DONE |
 | T14 | SCI-03: chronione nowe pisanie E6 | DONE |
-| T15 | SCI-04: warianty E2 i autorskie E5 | IN_PROGRESS |
-| T16 | SCI-05: kopia, pilotaż i przekazanie | TODO |
+| T15 | SCI-04: warianty E2 i autorskie E5 | DONE |
+| T16 | SCI-05: kopia, pilotaż i przekazanie | DONE |
+
+Odbiór lokalny: docs/11-release-verification.md. T08/T09 wymagają jeszcze
+rzeczywistego Safari i ręcznego startu z Findera. T10: instrukcja gotowa
+(docs/12-pilot.md), oczekuje rzeczywistych obserwacji autora.

@@ -1,41 +1,42 @@
 # Stan projektu
 Updated: 2026-11-02
-Active task: T15
-Status: IN_PROGRESS
-Environment: lokalny macOS 13.7.8, Intel, Node 24.21.0
+Active task: T10
+Status: TODO — oczekiwanie na obserwacje; MVP gotowe lokalnie
+Environment: macOS 13.7.8 Intel, Node 24.21.0
 Branch: main
-Last verified code commit: checkpoint SCI-02/03 i integracji MVP
 Remote: proce55or/obrazownik (private, zweryfikowane API)
 
 ## Działa
-- SCI-00/01: migracja2, unknown starszej historii, pochodzenie, ekspozycje,
-  eksport/import z remapem i sprawdzone kopie; teksty zachowane.
-- SCI-02/03: E1/E3 z własnymi polami, pre_hint/final; chronione nowe pisanie,
-  atomowe rezerwacje, osobna wersja do pomocy z zachowanym oryginałem.
-- Kod pełnego MVP: 5 rodzin, 60 bazowych +6 opcjonalnych +5 near +20 rezerwy,
-  3 archiwalne wersje E1, sesje, 2/7/21, zeszyt, dokumenty i obserwacje.
-- Narzędzia restore, repo-check i launcher przygotowane przez weryfikatora.
-- Brak LLM/API zewnętrznego w ćwiczeniach, dane poza repo.
+- Pełny lokalny MVP: pięć rodzin, 60 bazowych +6 opcjonalnych +5 near
+  +20 chronionych tematów, trzy archiwalne wersje E1, dziewięć metod.
+- SCI-00–05: źródła i ograniczenia metod, własne polskie pola E1/E3,
+  pre_hint/final, osobna wersja wspomagana, zachowany oryginał E5.
+- Sesje, powroty2/7/21, trwały zeszyt, wersje, porównanie i obserwacje,
+  kopie, JSON export/import, restore i launcher. Brak LLM/telemetrii.
+- Produkcja4317 działa z schema2, dane ~/Obrazownik-dane. Sprawdzona
+  kopia schema1 przed migracją; odciski tekstów/dat/wersji zgodne po niej.
 
 ## Weryfikacja
-- npm run check: 94 testy PASS, walidator 91 aktywnych/3 archiwalne PASS,
-  context i repo-check PASS. Build PASS.
-- E2E: autosave/pomoc/final/restart/recovery/2karty PASS;
-  polskie pola E3, źródła i nowe pisanie→osobna pomoc PASS.
-- Testy kopii współbieżnych, rzeczywistego restore, migracji, importu i10k
-  wpisów zeszytu: PASS; dane wyłącznie tymczasowe.
+- npm run check: 94 testy/19 plików PASS; walidator91+3 PASS,
+  TypeScript/lint/context/repo-check PASS. Build i pełne E2E PASS.
+- E2E: autosave/restart/recovery/konflikt/pomoc/pola, nowe pisanie,
+  zeszyt→E5, pięć rodzin po2 karty, opcjonalne metody, ustawienia,
+  kopia, JSON/importx2, porównanie, sesja i kopia dnia: PASS.
+- 320/390px, CSS zoom200%, fokus klawiatury: PASS. Kontrast opisów
+  poprawiony i sprawdzony. Dodatkowo zapis bez IndexedDB i sieci zewnętrznej PASS.
+- Restore/migracje/import i 10k rekordów zeszytu: testy tmpdir PASS.
+  npm audit i audit --omit=dev: 0 podatności.
+- Szczegóły: docs/11-release-verification.md; instrukcja README.md.
 
-## Następny krok
-Dokończ pełny przeglądarkowy odbiór zeszytu→E5, sesji, kopii/importu,
-obserwacji i opcjonalnych metod. Zaktualizuj README/pilotaż. Po testach
-przełącz produkcję i wypchnij kolejny sprawdzony commit.
+## Pozostało świadomie
+- Rzeczywiste Safari/powiększenie przeglądarki i dwuklik Findera:
+  VERIFY_ON_MAC, automatyzacja Safari niedostępna. Chromium na Macu działa.
+- T10: pilotaż przygotowany w docs/12-pilot.md, czeka na obserwacje autora.
+  Nie udowodniono skuteczności klinicznej. Nie wymyślać wyników pilotażu.
 
-## Ograniczenia
-- Produkcja4317 nadal uruchamia poprzedni proces; nie przepinano bazy w toku testów.
-- Testy4318, staging QA4319: osobne tmpdir, bez tekstów użytkownika.
-- Safari bez rzeczywistego odbioru; pilotaż użytkowy wymaga późniejszych obserwacji.
-- Jeden agent QA przerwał turn: Selected model is at capacity. Root kontynuuje.
-
-## Wznowienie
-Czytaj tasks/T15.md, git status. npm run check; npm run test:e2e (port4318).
-Nie uruchamiaj drugiego procesu na produkcyjnej bazie. Nie cofaj T00.
+## Zasoby i wznowienie
+Użytkownik nakazał pozostawić co najmniej20% limitu: sprawdzaj licznik
+Codex, zatrzymuj pracę z zapasem przed80% zużycia; limit wspólny dla konta.
+Ostatni odczyt54%. Nie kontynuuj tylko po to, aby zużywać limit.
+Po zgłoszeniu problemu: git status, właściwa karta i dowód; nie cofaj T00.
+Testy mają własny port4318 i tmpdir. Nigdy nie resetuj produkcyjnej bazy.

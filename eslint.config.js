@@ -14,7 +14,8 @@ export default ts.config(
         console: "readonly",
         document: "readonly",
         innerWidth: "readonly",
-        fetch: "readonly", URL:"readonly",
+        fetch: "readonly", URL:"readonly", Buffer:"readonly", window:"readonly",
+        HTMLButtonElement:"readonly", HTMLAnchorElement:"readonly", HTMLSelectElement:"readonly", getComputedStyle:"readonly",
       },
     },
     rules: {

@@ -1,5 +1,8 @@
 # Odbiór pierwszego działającego etapu T00–T03
 
+Zapis historyczny. Aktualny odbiór pełnego programu:
+[11-release-verification.md](11-release-verification.md).
+
 Sprawdzenie 2026-11-02 na lokalnym Intel/macOS 13.7.8, Node 24.21.0.
 Nie jest to odbiór pełnego MVP ani pilotaż użyteczności.
 

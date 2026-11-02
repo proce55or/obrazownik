@@ -6,7 +6,7 @@
   font-size: 18px;
   line-height: 1.6;
   --green: #30554a;
-  --muted: #6c756c;
+  --muted: #586653;
   --border: #dedfd4;
 }
 * {
@@ -147,22 +147,22 @@ main {
   font-weight: 600;
 }
 .eyebrow {
-  color: #69795f;
+  color: #596b50;
 }
 .version {
   font-size: 0.7rem;
-  color: #7b8076;
+  color: #606b58;
 }
 .small-heading {
   font-size: 0.9rem;
-  color: #75806e;
+  color: #596b50;
   margin-bottom: 18px;
 }
 .welcome {
   margin-bottom: 42px;
 }
 .intro {
-  color: #70766b;
+  color: #606b58;
   font-size: 1rem;
   line-height: 1.8;
   margin-bottom: 0;
@@ -187,7 +187,7 @@ main {
   margin-bottom: 15px;
 }
 .invitation p {
-  color: #647260;
+  color: #56684e;
   font-size: 0.91rem;
   line-height: 1.8;
   margin-bottom: 26px;
@@ -215,7 +215,7 @@ main {
 .button-note {
   display: block;
   font-size: 0.71rem;
-  color: #75806d;
+  color: #56684e;
   margin-top: 12px;
 }
 .window-art {
@@ -291,7 +291,7 @@ main {
   padding-top: 18px;
 }
 .note-number {
-  color: #929581;
+  color: #606b58;
   font-size: 0.6rem;
 }
 .quiet-grid h3 {
@@ -299,7 +299,7 @@ main {
 }
 .quiet-grid p {
   font-size: 0.83rem;
-  color: #777b71;
+  color: #606b58;
   line-height: 1.8;
   margin: 0;
 }
@@ -308,7 +308,7 @@ footer {
   padding: 24px 56px 28px;
   margin: auto;
   border-top: 1px solid var(--border);
-  color: #8a8e80;
+  color: #606b58;
   font-size: 0.68rem;
   display: flex;
   justify-content: space-between;
@@ -558,7 +558,7 @@ footer {
 }
 .draft-link small {
   display: block;
-  color: #6c756c;
+  color: #586653;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -642,13 +642,13 @@ footer {
   color: #596358;
 }
 .writing-field::placeholder {
-  color: #8a8c7d;
+  color: #626d59;
 }
 .writing-meta {
   display: flex;
   justify-content: space-between;
   gap: 25px;
-  color: #6c756c;
+  color: #586653;
   font-size: 0.68rem;
   margin: 10px 0 30px;
 }
@@ -757,7 +757,7 @@ footer {
 .reflection summary span {
   display: block;
   font-size: 0.7rem;
-  color: #6c756c;
+  color: #586653;
   margin: 4px 0 18px;
 }
 .ratings-grid {

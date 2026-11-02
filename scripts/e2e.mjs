@@ -109,6 +109,10 @@ try {
   run(["run-code", "--filename", "tests/e2e/restart.js"], "RESTART_PASS");
   run(["run-code","--filename","tests/e2e/science.js"],"SCIENCE_PASS");
   console.log("PASS: Polish verb fields, snapshots, provenance and independent-to-assisted writing.");
+  run(["run-code","--filename","tests/e2e/product.js"],"PRODUCT_PASS");
+  console.log("PASS: own document → E5, all exercise families, settings, backup, JSON export/import, comparison and session.");
+  run(["run-code","--filename","tests/e2e/readability.js"],"READABILITY_PASS");
+  console.log("PASS: two cards per family, optional variants, 320/390px, 200% CSS zoom and keyboard focus.");
   console.log(
     "PASS: server restart preserves text, final and help; session/CSRF reconnects.",
   );
