@@ -1,7 +1,7 @@
 # Stan projektu
 Updated: 2026-11-03, Europe/Warsaw
-Active task: T18
-Status: IN_PROGRESS — przygotowana nocna kontrola po bezczynności
+Active task: T10
+Status: READY_FOR_USER — nocny odbiór zakończony
 Environment: macOS13.7.8 Intel, Node24.21.0
 Branch: main; zweryfikowany kod:8a4f698
 Release: 0.2.0, schema3
@@ -32,14 +32,14 @@ Pomiary: docs/14-bielik-benchmark.md; kontrakt: docs/15-bielik-resume.md.
 - Ręczne Safari i literalny dwuklik Findera pozostają VERIFY_ON_MAC;
   T10 czeka na rzeczywiste obserwacje autora. Brak dowodu skuteczności klinicznej.
 
-## Nocny nadzór i limit
-Harmonogram `obrazownik-nocne-doko-czenie-i-kontrola`: ACTIVE w tej rozmowie,
-co godzinę, maksymalnie10 razy, najpóźniej03.11 o11:00. T18 opisuje jedną
-kontrolę po bezczynności i wyłączenie harmonogramu po sukcesie.
-Baseline w ~/Obrazownik-modele/bielik-7b/qa-night przygotowany; komenda:
-`node scripts/check-bielik-idle.mjs --verify`. Nie powtarzaj --prepare.
-Nocny test nie został jeszcze wykonany — nie raportuj go jako PASS.
-Caffeinate do11:00, PID w logs/night-awake.json; ekran może się wygasić.
+## Nocny odbiór i limit
+T18 DONE:03.11 o02:18 Warszawa, `check-bielik-idle.mjs --verify` PASS.
+Aplikacja0.2.0 i właściwy Bielik dostępne. Bufor z dysku niezmieniony po81min
+od przygotowania; nowa syntetyczna odpowiedź w3,60s. Bez otwierania bazy
+użytkownika. Wynik: ~/Obrazownik-modele/bielik-7b/qa-night/last-result.json.
+Harmonogram `obrazownik-nocne-doko-czenie-i-kontrola` usunięty po sukcesie;
+własny caffeinate zakończony. Aplikacja i model pozostawione uruchomione.
+Nie powtarzać testów bez nowej przyczyny. Następny krok: pilotaż autoraT10.
 Cel zostawić20%,15% to dolna granica użytkownika. Przy>=78% lub braku
-licznika nie zaczynaj kosztownej pracy; zapisz stan i wyłącz harmonogram.
-Ostatni odczyt58%. Limit wspólny dla konta. Testy tylko na danych syntetycznych.
+licznika nie zaczynać kosztownej pracy. Odczyt po kontroli58% wykorzystane,
+42% pozostało. Limit wspólny dla konta. Testy tylko na danych syntetycznych.
