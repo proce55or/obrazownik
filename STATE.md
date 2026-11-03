@@ -34,12 +34,12 @@ Pomiary: docs/14-bielik-benchmark.md; kontrakt: docs/15-bielik-resume.md.
 
 ## Nocny nadzór i limit
 Harmonogram `obrazownik-nocne-doko-czenie-i-kontrola`: ACTIVE w tej rozmowie,
-co godzinę, maksymalnie7 razy, najpóźniej03.11 o08:00. T18 opisuje jedną
+co godzinę, maksymalnie10 razy, najpóźniej03.11 o11:00. T18 opisuje jedną
 kontrolę po bezczynności i wyłączenie harmonogramu po sukcesie.
 Baseline w ~/Obrazownik-modele/bielik-7b/qa-night przygotowany; komenda:
 `node scripts/check-bielik-idle.mjs --verify`. Nie powtarzaj --prepare.
 Nocny test nie został jeszcze wykonany — nie raportuj go jako PASS.
-Caffeinate do08:00, PID w logs/night-awake.json; ekran może się wygasić.
+Caffeinate do11:00, PID w logs/night-awake.json; ekran może się wygasić.
 Cel zostawić20%,15% to dolna granica użytkownika. Przy>=78% lub braku
 licznika nie zaczynaj kosztownej pracy; zapisz stan i wyłącz harmonogram.
 Ostatni odczyt58%. Limit wspólny dla konta. Testy tylko na danych syntetycznych.
