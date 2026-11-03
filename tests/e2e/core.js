@@ -1,4 +1,12 @@
 async function scenario(page) {
+  const nav = async name => {
+    const button = page.getByRole('button', {name, exact: true});
+    if (!await button.isVisible()) {
+      const menu = page.getByRole('button', {name: /^Menu ·/});
+      if (await menu.isVisible() && await menu.getAttribute('aria-expanded') === 'false') await menu.click();
+    }
+    await button.click();
+  };
   const origin=new URL(page.url()).origin;
   const assert = (value, message) => {
     if (!value) throw new Error(message);
@@ -34,10 +42,9 @@ async function scenario(page) {
       .filter({ hasText: "Zapisano na Macu" })
       .waitFor();
   }
-  if (!await page.locator('details.more-options').evaluate(node => node.open)) await page.getByText('Więcej możliwości', {exact:true}).click();
-  await page
-    .getByRole("button", { name: "Zużyta rękawiczka", exact: true })
-    .click();
+  await nav('Ćwiczenia');
+  await page.getByRole('combobox', {name: 'Temat ćwiczenia', exact: true}).selectOption('property-glove-01');
+  await nav('Otwórz wybrane ćwiczenie');
   await page
     .getByRole("textbox", { name: "Twoje słowa", exact: true })
     .waitFor({ state: "visible" });
@@ -127,10 +134,9 @@ async function scenario(page) {
     path: "output/playwright/e2e-desktop.png",
     fullPage: true,
   });
-  if (!await page.locator('details.more-options').evaluate(node => node.open)) await page.getByText('Więcej możliwości', {exact:true}).click();
-  await page
-    .getByRole("button", { name: "Pusta filiżanka", exact: true })
-    .click();
+  await nav('Ćwiczenia');
+  await page.getByRole('combobox', {name: 'Temat ćwiczenia', exact: true}).selectOption('property-cup-01');
+  await nav('Otwórz wybrane ćwiczenie');
   await fillSaved("Tekst na Macu.");
   await page.route("**/api/attempts/*", (route) =>
     route.request().method() === "PATCH"

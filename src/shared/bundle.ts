@@ -1,10 +1,11 @@
 import { z } from 'zod';
+import { hasGuidedIdentity } from './guided.js';
 import { AttemptSchema, VersionSchema, AssistanceSchema, SettingsSchema, MethodSchema } from './schemas.js';
 import { CardSchema } from '../domain/cards.js';
 import { SessionSchema, DocumentSchema, DocumentVersionSchema, ReviewSchema } from './records.js';
 export const BundleExposureSchema = z.object({id:z.string().min(1).max(300),cardId:z.string().min(1).max(100),cardVersion:z.number().int().positive(),itemFamilyId:z.string().max(150),attemptId:z.uuid().nullable(),kind:z.enum(['preview','prompt','reserved']),shownAt:z.iso.datetime()}).strict();
 export const BundleSchema = z.object({
- format:z.literal('obrazownik'),formatVersion:z.literal(1),appVersion:z.string().max(30).default('0.1.0'),schemaVersion:z.union([z.literal(2),z.literal(3)]),exportedAt:z.iso.datetime(),
+ format:z.literal('obrazownik'),formatVersion:z.literal(1),appVersion:z.string().max(30).default('0.1.0'),schemaVersion:z.union([z.literal(2),z.literal(3),z.literal(4)]),exportedAt:z.iso.datetime(),
  exposureHistory:z.enum(['known','unknown']),settings:SettingsSchema,
  attempts:z.array(AttemptSchema).max(100000),versions:z.array(VersionSchema).max(500000),assistanceEvents:z.array(AssistanceSchema).max(500000),
  exposures:z.array(BundleExposureSchema).max(500000),sessions:z.array(SessionSchema).max(100000),documents:z.array(DocumentSchema).max(100000),documentVersions:z.array(DocumentVersionSchema).max(500000),reviews:z.array(ReviewSchema).max(500000),methods:z.array(MethodSchema).max(1000),cards:z.array(CardSchema).max(10000),
@@ -16,6 +17,18 @@ export const BundleSchema = z.object({
  for(const id of attempts.keys())if(documents.has(id))fail('Niejednoznaczny identyfikator próby i dokumentu');
  if(new Set(b.reviews.map(r=>r.sourceAttemptId+':'+r.offsetDays)).size!==b.reviews.length)fail('Powtórzony termin powrotu');
  for(const a of b.attempts){if(a.sessionId&&!sessions.has(a.sessionId))fail('Brak sesji próby');if(a.sourceAttemptId&&!attempts.has(a.sourceAttemptId))fail('Brak źródłowej próby');if(a.sourceDocumentId&&!documents.has(a.sourceDocumentId))fail('Brak źródłowego dokumentu');}
+ const events = new Map(b.assistanceEvents.map(event => [event.id, event]));
+ for (const attempt of b.attempts) if (attempt.guided) {
+   if (b.schemaVersion < 4 || !hasGuidedIdentity(attempt)) fail('Niezgodny zapis ćwiczenia prowadzonego');
+   for (const review of [...attempt.guided.history, ...(attempt.guided.feedback ? [attempt.guided.feedback] : [])]) {
+     const event = events.get(review.eventId);
+     if (!event || event.attemptId !== attempt.id || event.kind !== 'guided_feedback' || event.provider !== 'bielik_local' ||
+       JSON.stringify(event.llm) !== JSON.stringify(review.llm) || event.revealedContentSnapshot !== JSON.stringify(review.feedback))
+       fail('Brak zgodnej informacji zwrotnej ćwiczenia prowadzonego');
+     if (review.answerRevision >= attempt.revision || !review.answer.includes(review.feedback.quote))
+       fail('Niezgodna odpowiedź informacji zwrotnej');
+   }
+ }
  for(const v of [...b.versions,...b.assistanceEvents])if(!attempts.has(v.attemptId))fail('Brak próby wersji/pomocy');
  for(const e of b.exposures)if(e.attemptId&&!attempts.has(e.attemptId))fail('Brak próby ekspozycji');
  for(const v of b.documentVersions)if(!documents.has(v.documentId))fail('Brak dokumentu wersji');

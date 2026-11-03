@@ -16,18 +16,24 @@ async function scenario(page) {
     if (!response.ok) throw new Error(`${method} ${url}: ${response.status}`);
     return response.json();
   }, {url, method, body});
-  const nav = (target, name) => target.getByRole('button', {name, exact: true}).click();
+  const nav = async (target, name) => {
+    const button = target.getByRole('button', {name, exact: true});
+    if (!await button.isVisible()) {
+      const menu = target.getByRole('button', {name: /^Menu ·/});
+      if (await menu.isVisible() && await menu.getAttribute('aria-expanded') === 'false') await menu.click();
+    }
+    await button.click();
+  };
   const responseBox = target => target.getByRole('textbox', {name: 'Twoje słowa', exact: true});
   const saved = async target => { try { await target.locator('.save-status').filter({hasText: 'Zapisano na Macu'}).waitFor({timeout:5000}); } catch { throw new Error('Save did not settle: ' + (await target.locator('main').innerText()).slice(-3500)); } };
   const home = async target => {
     await target.goto(origin);
-    await target.getByRole('button', {name: 'Zeszyt', exact: true}).waitFor();
-    const more = target.locator('details.more-options');
-    if (await more.count() && !await more.evaluate(node => node.open)) await more.locator('summary').first().click();
+    await target.getByRole('button', {name: 'Przejdź do ćwiczeń', exact: true}).click();
   };
   const openExercise = async target => {
     const created = target.waitForResponse(r => new URL(r.url()).pathname === '/api/attempts' && r.request().method() === 'POST' && r.ok());
-    await target.locator('.other-starts button').first().click();
+    await target.getByRole('combobox', {name: 'Temat ćwiczenia', exact: true}).selectOption('property-glove-01');
+    await nav(target, 'Otwórz wybrane ćwiczenie');
     const attempt = await (await created).json();
     await responseBox(target).waitFor();
     await target.waitForFunction(() => !document.querySelector('#response').disabled);
@@ -44,7 +50,7 @@ async function scenario(page) {
       }
       return route.continue();
     });
-    await nav(tab, 'Zacznij pisać');
+    await nav(tab, 'Otwórz wybrane ćwiczenie');
     await tab.getByText('Nie można teraz otworzyć tego ćwiczenia.', {exact: true}).waitFor();
     await openExercise(tab);
     await tab.unroute('**/api/attempts');
@@ -61,7 +67,7 @@ async function scenario(page) {
       acceptedStart = await (await route.fetch()).json();
       await route.abort('failed');
     });
-    await nav(tab, 'Zacznij pisać');
+    await nav(tab, 'Otwórz wybrane ćwiczenie');
     await tab.getByRole('button', {name: 'Ponów rozpoczęcie ćwiczenia', exact: true}).waitFor();
     await tab.unroute('**/api/attempts');
     const repeatedStart = tab.waitForRequest(r => new URL(r.url()).pathname === '/api/attempts' && r.method() === 'POST');
@@ -150,7 +156,7 @@ async function scenario(page) {
 
     // Document title and body share autosave/recovery. A lost PATCH is replayable.
     await home(tab);
-    await nav(tab, 'Zeszyt');
+    await nav(tab, 'Moje teksty');
     await tab.getByRole('button', {name: 'Nowy tekst', exact: false}).click();
     await tab.getByLabel('Tytuł', {exact: true}).fill('Dokument błędów klienta');
     await nav(tab, 'Utwórz tekst');
@@ -162,7 +168,7 @@ async function scenario(page) {
     assert(doc, 'Title alone did not autosave');
     const secondDocument = await context.newPage();
     await home(secondDocument);
-    await nav(secondDocument, 'Zeszyt');
+    await nav(secondDocument, 'Moje teksty');
     await secondDocument.locator('.notebook-list article').filter({hasText: doc.title}).getByRole('button', {name: 'Otwórz tekst', exact: true}).click();
     let releaseDocument;
     const documentGate = new Promise(resolve => { releaseDocument=resolve; });
@@ -208,7 +214,7 @@ async function scenario(page) {
     await tab.unroute('**/api/documents/*');
     tab.once('dialog', dialog => dialog.accept());
     await tab.reload();
-    await nav(tab, 'Zeszyt');
+    await nav(tab, 'Moje teksty');
     await tab.locator('.notebook-list article').filter({hasText: 'Tytuł zapisany automatycznie'}).getByRole('button', {name: 'Otwórz tekst', exact: true}).click();
     await tab.getByRole('heading', {name: 'Odnaleziono niezapisany tekst', exact: true}).waitFor();
     await tab.waitForFunction(() => document.activeElement.classList.contains('recovery-panel'));

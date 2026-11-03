@@ -98,12 +98,12 @@ try {
   run(["snapshot"]);
   const only = process.env.OBRAZOWNIK_TEST_ONLY;
   if (only) {
-    if (!["buffer-tools", "client-errors", "layout", "readability", "local-model", "local-model-buffer"].includes(only))
+    if (!["buffer-tools", "client-errors", "layout", "readability", "local-model", "local-model-buffer", "guided"].includes(only))
       throw new Error("Unknown focused scenario");
     run(
       ["run-code", "--filename", `tests/e2e/${only}.js`],
       `${only.toUpperCase().replaceAll("-", "_")}_PASS`,
-      120_000,
+      only === "guided" ? 650_000 : 120_000,
     );
     console.log(`PASS: ${only}`);
   } else {

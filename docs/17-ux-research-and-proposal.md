@@ -30,16 +30,8 @@ W kroku 3 zmierzono początek textarea na y=1104 CSS px, wysokość strony
 każdego urządzenia. Konkretny przykład pokazuje dużą odległość polecenia,
 pisania i zakończenia, mimo dostępnej szerokości okna.
 
-1. Start:
-![Obecny start](../output/ux-audit-2026-11-03/01-start.jpg)
-2. Wybór, po rozwinięciu obu sekcji:
-![Obecny wybór](../output/ux-audit-2026-11-03/02-wybor.jpg)
-3. Pisanie:
-![Obecne ćwiczenie](../output/ux-audit-2026-11-03/03-cwiczenie.jpg)
-4. Zakończenie z tekstem syntetycznym:
-![Obecne zakończenie](../output/ux-audit-2026-11-03/04-zakonczenie.jpg)
-
-Obrazy w output są lokalnymi materiałami audytu, poza Git.
+Zrzuty czterech ekranów: `output/ux-audit-2026-11-03/01-start.jpg`
+do `04-zakonczenie.jpg`, lokalnie, poza Git.
 
 ## Aktualne źródła i ich zastosowanie
 
@@ -78,50 +70,23 @@ Obrazy w output są lokalnymi materiałami audytu, poza Git.
    pismo18–22px są naszymi bardziej komfortowymi założeniami, nie rzekomym
    wymogiem WCAG dotyczącym konkretnej wielkości fontu.
 
-## Trzy priorytety przebudowy
+## Priorytety integracji
 
-### 1. Układ aplikacji i menu
+Menu boczne Start / Ćwiczenia / Moje teksty / Ustawienia i odsyłacz
+Jak korzystać. W wąskim ekranie podpisane menu zwijane. Start ma jedno
+główne działanie; otwarty szkic prowadzi do kontynuacji. Polecenie, tekst
+i następny krok obok siebie. Podstawy naukowe i narzędzia są opcjonalne.
+Przy wielu etapach widoczny krok oraz wcześniejsza odpowiedź.
 
-- Start: jedna propozycja ćwiczenia; dla otwartego szkicu jedno działanie
-  „Kontynuuj ćwiczenie”. Bez dużego hasła powitalnego i kilku paneli startu.
-- Ćwiczenia: osobny katalog z prostym opisem celu i przykładem rodzaju zadania.
-  Obecne identyfikatory i rodziny pozostają w danych; nazwy w UI opisują działanie.
-- Moje teksty: szkice, ukończone ćwiczenia, własne pisanie. Obserwacje jako
-  podrzędny widok, bez ocen talentu i klinicznego „postępu”.
-- Ustawienia: czytelność, lokalny model, kopie i wymiana danych.
-- Osobny, stale dostępny odsyłacz „Jak korzystać”.
+Objaśnienia obsługi: hover/fokus/klik, Escape, globalny wyłącznik.
+Nie zastępują widocznych poleceń. Podpowiedzi do treści są osobną pomocą
+rejestrowaną z pochodzeniem; w próbach chronionych pozostają zablokowane.
+Zmiana instrukcji wymaga nowej wersji karty, bez nadpisywania dawnych
+promptSnapshot. Zachować DraftQueue, CAS, potwierdzenia i odzyskiwanie.
 
-Na komputerze menu boczne z etykietami i wybraną sekcją; w wąskim oknie
-podpisane menu zwijane. Nie wymuszać braku przewijania kosztem dużego pisma.
-
-### 2. Prowadzenie przez ćwiczenie
-
-Nagłówek opisuje zadanie: „Opisz jedną cechę kamienia”. Następnie polecenie,
-pole tekstu i przycisk zakończenia. Informacja „Gdy skończysz, wybierz
-Zakończ ćwiczenie” stale widoczna. Podstawy naukowe i opcjonalne narzędzia
-nie poprzedzają tekstu w podstawowej ścieżce.
-
-Przy złożonych zadaniach pokazywać bieżący etap i wcześniejszą odpowiedź.
-Nie oceniać automatycznie jakości tekstu ani wymuszać kolejnej odpowiedzi.
-
-Nowe sformułowania poleceń wymagają nowych wersji kart, jeśli zmieniają
-stimulus/instrukcję. Nie nadpisywać promptSnapshot dawnych prób.
-
-### 3. Dwa różne rodzaje pomocy
-
-**Objaśnienia obsługi** wyjaśniają funkcję sekcji/przycisku. Włączane
-przełącznikiem, z krótkim opóźnieniem hover, także po kliknięciu/fokusie.
-Podstawowe polecenia pozostają widoczne po wyłączeniu dymków.
-
-**Podpowiedzi do treści** są ujawniane na żądanie i nadal podlegają zapisowi
-pochodzenia pomocy. Można zaproponować wybór „Bez Bielika / Z Bielikiem”
-przed nową próbą; wybór musi być utrwalony w konfiguracji tej próby.
-Opis jasno mówi, że obecny Bielik zna temat, ale nie czyta wpisanego tekstu.
-Nowy interfejs sam w sobie nie poprawia trafności generowanych pytań.
-
-Instrukcje obsługi nie są pomocą językową. Przykłady odpowiedzi i pytania
-naprowadzające nadal wymagają rejestracji. W próbach chronionych pozostają
-objaśnienia obsługi, ale treściowe podpowiedzi i LLM pozostają zablokowane.
+Bielik0.2.1 znał temat, ale nie czytał odpowiedzi. Sam układ nie poprawia
+trafności pytań. T21, jawnie zlecone później: osobne ćwiczenie z lokalnym
+omówieniem bieżącej odpowiedzi i trzema etapami; bez ocen talentu.
 
 ## Klikalna propozycja
 
@@ -150,14 +115,7 @@ Nie jest to pełny audyt WCAG ani badanie z grupą użytkowników. Rzeczywista
 ocena zrozumiałości musi obejmować pierwsze wykonanie zadania bez tłumaczenia
 poza aplikacją. Nie testowano tu całego katalogu, Safari ani Windows.
 
-Integracja w kolejnej jednostce:
-1. Układ i menu zachowujące DraftQueue, potwierdzenia, CAS i ratunkowe kopie.
-2. Ćwiczenie i objaśnienia, błędy/offline/retry, prawdziwa dostępność modelu,
-   kompatybilne zapamiętywanie preferencji i wersjonowanie kart.
-3. Pełny katalog, zeszyt, obserwacje i ustawienia. Odbiór klawiaturą,
-   powiększeniem i wąskim ekranem; zapis po restarcie, CAS, chronione próby,
-   eksport/import. Wdrożenie po kontrolach na danych syntetycznych.
-
-Kryterium użytkowe: autor bez pomocy rozmowy potrafi rozpocząć, powiedzieć
-własnymi słowami, jakie ma zadanie, napisać odpowiedź, zakończyć i znaleźć
-tekst. Sprawdzić także samodzielne włączenie/wyłączenie objaśnień.
+Odbiór integracji: zapis po restarcie, CAS, błędy/offline/retry, chronione
+próby, eksport/import, klawiatura i wąski ekran. Dane syntetyczne w tmpdir.
+Kryterium użytkowe: autor bez rozmowy potrafi zacząć, wyjaśnić zadanie,
+napisać, zakończyć i znaleźć tekst. Wymaga rzeczywistego pilotażu.

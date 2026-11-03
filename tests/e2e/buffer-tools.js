@@ -1,6 +1,13 @@
 async function scenario(page) {
   const assert=(ok,message)=>{if(!ok)throw new Error(message);};
-  const nav=name=>page.getByRole('button',{name,exact:true}).click();
+  const nav = async name => {
+    const button = page.getByRole('button', {name, exact: true});
+    if (!await button.isVisible()) {
+      const menu = page.getByRole('button', {name: /^Menu ·/});
+      if (await menu.isVisible() && await menu.getAttribute('aria-expanded') === 'false') await menu.click();
+    }
+    await button.click();
+  };
   const origin=new URL(page.url()).origin;
   // The database is disposable and owned by this harness.
   const boot=await page.evaluate(async()=> (await fetch('/api/bootstrap')).json());
@@ -11,6 +18,8 @@ async function scenario(page) {
   },boot.settings);
   await page.route('**/api/attempts/*/llm/status',route=>route.fulfill({json:{status:'error',message:'Model testowo niedostępny.',prefetchEnabled:false}}));
   await page.reload();
+  await nav('Ćwiczenia');
+  await page.getByText('Krótka sesja z kilkoma ćwiczeniami', {exact:true}).click();
   await nav('Zaproponuj krótką sesję');
   await page.locator('.session-panel .draft-link').first().click();
   await page.getByText('Nie udało się przygotować pytania.',{exact:false}).waitFor();
@@ -23,7 +32,7 @@ async function scenario(page) {
   await page.getByText('Źródła użytej pomocy',{exact:true}).click();
   await page.getByText('Gotowa pomoc aplikacji',{exact:true}).waitFor();
   await nav('Wróć do Dzisiaj');
-  await nav('Ustawienia i kopie');
+  await nav('Ustawienia');
   await page.evaluate(async env=>{
     const db=await new Promise((resolve,reject)=>{const r=window.indexedDB.open('obrazownik-recovery-v1',1);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});
     await new Promise((resolve,reject)=>{
@@ -58,8 +67,8 @@ async function scenario(page) {
   const hung=await page.context().newPage();
   await hung.addInitScript(()=>{Object.defineProperty(window.indexedDB,'open',{configurable:true,value(){return {};}});});
   await hung.goto(origin);
-  await hung.getByText('Więcej możliwości',{exact:true}).click();
-  await hung.getByRole('button',{name:'Zacznij pisać',exact:true}).click();
+  await hung.getByRole('button',{name:'Przejdź do ćwiczeń',exact:true}).click();
+  await hung.getByRole('button',{name:'Otwórz wybrane ćwiczenie',exact:true}).click();
   const hungField=hung.getByRole('textbox',{name:'Twoje słowa',exact:true});
   await hungField.waitFor();
   await hung.waitForFunction(()=>document.querySelector('#response')?.disabled===false,{},{timeout:7000});

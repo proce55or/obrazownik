@@ -21,6 +21,10 @@ import { Notebook } from "./Notebook";
 import { Observations } from "./Observations";
 import { Settings } from "./Settings";
 import { Completed } from "./Completed";
+import { AppShell, HelpPage, type AppView } from "./AppShell";
+import { StartScreen } from "./StartScreen";
+import { GuidedEditor } from "./GuidedEditor";
+import { GuidedCompleted } from "./GuidedCompleted";
 
 export function App() {
   const [boot, setBoot] = useState<Bootstrap>(),
@@ -30,9 +34,7 @@ export function App() {
     [epoch, setEpoch] = useState(0),
     [busy, setBusy] = useState(true),
     [error, setError] = useState("");
-  const [view, setView] = useState<
-    "home" | "notebook" | "observations" | "settings"
-  >("home");
+  const [view, setView] = useState<AppView>("home");
   const [notebookEditing, setNotebookEditing] = useState(false);
   const [pendingStart, setPendingStart] = useState(false);
   const request = useRef<{
@@ -40,6 +42,10 @@ export function App() {
     clientRequestId: string;
     variant: "standard" | "easy";
     useConstraint: boolean;
+    createdId?: string;
+  } | null>(null);
+  const guidedRequest = useRef<{
+    clientRequestId: string;
     createdId?: string;
   } | null>(null);
   const fontSize = boot?.settings.fontSize;
@@ -107,6 +113,7 @@ export function App() {
     setError("");
     try {
       if (
+        guidedRequest.current ||
         independentRequest.current ||
         (request.current &&
           (request.current.cardId !== cardId ||
@@ -154,6 +161,7 @@ export function App() {
   ) {
     if (busy) return;
     if (
+      guidedRequest.current ||
       request.current ||
       (independentRequest.current && independentRequest.current.role !== role)
     ) {
@@ -184,11 +192,45 @@ export function App() {
       setBusy(false);
     }
   }
+  async function startGuided() {
+    if (busy) return;
+    if (request.current || independentRequest.current) {
+      setError("Najpierw ponów poprzednie rozpoczęcie ćwiczenia.");
+      return;
+    }
+    setBusy(true);
+    setError("");
+    try {
+      guidedRequest.current ??= { clientRequestId: crypto.randomUUID() };
+      const created = responseData(
+        DetailSchema,
+        await api("/guided/start", "POST", {
+          clientRequestId: guidedRequest.current.clientRequestId,
+        }),
+      );
+      guidedRequest.current.createdId = created.attempt.id;
+      await open(created.attempt.id);
+      guidedRequest.current = null;
+      setPendingStart(false);
+    } catch (failure) {
+      if (!isUncertainOutcome(failure)) guidedRequest.current = null;
+      setPendingStart(!!guidedRequest.current);
+      setError(
+        userMessage(failure, "Nie udało się otworzyć ćwiczenia prowadzonego."),
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
   async function openExisting(id: string) {
     setBusy(true);
     setError("");
     try {
       await open(id);
+      if (guidedRequest.current?.createdId === id) {
+        guidedRequest.current = null;
+        setPendingStart(false);
+      }
       if (request.current?.createdId === id) {
         request.current = null;
         setPendingStart(false);
@@ -234,103 +276,105 @@ export function App() {
     focusMain();
   };
   return (
-    <>
-      <a className="skip-link" href="#main">
-        Przejdź do treści
-      </a>
-      <header className="site-header">
-        <span className="brand">
-          <img src="/favicon.svg" alt="" />
-          obrazownik<span className="brand-dot">.</span>
-        </span>
-        <span className="header-note">Miejsce na własne słowa</span>
-        <span className="local-status">
-          <i />
-          Tylko na Twoim Macu
-        </span>
-      </header>
-      <main
-        id="main"
-        tabIndex={-1}
-        className={
-          boot
-            ? `font-${typeof boot.settings.fontSize === "number" ? boot.settings.fontSize : boot.settings.fontSize === "large" ? 24 : 18}`
-            : undefined
-        }
-      >
-        <div className="page-top">
-          <span className="eyebrow">TWÓJ WŁASNY RYTM</span>
-          <span className="version">Pierwsze strony · wersja 0.2.1</span>
+    <AppShell
+      view={detail ? "exercises" : view}
+      locked={!!detail || notebookEditing || busy}
+      location={
+        detail
+          ? detail.attempt.guided
+            ? "Ćwiczenie prowadzone · Kamień nad rzeką"
+            : "Ćwiczenie · Twoje słowa"
+          : undefined
+      }
+      onNavigate={(next) => {
+        setView(next);
+        focusMain();
+        if (next === "home")
+          void refreshHome().catch((failure) => setError(userMessage(failure)));
+      }}
+    >
+      {boot && !detail && view === "home" && (
+        <StartScreen
+          drafts={boot.drafts}
+          busy={busy || pendingStart}
+          onStart={() => {
+            void startGuided();
+          }}
+          onOpen={(id) => {
+            void openExisting(id);
+          }}
+          onExercises={() => {
+            setView("exercises");
+            focusMain();
+          }}
+        />
+      )}
+      {boot && !detail && view === "help" && <HelpPage />}
+      {boot && !detail && view === "notebook" && !notebookEditing && (
+        <div className="notebook-top">
+          <button
+            className="text-button"
+            onClick={() => {
+              setView("observations");
+              focusMain();
+            }}
+          >
+            Zobacz moje obserwacje z ćwiczeń →
+          </button>
         </div>
-        {boot && !detail && !notebookEditing && (
-          <nav className="site-nav" aria-label="Główna nawigacja">
-            {(
-              [
-                { id: "home", label: "Dzisiaj" },
-                { id: "notebook", label: "Zeszyt" },
-                { id: "observations", label: "Obserwacje" },
-                { id: "settings", label: "Ustawienia i kopie" },
-              ] as const
-            ).map((tab) => (
-              <button
-                className="secondary-button"
-                aria-current={view === tab.id ? "page" : undefined}
-                key={tab.id}
-                onClick={() => {
-                  setView(tab.id);
-                  if (tab.id === "home")
-                    void refreshHome().catch((error) =>
-                      setError(
-                        error instanceof Error
-                          ? error.message
-                          : "Brak połączenia.",
-                      ),
-                    );
-                }}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </nav>
-        )}
-        {boot && !detail && view === "notebook" && (
-          <Notebook
-            environmentId={boot.environmentId}
-            onEditingChange={setNotebookEditing}
-            onOpenAttempt={openExisting}
-            onTransformDocument={transformDocument}
-          />
-        )}
-        {boot && !detail && view === "observations" && <Observations />}
-        {boot && !detail && view === "settings" && (
-          <Settings
-            boot={boot}
-            onSaved={(settings) =>
-              setBoot((old) => (old ? { ...old, settings } : old))
-            }
-          />
-        )}
-        {boot && !detail && view === "home" && (
-          <Home
-            onIndependent={(role) => {
-              void startIndependent(role);
+      )}
+      {boot && !detail && view === "notebook" && (
+        <Notebook
+          environmentId={boot.environmentId}
+          onEditingChange={setNotebookEditing}
+          onOpenAttempt={openExisting}
+          onTransformDocument={transformDocument}
+        />
+      )}
+      {boot && !detail && view === "observations" && (
+        <>
+          <button
+            className="text-button"
+            onClick={() => {
+              setView("notebook");
+              focusMain();
             }}
-            cards={cards}
-            drafts={boot.drafts}
-            recent={recent}
-            busy={busy}
-            onStart={(id, variant, constraint) => {
-              void start(id, variant, constraint);
-            }}
-            onOpen={(id) => {
-              void openExisting(id);
-            }}
-          />
-        )}
-        {boot &&
-          detail &&
-          (detail.attempt.status === "draft" ? (
-            <Editor
+          >
+            ← Wróć do moich tekstów
+          </button>
+          <Observations />
+        </>
+      )}
+      {boot && !detail && view === "settings" && (
+        <Settings
+          boot={boot}
+          onSaved={(settings) =>
+            setBoot((old) => (old ? { ...old, settings } : old))
+          }
+        />
+      )}
+      {boot && !detail && view === "exercises" && (
+        <Home
+          onIndependent={(role) => {
+            void startIndependent(role);
+          }}
+          cards={cards}
+          drafts={boot.drafts}
+          recent={recent}
+          busy={busy}
+          onStart={(id, variant, constraint) => {
+            void start(id, variant, constraint);
+          }}
+          onOpen={(id) => {
+            void openExisting(id);
+          }}
+        />
+      )}
+      {boot &&
+        detail &&
+        (detail.attempt.guided ? (
+          detail.attempt.status === "draft" ? (
+            <GuidedEditor
               key={`${detail.attempt.id}:${epoch}`}
               initial={detail}
               environmentId={boot.environmentId}
@@ -338,57 +382,64 @@ export function App() {
               onReplace={replace}
             />
           ) : (
-            <Completed
+            <GuidedCompleted
               key={`${detail.attempt.id}:${epoch}`}
               detail={detail}
-              onRevise={reviseAttempt}
               onHome={goHome}
             />
-          ))}
-        {!boot && busy && <p role="status">Otwieranie Twojej przestrzeni…</p>}
-        {error && (
-          <div role="alert" className="connection-error">
-            <p>{error}</p>
-            {pendingStart && (
-              <button
-                className="primary-button"
-                disabled={busy}
-                onClick={() => {
-                  if (request.current) {
-                    const value = request.current;
-                    void start(
-                      value.cardId,
-                      value.variant,
-                      value.useConstraint,
-                    );
-                  } else if (independentRequest.current)
-                    void startIndependent(independentRequest.current.role);
-                }}
-              >
-                Ponów rozpoczęcie ćwiczenia
-              </button>
-            )}
+          )
+        ) : detail.attempt.status === "draft" ? (
+          <Editor
+            key={`${detail.attempt.id}:${epoch}`}
+            initial={detail}
+            environmentId={boot.environmentId}
+            onHome={goHome}
+            onReplace={replace}
+          />
+        ) : (
+          <Completed
+            key={`${detail.attempt.id}:${epoch}`}
+            detail={detail}
+            onRevise={reviseAttempt}
+            onHome={goHome}
+          />
+        ))}
+      {!boot && busy && <p role="status">Otwieranie Twojej przestrzeni…</p>}
+      {error && (
+        <div role="alert" className="connection-error">
+          <p>{error}</p>
+          {pendingStart && (
             <button
-              className="secondary-button"
+              className="primary-button"
               disabled={busy}
               onClick={() => {
-                setBusy(true);
-                void refreshHome()
-                  .catch((failure) =>
-                    setError(userMessage(failure, "Brak połączenia.")),
-                  )
-                  .finally(() => setBusy(false));
+                if (request.current) {
+                  const value = request.current;
+                  void start(value.cardId, value.variant, value.useConstraint);
+                } else if (independentRequest.current)
+                  void startIndependent(independentRequest.current.role);
+                else if (guidedRequest.current) void startGuided();
               }}
             >
-              Połącz ponownie
+              Ponów rozpoczęcie ćwiczenia
             </button>
-          </div>
-        )}
-      </main>
-      <footer>
-        <span>Każdy obraz zaczyna się od zauważenia.</span>
-        <span>Prywatnie. Lokalnie. Po swojemu.</span>
-      </footer>
-    </>
+          )}
+          <button
+            className="secondary-button"
+            disabled={busy}
+            onClick={() => {
+              setBusy(true);
+              void refreshHome()
+                .catch((failure) =>
+                  setError(userMessage(failure, "Brak połączenia.")),
+                )
+                .finally(() => setBusy(false));
+            }}
+          >
+            Połącz ponownie
+          </button>
+        </div>
+      )}
+    </AppShell>
   );
 }

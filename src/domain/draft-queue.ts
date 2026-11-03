@@ -106,8 +106,20 @@ export class DraftQueue<T extends DraftTarget = Attempt> {
       scaffolding: this.scaffolding,
       ...(this.title === undefined ? {} : { title: this.title }),
     };
+    const alreadyConfirmed = !this.dirty && !this.conflict;
     this.recoveryChain = this.recoveryChain
-      .then(() => this.options.putRecovery(draft))
+      .then(async () => {
+        // A reverted edit may equal the last acknowledged snapshot. Replace
+        // this tab's older rescue copy first, then clear only that exact,
+        // confirmed content. Unknown writes and conflicts still need recovery.
+        await this.options.putRecovery(draft);
+        if (alreadyConfirmed)
+          await this.options.clearRecovery(
+            draft.text,
+            draft.scaffolding,
+            draft.title,
+          );
+      })
       .catch(() => {
         this.options.onBufferError();
       });

@@ -1,4 +1,7 @@
 import { z } from "zod";
+import { GuidedStateSchema } from "./guided.js";
+import { LocalLlmProvenanceSchema } from "./llm-provenance.js";
+export { LocalLlmProvenanceSchema } from "./llm-provenance.js";
 export const FamilySchema = z.enum([
   "property",
   "bridge",
@@ -55,6 +58,7 @@ export const ScaffoldingSchema=z.record(z.string().max(80),z.string().max(4000))
 export const AttemptSchema = z
   .object({
     id: z.uuid(),
+    guided: GuidedStateSchema.optional(),
     sessionId: z.uuid().nullable(),
     cardId: z.string().max(100),
     cardVersion: z.number().int().positive(),
@@ -99,17 +103,12 @@ export const VersionSchema = z
     scaffolding: ScaffoldingSchema.default({}),
   })
   .strict();
-export const LocalLlmProvenanceSchema = z.object({
-  modelId: z.string().max(200), modelSha256: z.string().regex(/^[a-f0-9]{64}$/),
-  promptVersion: z.string().max(80), generatedAt: z.iso.datetime(),
-  generationMs: z.number().nonnegative(), cacheHit: z.boolean(),
-}).strict();
 export const AssistanceSchema = z
   .object({
     id: z.uuid(),
     attemptId: z.uuid(),
     level: z.number().int().min(1).max(3),
-    kind: z.enum(["question", "direction", "example", "word_bank"]),
+    kind: z.enum(["question", "direction", "example", "word_bank", "guided_feedback"]),
     revealedContentSnapshot: z.string().max(4000),
     requestedAt: z.iso.datetime(),
     deliveredAt: z.iso.datetime().nullable(),
@@ -118,7 +117,7 @@ export const AssistanceSchema = z
     llm: LocalLlmProvenanceSchema.nullable().default(null),
   })
   .strict().refine(event=>event.provider==='bielik_local'
-    ? event.llm!==null&&event.level===1&&event.kind==='question'
+    ? event.llm!==null&&event.level===1&&(event.kind==='question'||event.kind==='guided_feedback')
     : event.llm===null,{message:'Źródło podpowiedzi i metadane modelu muszą być zgodne.'});
 export const CreateAttemptSchema = z
   .object({ cardId: z.string().min(1).max(100), clientRequestId: z.uuid(),variant:z.enum(['standard','easy']).default('standard'),useConstraint:z.boolean().default(false) })

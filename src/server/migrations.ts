@@ -38,6 +38,8 @@ UPDATE attempts SET record=json_set(record,'$.assistanceTracking','unknown','$.e
 UPDATE attempts SET record=json_set(record,'$.llmMode',COALESCE(json_extract(record,'$.llmMode'),'unknown'));
 UPDATE assistanceEvents SET record=json_set(record,'$.provider',COALESCE(json_extract(record,'$.provider'),'unknown'),'$.llm',json_extract(record,'$.llm'));
 `},
+  // Guided JSON records cannot be opened safely by earlier strict schemas.
+  {version:4,sql:'SELECT 1;'},
 ];
 export async function migrate(
   db: DatabaseSync,

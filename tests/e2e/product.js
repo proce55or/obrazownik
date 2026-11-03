@@ -9,14 +9,21 @@ async function scenario(page) {
   const origin = new URL(page.url()).origin;
   page.on('pageerror', error => errors.push(error.message));
   page.on('request', request => { if (!request.url().startsWith(origin + '/') && !request.url().startsWith('blob:')) external.push(request.url()); });
-  const nav = name => page.getByRole('button', { name, exact: true }).click();
+  const nav = async name => {
+    const button = page.getByRole('button', {name, exact: true});
+    if (!await button.isVisible()) {
+      const menu = page.getByRole('button', {name: /^Menu ·/});
+      if (await menu.isVisible() && await menu.getAttribute('aria-expanded') === 'false') await menu.click();
+    }
+    await button.click();
+  };
   const complete = async text => {
     await page.getByRole('textbox', { name: 'Twoje słowa', exact: true }).fill(text);
     await nav('Zapisz i zakończ');
     await page.getByRole('heading', { name: 'Jest Twój ślad.', exact: true }).waitFor();
     await nav('Wróć do Dzisiaj');
   };
-  await nav('Zeszyt');
+  await nav('Moje teksty');
   await page.getByRole('button', { name: 'Nowy tekst', exact: false }).click();
   await page.getByRole('textbox', { name: 'Tytuł', exact: true }).fill('Źródło [E2E]');
   await nav('Utwórz tekst');
@@ -41,14 +48,13 @@ async function scenario(page) {
   await complete('Nowy własny fragment. Liść przemierza kamienną drogę.');
   assert((await get(`/api/documents/${doc.id}`)).document.currentText === source, 'E5 overwrote source');
   for (const family of ['bridge', 'sense', 'transform']) {
-    if (!await page.locator('details.more-options').evaluate(node => node.open)) await page.getByText('Więcej możliwości', {exact:true}).click();
-    await page.getByText('Wybierz ćwiczenie i własne tempo', { exact: true }).click();
+    await nav('Ćwiczenia');
     await page.getByRole('combobox', { name: 'Rodzaj ćwiczenia', exact: true }).selectOption(family);
     await page.getByRole('checkbox', { name: 'Łatwiejszy wariant', exact: true }).check();
     await page.getByRole('button', { name: 'Otwórz wybrane ćwiczenie', exact: false }).click();
     await complete(`Własny tekst rodziny ${family}: żółty promień opiera się o próg.`);
   }
-  await nav('Ustawienia i kopie');
+  await nav('Ustawienia');
   await page.getByRole('combobox', { name: 'Wielkość tekstu w całej aplikacji', exact: true }).selectOption('26');
   await page.getByText('Dodatkowe rodzaje ćwiczeń',{exact:true}).click();
   for (const label of ['Jedno słowo, kilka dróg', 'Pojęcie w sytuacji', 'Wspólna cecha i metafora']) {
@@ -76,7 +82,8 @@ async function scenario(page) {
     await page.getByText(i ? 'Ten plik został już dodany. Nie utworzono duplikatów.' : 'Dane z pliku zostały dodane.', { exact: false }).waitFor();
   }
   await page.screenshot({ path: 'output/playwright/e2e-settings.png', fullPage: true });
-  await nav('Obserwacje');
+  await nav('Moje teksty');
+  await nav('Zobacz moje obserwacje z ćwiczeń →');
   const observations = await get('/api/observations?limit=30&offset=0');
   assert(observations.samples.length >= 2, 'Missing comparison samples');
   await page.getByRole('combobox', { name: 'Pierwsza próbka', exact: true }).selectOption(observations.samples[0].id);
@@ -84,11 +91,14 @@ async function scenario(page) {
   await page.getByRole('heading', { name: 'Tekst 1', exact: true }).waitFor();
   await nav('Losuj kolejność');
   await page.screenshot({ path: 'output/playwright/e2e-observations.png', fullPage: true });
-  await nav('Dzisiaj');
+  await nav('Ćwiczenia');
+  await page.getByText('Krótka sesja z kilkoma ćwiczeniami', {exact:true}).click();
   await nav('Zaproponuj krótką sesję');
   await page.getByRole('heading', { name: 'Twoja krótka sesja', exact: true }).waitFor();
   await page.locator('.session-panel .draft-link').first().click();
   await complete('Własny tekst krótkiej sesji — słowa zostały zachowane.');
+  await nav('Ćwiczenia');
+  await page.getByText('Krótka sesja z kilkoma ćwiczeniami', {exact:true}).click();
   await nav('Zakończ sesję na dziś');
   await page.getByText('Sesja zakończona. Twoje teksty są zapisane. Kopia dnia została sprawdzona.', { exact: true }).waitFor();
   assert((await get('/api/backups')).backups.some(b => b.name.startsWith('auto-')), 'Daily backup missing');

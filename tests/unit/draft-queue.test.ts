@@ -213,3 +213,40 @@ test("continuous typing cannot postpone the rescue buffer indefinitely", async (
   expect(f.transport).not.toHaveBeenCalled();
   f.queue.dispose();
 });
+
+test("reverting to the acknowledged answer leaves no stale rescue copy after a guided stage change", async () => {
+  const f = fixture();
+  const original = "Kamień jest szorstki.";
+  f.queue.setText(original);
+  await f.queue.flush();
+  await f.queue.settleRecovery();
+  f.queue.setText(original + " ");
+  await f.queue.settleRecovery();
+  expect(f.buffer()?.text).toBe(original + " ");
+  f.queue.setText(original);
+  await f.queue.flush();
+  // The next stage has the same attempt id but an empty response field.
+  f.queue.acceptRevision({ ...f.attempt, revision: 2, currentText: "" });
+  await f.queue.settleRecovery();
+  f.queue.dispose();
+  await f.queue.settleRecovery();
+  expect(f.transport).toHaveBeenCalledTimes(1);
+  expect(f.buffer()).toBeUndefined();
+});
+
+test("reverting during an uncertain write still preserves recovery until the mutation is confirmed", async () => {
+  const f = fixture();
+  f.transport.mockRejectedValueOnce(new Error("Lost response"));
+  f.queue.setText("Niezapisana odpowiedź");
+  await expect(f.queue.flush()).rejects.toThrow("Lost response");
+  f.queue.setText("");
+  await f.queue.settleRecovery();
+  expect(f.queue.dirty).toBe(true);
+  expect(f.buffer()?.text).toBe("");
+  await f.queue.flush();
+  await f.queue.settleRecovery();
+  expect(f.transport.mock.calls[1][0]).toEqual(f.transport.mock.calls[0][0]);
+  expect(f.transport.mock.calls[2][0].text).toBe("");
+  expect(f.buffer()).toBeUndefined();
+  f.queue.dispose();
+});

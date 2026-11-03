@@ -1,35 +1,32 @@
 # Stan projektu
 Updated: 2026-11-03, Europe/Warsaw
-Active task: T20
-Status: PROPOSAL_READY — research i klikalny projekt UX/UI
+Active task: T21
+Status: DONE
 Environment: macOS13.7.8 Intel, Node24.21.0
-Branch: main; Release:0.2.1, schema3
+Branch: main; wdrożone0.3.0/schema4
 Remote: proce55or/obrazownik (PRIVATE)
 
-## Wdrożony program
-MVP + SCI-00–05 + T17/T18 + T19. Aplikacja127.0.0.1:4317,
-Bielik4320. T19 odebrane i wdrożone: docs/16-review-fixes.md.
-116 testów/22 pliki, check/build i pełne E2E z rzeczywistym Bielikiem PASS.
-Safari i ręczny dwuklik Findera nadal VERIFY_ON_MAC.
-Dane ~/Obrazownik-dane; wagi ~/Obrazownik-modele/bielik-7b, poza Git.
+## Działająca aplikacja
+127.0.0.1:4317, lokalny Bielik4320. Dane ~/Obrazownik-dane;
+wagi ~/Obrazownik-modele/bielik-7b, poza Git. Nowy układ T20 wdrożony.
+Start → Zacznij z Bielikiem: szczegół, porównanie, scena. Model na jawne
+żądanie czyta bieżącą odpowiedź lokalnie; cytat, omówienie i pytanie.
+Historia etapów i pomoc zachowane w bazie, JSON i Markdown. Starsze
+ćwiczenia/pytania i chronione pisanie zachowują zasady. Bez chmury.
+Instrukcja krok po kroku: docs/13-bielik-krok-po-kroku.md.
 
-## T20 — projekt, jeszcze bez wdrożenia
-Autor zgłosił niezrozumiałą obsługę i poprosił najpierw o research designu.
-Audyt czterech ekranów na osobnej bazie tmpdir: zagnieżdżony katalog,
-pole pisania daleko pod instrukcją, znikające menu, niejasne etapy.
-Źródła W3C, Apple, Fluent2, GOV.UK, USWDS i plan: docs/17-ux-research-and-proposal.md.
-Prototyp: design/ux-proposal/index.html; node design/ux-proposal/serve.mjs
-udostępnia127.0.0.1:4321. Menu, pisanie, powrót, zakończenie, wyłączane
-objaśnienia hover/fokus/klik/Escape, pismo18–26. Bez API/bazy/modelu;
-tekst tylko w pamięci karty. Produkcja niezmieniona.
-Syntax/lint/context PASS. Odbiór klawiaturą, hover,1280×800 i320px/26px;
-naprawiono menu i skiplink.
-Zrzuty bieżącego audytu w output/ux-audit-2026-11-03 (poza Git).
-Następny krok: ocena klikalnego układu i integracja w osobnej jednostce,
-z ochroną DraftQueue/CAS, wersji kart, śladów pomocy i prób chronionych.
-T10: rzeczywiste problemy użyteczności, bez wniosków klinicznych.
+## Odbiór
+Check134testy/24pliki, build, pełne E2E i trzyetapowy realny Bielik PASS.
+Dodatkowo offline503, niepewne zapisy, reload, CAS, eksport/import, backup,
+320/390px,26px,zoom200%,klawiatura i objaśnienia. Szczegóły tasks/T21.md.
+Przed wdrożeniem manualbackup03.11T17:57:40Z; migracja z własną kopią.
+Health0.3.0/schema4 + właściwy model PASS. Dawne rekordy po restarcie
+porównane sumami kontrolnymi bez zmian. Brak testów na produkcyjnych tekstach.
+Safari i ręczny dwuklik Findera nadal VERIFY_ON_MAC.
+Następny krok: pilotaż autora. Model może mylnie interpretować tekst;
+nie dopisywać funkcji ani ponawiać pełnych testów bez nowej przyczyny.
+Prototyp4321 pozostaje archiwalną demonstracją bez bazy; używać4317.
 
 ## Zasoby
-Ostatni odczyt limitu62% użyte/38% pozostało. Zachować20%; przy>=78%
-lub braku licznika nie zaczynać kosztownej pracy. T18 zakończone,
-harmonogram usunięty. Nie wznawiać nocnych zadań ani pełnych testów bez powodu.
+Ostatni odczyt68% użyte/32% pozostało. Zachować20%; przy>=78% lub braku
+licznika nie zaczynać kosztownej pracy. T18 zakończone, harmonogram usunięty.

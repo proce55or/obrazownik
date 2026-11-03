@@ -22,6 +22,9 @@ import {
   SettingsSchema,
 } from "../shared/schemas.js";
 import { cards, getCard, allCards } from "./content.js";
+import { GuidedStartSchema } from '../shared/guided.js';
+import { GuidedFeedbackService, type GuidedFeedbackOptions } from './guided-feedback.js';
+import type { AttemptDetail } from '../shared/schemas.js';
 import { LocalHintService, assertLlmAttempt, type LocalLlmOptions } from './local-llm.js';
 
 export interface AppOptions {
@@ -30,6 +33,7 @@ export interface AppOptions {
   serveClient?: boolean;
   clientRoot?: string;
   llm?: LocalLlmOptions;
+  guidedLlm?: GuidedFeedbackOptions;
 }
 export async function createApp(options: AppOptions = {}) {
   const localPort=z.number().int().min(1024).max(65535).parse(options.localPort??PORT);
@@ -97,7 +101,9 @@ export async function createApp(options: AppOptions = {}) {
   await app.register(cookie);
   const storage = await Storage.open(dataDir);
   const llm = new LocalHintService(dataDir,options.llm);
-  app.addHook("onClose", async () => {await llm.close();await storage.close();});
+  const guidedLlm = new GuidedFeedbackService(options.guidedLlm);
+  const guidedJobs = new Map<string, {mutationId: string; revision: number; promise: Promise<AttemptDetail>}>();
+  app.addHook("onClose", async () => {await Promise.all([llm.close(), guidedLlm.close()]);await storage.close();});
   const sessions = new Map<string, { token: string; expires: number }>();
   const origins = new Set([`http://${HOST}:${localPort}`, "http://127.0.0.1:5173"]);
   const hosts = new Set([`${HOST}:${localPort}`, "127.0.0.1:5173"]);
@@ -141,7 +147,7 @@ export async function createApp(options: AppOptions = {}) {
   app.get("/api/health", async () => ({
     app: "obrazownik",
     version: VERSION,
-    schemaVersion: 3,
+    schemaVersion: 4,
     status: "ok",
   }));
   app.get("/api/bootstrap", async (req, reply) => {
@@ -191,6 +197,28 @@ export async function createApp(options: AppOptions = {}) {
     if(['M2','M3','M5'].includes(card.methodId)&&!storage.settings().optionalMethods.includes(card.methodId as 'M2'|'M3'|'M5'))throw new AppError(409,'method_disabled','Włącz ten opcjonalny wariant w ustawieniach.');
     return storage.createAttempt(card, input.clientRequestId,input);
   });
+  app.post('/api/guided/start', async req => storage.createGuided(GuidedStartSchema.parse(req.body).clientRequestId));
+  app.post('/api/attempts/:id/guided/feedback', async req => {
+    const id = idOf(req.params), input = ActionSchema.parse(req.body);
+    const replay = storage.replayMutation(`guided-feedback:${id}`, input.clientMutationId, input);
+    if (replay !== undefined) return replay;
+    const attempt = storage.checkGuided(id, input.expectedRevision);
+    if (!attempt.currentText.trim())
+      throw new AppError(400, 'guided_empty_answer', 'Napisz własną odpowiedź, zanim poprosisz Bielika o jej przeczytanie.');
+    if (attempt.currentText.length > 1800)
+      throw new AppError(400, 'feedback_input_too_long', 'Bielik może przeczytać do 1800 znaków w jednym etapie. Twój cały tekst jest zapisany. Skróć odpowiedź przed poproszeniem o informację zwrotną.');
+    const pending = guidedJobs.get(id);
+    if (pending) {
+      if (pending.mutationId === input.clientMutationId && pending.revision === input.expectedRevision) return pending.promise;
+      throw new AppError(409, 'guided_busy', 'Bielik jeszcze czyta tę odpowiedź. Poczekaj na wynik.', true);
+    }
+    const promise = guidedLlm.generate(attempt).then(result =>
+      storage.prepareGuidedFeedback(id, input, attempt.currentText, result));
+    guidedJobs.set(id, {mutationId: input.clientMutationId, revision: input.expectedRevision, promise});
+    try { return await promise; }
+    finally { if (guidedJobs.get(id)?.promise === promise) guidedJobs.delete(id); }
+  });
+  app.post('/api/attempts/:id/guided/next', async req => storage.nextGuided(idOf(req.params), ActionSchema.parse(req.body)));
   app.get("/api/attempts", async (req) => {
     const query = z
       .object({

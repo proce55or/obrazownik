@@ -8,23 +8,29 @@ async function scenario(page) {
     const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-Token':boot.csrfToken},body:JSON.stringify(body)});
     return{status:response.status,body:await response.json()};
   },{url,body});
-  const nav=name=>page.getByRole('button',{name,exact:true}).click();
+  const nav = async name => {
+    const button = page.getByRole('button', {name, exact: true});
+    if (!await button.isVisible()) {
+      const menu = page.getByRole('button', {name: /^Menu ·/});
+      if (await menu.isVisible() && await menu.getAttribute('aria-expanded') === 'false') await menu.click();
+    }
+    await button.click();
+  };
   const runtime=await get('/api/llm/status');
   assert(runtime.available,'LOCAL_MODEL_NOT_READY: start the verified Bielik runtime before the optional test.');
   const before=(await get('/api/bootstrap')).settings;
   async function settings(mode,prefetch){
-    await nav('Ustawienia i kopie');
+    await nav('Ustawienia');
     await page.getByRole('combobox',{name:'Pomoc w nowych ćwiczeniach',exact:true}).selectOption(mode);
     await page.getByText('Przygotowywanie dodatkowego pytania',{exact:true}).click();
     const field=page.getByRole('checkbox',{name:'Przygotuj pytanie w tle po otwarciu ćwiczenia',exact:true});
     if(prefetch)await field.check();else await field.uncheck();
     await nav('Zapisz ustawienia');
     await page.getByText('Ustawienia zapisane.',{exact:true}).waitFor();
-    await nav('Dzisiaj');
+    await nav('Start');
   }
   async function startTraining(){
-    if (!await page.locator('details.more-options').evaluate(node => node.open)) await page.getByText('Więcej możliwości', {exact:true}).click();
-    await page.getByText('Wybierz ćwiczenie i własne tempo',{exact:true}).click();
+    await nav('Ćwiczenia');
     await page.getByRole('combobox',{name:'Rodzaj ćwiczenia',exact:true}).selectOption('property');
     const created=page.waitForResponse(response=>response.url().endsWith('/api/attempts')&&response.request().method()==='POST');
     await page.getByRole('button',{name:'Otwórz wybrane ćwiczenie',exact:false}).click();
@@ -75,7 +81,7 @@ async function scenario(page) {
     await nav('Zapisz szkic i wróć');
     await settings('bielik',true);
     const createdIndependent=page.waitForResponse(response=>response.url().endsWith('/api/independent')&&response.request().method()==='POST');
-    if (!await page.locator('details.more-options').evaluate(node => node.open)) await page.getByText('Więcej możliwości', {exact:true}).click();
+    await nav('Ćwiczenia');
     await page.getByRole('button',{name:'Zacznij nowy tekst',exact:false}).click();
     const independent=await(await createdIndependent).json();
     await page.getByRole('button',{name:'Potrzebuję pomocy - otwórz osobną wersję',exact:true}).waitFor();

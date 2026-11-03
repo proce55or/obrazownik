@@ -14,6 +14,9 @@ import {
   type AttemptVersion,
   type AssistanceEvent,
 } from "../shared/schemas.js";
+import { GuidedFeedbackSchema, GuidedReviewSchema, hasGuidedIdentity, isGuidedFeedbackCurrent, type GuidedFeedback, type GuidedStep } from "../shared/guided.js";
+import { LocalLlmProvenanceSchema, type LocalLlmProvenance } from "../shared/llm-provenance.js";
+import { guidedCard, guidedMethod } from "./guided-content.js";
 import { assistanceState } from "../domain/assistance.js";
 import { methods, getMethod, getCard } from "./content.js";
 import { verifiedBackup } from "./backup.js";
@@ -244,6 +247,73 @@ export class Storage {
       () => this.insertAttempt(card, options),
     );
   }
+  createGuided(requestId: string) {
+    return this.mutate("guided-start", requestId, { clientRequestId: requestId }, () => {
+      this.db.prepare("INSERT OR IGNORE INTO methods(key,record) VALUES (?,?)")
+        .run(`${guidedMethod.id}:${guidedMethod.version}`, JSON.stringify(guidedMethod));
+      const attempt = this.insertAttempt(guidedCard);
+      this.writeAttempt({ ...attempt, llmMode: "bielik", methodSnapshot: guidedMethod,
+        guided: { version: 1, step: 0, feedback: null, history: [] } });
+      return this.detail(attempt.id);
+    });
+  }
+  checkGuided(id: string, revision: number): Attempt {
+    const attempt = this.checkRevision(id, revision);
+    if (!hasGuidedIdentity(attempt))
+      throw new AppError(403, "guided_unavailable", "Ta próba nie jest ćwiczeniem prowadzonym z Bielikiem.");
+    if (attempt.status !== "draft")
+      throw new AppError(409, "attempt_closed", "To ćwiczenie zostało już zakończone.");
+    return attempt;
+  }
+  prepareGuidedFeedback(
+    id: string,
+    input: {expectedRevision: number; clientMutationId: string},
+    answer: string,
+    result: {feedback: GuidedFeedback; llm: LocalLlmProvenance},
+  ) {
+    return this.mutate(`guided-feedback:${id}`, input.clientMutationId, input, () => {
+      const attempt = this.checkGuided(id, input.expectedRevision);
+      if (attempt.currentText !== answer)
+        throw new AppError(409, "guided_answer_changed", "Odpowiedź zmieniła się podczas czytania. Poproś Bielika o nową informację zwrotną.");
+      const feedback = GuidedFeedbackSchema.parse(result.feedback);
+      const llm = LocalLlmProvenanceSchema.parse(result.llm);
+      if (!answer.trim() || !answer.includes(feedback.quote))
+        throw new AppError(502, "guided_invalid_feedback", "Bielik nie odniósł się poprawnie do Twojej odpowiedzi. Tekst jest zapisany; spróbuj ponownie.", true);
+      // Preserve the exact response before any model assistance becomes visible.
+      this.capture(attempt, "pre_hint");
+      const event = AssistanceSchema.parse({
+        id: randomUUID(), attemptId: id, level: 1, kind: "guided_feedback",
+        provider: "bielik_local", llm,
+        revealedContentSnapshot: JSON.stringify(feedback),
+        requestedAt: this.clock().toISOString(), deliveredAt: null, status: "prepared",
+      });
+      this.db.prepare("INSERT INTO assistanceEvents(id,attemptId,record) VALUES (?,?,?)")
+        .run(event.id, id, JSON.stringify(event));
+      const review = GuidedReviewSchema.parse({
+        step: attempt.guided!.step, answer, answerRevision: attempt.revision,
+        feedback, eventId: event.id, llm,
+      });
+      this.writeAttempt({ ...attempt, revision: attempt.revision + 1,
+        updatedAt: this.clock().toISOString(), guided: { ...attempt.guided!, feedback: review } });
+      return this.detail(id);
+    });
+  }
+  nextGuided(id: string, input: {expectedRevision: number; clientMutationId: string}) {
+    return this.mutate(`guided-next:${id}`, input.clientMutationId, input, () => {
+      const attempt = this.checkGuided(id, input.expectedRevision), guided = attempt.guided!;
+      if (guided.step === 2)
+        throw new AppError(409, "guided_last_step", "To ostatni etap. Możesz zakończyć ćwiczenie.");
+      if (!isGuidedFeedbackCurrent(attempt))
+        throw new AppError(409, "guided_feedback_required", "Najpierw poproś Bielika o przeczytanie aktualnej odpowiedzi.");
+      this.capture(attempt, "manual");
+      this.writeAttempt({ ...attempt, currentText: "", revision: attempt.revision + 1,
+        updatedAt: this.clock().toISOString(), guided: {
+          version: 1, step: (guided.step + 1) as GuidedStep,
+          feedback: null, history: [...guided.history, guided.feedback!],
+        } });
+      return this.detail(id);
+    });
+  }
   private insertAttempt(
     card: Card,
     options: {
@@ -471,7 +541,7 @@ export class Storage {
   ) {
     return this.mutate(`hint:${id}`, input.clientMutationId, input, () => {
       const attempt = this.checkRevision(id, input.expectedRevision);
-      if (attempt.mode === "independent" || attempt.status !== "draft")
+      if (attempt.guided || attempt.mode === "independent" || attempt.status !== "draft")
         throw new AppError(
           409,
           "hint_unavailable",
@@ -521,6 +591,7 @@ export class Storage {
     return this.mutate(`llm-hint:${id}`, input.clientMutationId, input, () => {
       const attempt = this.checkRevision(id, input.expectedRevision);
       if (
+        attempt.guided ||
         attempt.mode === "independent" ||
         attempt.llmMode !== "bielik" ||
         attempt.status !== "draft"
@@ -596,6 +667,9 @@ export class Storage {
             "attempt_closed",
             "Ta próba została już zamknięta.",
           );
+        if (status === "completed" && attempt.guided &&
+          (!hasGuidedIdentity(attempt) || attempt.guided.step !== 2 || !isGuidedFeedbackCurrent(attempt)))
+          throw new AppError(409, "guided_incomplete", "Dokończ trzy etapy i poproś Bielika o przeczytanie ostatniej odpowiedzi.");
         const now = this.clock().toISOString();
         if (status === "completed") this.capture(attempt, "final");
         this.updateReviews(attempt, status);
@@ -834,6 +908,8 @@ export class Storage {
   }
 
   private updateReviews(attempt: Attempt, status: "completed" | "skipped") {
+    // Guided sessions are restarted explicitly; automatic repeats use standard cards.
+    if (attempt.guided) return;
     const settings = this.settings();
     const firstCompletedRepeat =
       attempt.mode === "repeat" &&
@@ -1209,6 +1285,8 @@ export class Storage {
   reviseAttempt(id: string, requestId: string) {
     return this.mutate(`revise:${id}`, requestId, { id }, () => {
       const source = this.getAttempt(id);
+      if (source.guided)
+        throw new AppError(409, "guided_restart", "Nowe ćwiczenie prowadzone rozpocznij od Start. Dotychczasowa scena pozostaje w zeszycie.");
       if (source.status === "draft")
         throw new AppError(
           409,

@@ -12,6 +12,10 @@ export function assistanceLabel(
     return attempt?.assistanceTracking === "known"
       ? "Bez pomocy w aplikacji"
       : "Brak pełnej historii podpowiedzi";
+  if (relevant.some((event) => event.kind === "guided_feedback"))
+    return relevant.some((event) => event.status === "prepared")
+      ? "Ćwiczenie prowadzone z Bielikiem · część pomocy bez potwierdzenia pokazania"
+      : "Ćwiczenie prowadzone z lokalnym Bielikiem";
   if (relevant.every((e) => e.kind === "word_bank"))
     return relevant.some((e) => e.status === "prepared")
       ? "Słowa pomocnicze przygotowane; brak potwierdzenia pokazania"

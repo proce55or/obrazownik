@@ -1,8 +1,17 @@
 async function scenario(page) {
+  const nav = async name => {
+    const button = page.getByRole('button', {name, exact: true});
+    if (!await button.isVisible()) {
+      const menu = page.getByRole('button', {name: /^Menu ·/});
+      if (await menu.isVisible() && await menu.getAttribute('aria-expanded') === 'false') await menu.click();
+    }
+    await button.click();
+  };
   const assert = (value, message) => {
     if (!value) throw new Error(message);
   };
-  await page.getByText('Więcej możliwości', {exact:true}).click();
+  await nav('Ćwiczenia');
+  await page.getByText('Ostatnio zapisane ćwiczenia', {exact:true}).click();
   await page.getByRole("button", { name: /Ślad pracy.*Otwórz/ }).click();
   await page
     .getByRole("heading", { name: "Jest Twój ślad.", exact: true })

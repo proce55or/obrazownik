@@ -8,7 +8,6 @@ Działa pięć rodzin: **Właściwość i obraz**, **Most między pojęciami**,
 **Czasownik buduje scenę**, **Zmysł i perspektywa** oraz **Wybierz, usuń,
 dopisz**. Pakiet obejmuje 60 kart podstawowych, 6 kart opcjonalnych,
 5 kart bliskiego przeniesienia i 20 chronionych tematów nowego pisania.
-Starsze wersje kart pozostają dostępne dla zapisanej historii.
 
 Są krótkie sesje, łagodne powroty 2/7/21 dni, wersje sprzed pomocy,
 zeszyt odpowiedzi i własnych dokumentów, praca z fragmentem własnego tekstu,
@@ -53,22 +52,23 @@ Serwer nasłuchuje wyłącznie na 127.0.0.1. Nie ma konta, płatnego API,
 CDN, telemetrii ani synchronizacji. Telefon nie łączy się z bazą tego Maca
 przez własny localhost.
 
-Opcjonalnie można włączyć lokalnego Bielika 7B; domyślnie jest wyłączony.
+Start oferuje trzyetapowe ćwiczenie z lokalnym Bielikiem7B, który czyta
+bieżącą odpowiedź. Pozostałe ćwiczenia domyślnie używają gotowej pomocy.
 Instrukcja dla tej instalacji na Macu, krok po kroku: [Bielik](docs/13-bielik-krok-po-kroku.md).
 
 ## Pierwsza sesja
 
-1. Na stronie Dzisiaj otwórz jedną kartę albo wybierz krótką sesję.
-   Możesz zmienić rodzinę, użyć łatwiejszej instrukcji i skończyć po jednym zadaniu.
-2. Pisz w głównym polu lub skorzystaj z dobrowolnych pól pomocniczych.
-   Podpowiedzi i przykład pojawiają się po osobnym wybraniu.
-3. Poczekaj na „Zapisano na Macu”. „Zapisz i zakończ” zachowuje wersję końcową;
-   „Zapisz szkic i wróć” pozwala kontynuować później. Pominięcie nie jest karane.
-4. W zeszycie znajdziesz odpowiedzi, ich wersje oraz własne dokumenty.
-   Możesz wyszukiwać tekst, filtrować historię i pobrać czytelną kopię Markdown.
-5. Nowe pisanie korzysta z osobnej rezerwy. Wybranie pomocy tworzy osobną
-   wersję roboczą, zachowując pierwotny tekst. Powroty i bliskie przeniesienie
-   mają osobne oznaczenia. Starsza lub niepewna historia pozostaje nieznana.
+1. **Start → Zacznij z Bielikiem**: opisz szczegół, utwórz porównanie,
+   następnie małą scenę. Cel i polecenie widzisz nad polem odpowiedzi.
+2. **Poproś Bielika o wskazówkę**: model czyta zapisany tekst lokalnie,
+   cytuje fragment, omawia cel i proponuje poprawkę. Możesz się nie zgodzić.
+3. Popraw odpowiedź i poproś ponownie albo przejdź do kolejnego kroku.
+   **Zakończ i zachowaj ćwiczenie** zapisuje scenę wraz z wcześniejszymi etapami.
+4. **Zapisz szkic i wróć** pozwala kontynuować później. W **Moje teksty**
+   znajdziesz odpowiedzi, dokumenty, ich wersje i eksport Markdown.
+5. **Ćwiczenia** zawierają katalog, krótkie sesje i chronione nowe pisanie.
+   W próbach chronionych model i podpowiedzi są wyłączone; pomoc tworzy
+   osobną wersję. Ustawienia i kopie znajdziesz w **Ustawieniach**.
 
 Oznaczenie samodzielności dotyczy pomocy zarejestrowanej w aplikacji; program nie potrafi
 wykluczyć wsparcia użytego poza nią. Obserwacje pokazują teksty i dobrowolne
@@ -102,7 +102,7 @@ Sam brak odpowiedzi portu nie dowodzi zatrzymania serwera.
 
 ## Kopie, eksport i import
 
-W „Ustawienia i kopie” wybierz **„Utwórz i sprawdź kopię”**. Migawka SQLite
+W „Ustawieniach” wybierz **„Utwórz i sprawdź kopię”**. Migawka SQLite
 trafia do `~/Obrazownik-dane/backups`. Kopie powstają też przed migracją,
 przed importem i po pierwszej ukończonej sesji lokalnego dnia.
 Retencja obejmuje ostatnie 14 dni kopii automatycznych; ręczne i sprzed zmian

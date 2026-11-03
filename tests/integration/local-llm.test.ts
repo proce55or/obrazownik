@@ -59,7 +59,7 @@ test('prefetch is invisible; reveal flushes latest draft, deduplicates and prese
   expect((await f.get('/observations')).json().samples[0]).toMatchObject({llmMode:'bielik',bielikAssistanceState:'delivered'});
   expect((await f.get(`${f.base}/markdown`)).body).toContain(model.modelSha256);
   expect((await f.get('/notebook')).json().attempts[0].llmMode).toBe('bielik');
-  const exported=(await f.get('/export')).json();expect(exported.schemaVersion).toBe(3);
+  const exported=(await f.get('/export')).json();expect(exported.schemaVersion).toBe(4);
   expect(BundleSchema.parse(exported).assistanceEvents[0].llm?.modelSha256).toBe(model.modelSha256);
 });
 test('independent attempts and attempts started without LLM never generate or reveal hints',async()=>{

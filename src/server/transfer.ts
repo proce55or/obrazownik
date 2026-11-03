@@ -12,7 +12,7 @@ export function exportBundle(db:DatabaseSync,settings:Settings):Bundle {
  const exposures=db.prepare('SELECT * FROM contentExposure ORDER BY rowid').all();
  // Legacy exposures have incomplete lineage: retain them as unknown item families.
  const old=db.prepare('SELECT record FROM exposures WHERE id NOT IN (SELECT id FROM contentExposure)').all().map(r=>{const e=JSON.parse(String(r.record));return {...e,itemFamilyId:'legacy-unknown',kind:'prompt'};});
- return BundleSchema.parse({format:'obrazownik',formatVersion:1,appVersion:VERSION,schemaVersion:3,exportedAt:new Date().toISOString(),exposureHistory:String(db.prepare("SELECT value FROM appMeta WHERE key='exposureHistory'").get()?.value??'unknown'),settings,
+ return BundleSchema.parse({format:'obrazownik',formatVersion:1,appVersion:VERSION,schemaVersion:4,exportedAt:new Date().toISOString(),exposureHistory:String(db.prepare("SELECT value FROM appMeta WHERE key='exposureHistory'").get()?.value??'unknown'),settings,
  attempts:records(db,'attempts'),versions:records(db,'attemptVersions'),assistanceEvents:records(db,'assistanceEvents'),exposures:[...exposures,...old],sessions:records(db,'sessions'),documents:records(db,'documents'),documentVersions:records(db,'documentVersions'),reviews:records(db,'dueReviews'),methods:records(db,'methods'),cards:records(db,'cardRegistry')});
 }
 export function importPreview(input:unknown){assertBundleSize(input);const bundle=BundleSchema.parse(input);return {digest:digestBundle(bundle),attempts:bundle.attempts.length,documents:bundle.documents.length,versions:bundle.versions.length,exposures:bundle.exposures.length,assistanceEvents:bundle.assistanceEvents.length};}
@@ -34,7 +34,13 @@ export function importBundle(db:DatabaseSync,bundle:Bundle){
  for(const id of remap)mappings.set(id,randomUUID());
  const skip=(table:string,item:{id:string})=>!remap.has(item.id)&&existingRecord(db,table,item.id)!==undefined;
  const mapped=(id:string|null)=>id===null?null:mappings.get(id)??id;
- const rewrite=(object:Record<string,unknown>)=>{const r={...object};for(const key of ['id','attemptId','sourceAttemptId','sessionId','documentId','sourceDocumentId'])if(typeof r[key]==='string')r[key]=mapped(r[key] as string);if(Array.isArray(r.attemptIds))r.attemptIds=r.attemptIds.map(id=>mapped(String(id)));return r;};
+ const rewrite=(object:Record<string,unknown>)=>{const r={...object};for(const key of ['id','attemptId','sourceAttemptId','sessionId','documentId','sourceDocumentId'])if(typeof r[key]==='string')r[key]=mapped(r[key] as string);if(Array.isArray(r.attemptIds))r.attemptIds=r.attemptIds.map(id=>mapped(String(id)));
+ if(r.guided && typeof r.guided==='object') {
+   const guided=r.guided as NonNullable<Bundle['attempts'][number]['guided']>;
+   const review=(value:typeof guided.history[number])=>({...value,eventId:mapped(value.eventId)!});
+   r.guided={...guided,history:guided.history.map(review),feedback:guided.feedback?review(guided.feedback):null};
+ }
+ return r;};
  const recordCount=groups.reduce((n,[table,items])=>n+items.filter(item=>!skip(table,item)||remap.has(item.id)).length,0);
  for(const [table,items] of [['methods',bundle.methods],['cardRegistry',bundle.cards]] as const)for(const item of items){const key=`${item.id}:${item.version}`,old=db.prepare(`SELECT record FROM ${table} WHERE key=?`).get(key);if(old&&canonical(table==='cardRegistry'?CardSchema.strip().parse(JSON.parse(String(old.record))):JSON.parse(String(old.record)))!==canonical(item))throw new AppError(409,'catalog_conflict','Ta sama wersja metody lub karty ma inną definicję. Import przerwany.');db.prepare(`INSERT OR IGNORE INTO ${table}(key,record) VALUES (?,?)`).run(key,JSON.stringify(item));}
  for(const session of bundle.sessions){if(skip('sessions',session))continue;const r=rewrite(session);db.prepare('INSERT INTO sessions(id,record) VALUES (?,?)').run(String(r.id),JSON.stringify(r));}

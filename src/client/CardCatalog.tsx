@@ -21,7 +21,7 @@ export function CardCatalog({ cards, busy, onStart }: Props) {
   const card = group.find((item) => item.id === selected) ?? group[0];
 
   return (
-    <details className="versions card-catalog">
+    <details className="versions card-catalog" open>
       <summary>Wybierz ćwiczenie i własne tempo</summary>
       <div className="ratings-grid">
         <label>

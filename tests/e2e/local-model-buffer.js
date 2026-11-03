@@ -2,19 +2,25 @@
 async function scenario(page) {
   const assert=(ok,message)=>{if(!ok)throw new Error(message);};
   const get=url=>page.evaluate(async url=>{const response=await fetch(url);if(!response.ok)throw new Error(`GET failed: ${url}`);return response.json();},url);
-  const nav=name=>page.getByRole('button',{name,exact:true}).click();
+  const nav = async name => {
+    const button = page.getByRole('button', {name, exact: true});
+    if (!await button.isVisible()) {
+      const menu = page.getByRole('button', {name: /^Menu ·/});
+      if (await menu.isVisible() && await menu.getAttribute('aria-expanded') === 'false') await menu.click();
+    }
+    await button.click();
+  };
   const boot=await get('/api/bootstrap');
   assert(boot.dataDir.includes('obrazownik-'),'Refusing a data directory without an isolated QA marker');
   assert((await get('/api/llm/status')).available,'Verified local runtime is required');
   try{
-    await nav('Ustawienia i kopie');
+    await nav('Ustawienia');
     await page.getByRole('combobox',{name:'Pomoc w nowych ćwiczeniach',exact:true}).selectOption('bielik');
     await page.getByText('Przygotowywanie dodatkowego pytania',{exact:true}).click();
     await page.getByRole('checkbox',{name:'Przygotuj pytanie w tle po otwarciu ćwiczenia',exact:true}).uncheck();
     await nav('Zapisz ustawienia');await page.getByText('Ustawienia zapisane.',{exact:true}).waitFor();
-    await nav('Dzisiaj');
-    if (!await page.locator('details.more-options').evaluate(node => node.open)) await page.getByText('Więcej możliwości', {exact:true}).click();
-    await page.getByText('Wybierz ćwiczenie i własne tempo',{exact:true}).click();
+    await nav('Start');
+    await nav('Ćwiczenia');
     await page.getByRole('combobox',{name:'Rodzaj ćwiczenia',exact:true}).selectOption('property');
     const selector=page.getByRole('combobox',{name:'Temat ćwiczenia',exact:true});
     await selector.selectOption(await selector.locator('option').nth(1).getAttribute('value'));

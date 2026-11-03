@@ -10,7 +10,7 @@ import { AppError } from './errors.js';
 
 export const LOCAL_MODEL_URL = 'http://127.0.0.1:4320';
 export const PROMPT_VERSION = 'obrazownik-question-2';
-const ManifestSchema = z.object({modelId:z.literal('bielik-7b-local'),modelSha256:z.string().regex(/^[a-f0-9]{64}$/),modelPath:z.string().min(1)});
+export const ManifestSchema = z.object({modelId:z.literal('bielik-7b-local'),modelSha256:z.string().regex(/^[a-f0-9]{64}$/),modelPath:z.string().min(1)});
 export type ModelManifest = z.infer<typeof ManifestSchema>;
 const questionSchema = z.string().trim().min(12).max(400).refine(s=>s.endsWith('?') && (s.match(/\?/g)||[]).length===1 && !/[<>\n\r]/.test(s));
 const CachedSchema = z.object({key:z.string(),content:questionSchema,llm:LocalLlmProvenanceSchema}).strict();
@@ -42,7 +42,7 @@ const generateLocal:GenerateQuestion = async(prompt,model,abortSignal)=>{
   if(result.finishReason==='length')throw new Error('Incomplete question');
   return result.text;
 };
-async function probeLocal(model:ModelManifest){
+export async function probeLocal(model:ModelManifest){
   const signal=AbortSignal.timeout(3000);
   const [models,props]=await Promise.all([
     fetch(`${LOCAL_MODEL_URL}/v1/models`,{signal,redirect:'error'}),
@@ -54,7 +54,7 @@ async function probeLocal(model:ModelManifest){
   return list.data?.some(x=>x.id===model.modelId)===true && info.model_path===model.modelPath;
 }
 export function assertLlmAttempt(attempt:Attempt){
-  if(attempt.mode==='independent'||attempt.llmMode!=='bielik'||attempt.status!=='draft')
+  if(attempt.guided||attempt.mode==='independent'||attempt.llmMode!=='bielik'||attempt.status!=='draft')
     throw new AppError(403,'llm_disabled','Bielik jest dostępny tylko w otwartej próbie z włączonym lokalnym modelem.');
 }
 export class LocalHintService {
@@ -100,7 +100,7 @@ export class LocalHintService {
     this.entries.set(key,entry);
   }
   status(attempt:Attempt):Preparation {
-    if(attempt.mode==='independent'||attempt.llmMode!=='bielik'||attempt.status!=='draft')return {status:'disabled',message:'Ta próba odbywa się bez lokalnego modelu.'};
+    if(attempt.guided||attempt.mode==='independent'||attempt.llmMode!=='bielik'||attempt.status!=='draft')return {status:'disabled',message:'Ten rodzaj pomocy nie jest dostępny w tej próbie.'};
     const model=this.manifest();
     if(!model)return {status:'error',message:'Brakuje instalacji Bielika. Gotowe podpowiedzi pozostają dostępne.'};
     return this.load(this.input(attempt,model).key,model)?.state??{status:'idle',message:'Możesz przygotować pytanie. W tym czasie możesz swobodnie pisać.'};

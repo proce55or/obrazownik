@@ -15,6 +15,7 @@ import {
   type DocumentRecord,
 } from "../shared/records.js";
 import { AppError } from "./errors.js";
+import { GUIDED_STEPS, isGuidedFeedbackCurrent } from "../shared/guided.js";
 
 export const NotebookQuerySchema = z
   .object({
@@ -359,7 +360,15 @@ export class Notebook {
     const attempt = AttemptSchema.parse(JSON.parse(String(row.record)));
     const llmHelp=this.db.prepare('SELECT record FROM assistanceEvents WHERE attemptId=?').all(id).map(r=>AssistanceSchema.parse(JSON.parse(String(r.record)))).filter(e=>e.provider==='bielik_local'&&e.status!=='failed');
     const sources=llmHelp.map(e=>`Lokalny model: ${e.llm!.modelId}; SHA256: ${e.llm!.modelSha256}; prompt: ${e.llm!.promptVersion}; odbiór: ${e.status}; przygotowano: ${e.llm!.generatedAt}`).join('\n');
-    return `# ${heading(attempt.promptSnapshot.title)}\n\n${stateLabel(String(row.assistanceState), Number(row.assistanceLevel))}\n\nTryb: ${attempt.mode}; materiał: ${attempt.setRole}; tryb LLM: ${attempt.llmMode}\n${sources?`${sources}\n`:''}Zapis: ${attempt.updatedAt}\n\n## Polecenie\n\n${attempt.promptSnapshot.instruction}\n\n## Własny tekst\n\n${codeBlock(attempt.currentText)}\n`;
+    const guidedHistory = attempt.guided ? [
+      ...attempt.guided.history,
+      ...(attempt.guided.feedback ? [attempt.guided.feedback] : []),
+    ].map(review => {
+      const stale = review.step === attempt.guided!.step && !isGuidedFeedbackCurrent(attempt);
+      const feedback = review.feedback;
+      return `### Etap ${review.step + 1}: ${GUIDED_STEPS[review.step].title}\n\n${codeBlock(review.answer)}\n\nOmówienie lokalnego Bielika${stale ? ' — dotyczy wcześniejszej odpowiedzi' : ''}:\n\n${codeBlock(`Fragment: ${feedback.quote}\nCo działa: ${feedback.strength}\nCo możesz poprawić: ${feedback.improvement}\nPytanie: ${feedback.nextQuestion}`)}\n`;
+    }).join('\n') : '';
+    return `# ${heading(attempt.promptSnapshot.title)}\n\n${stateLabel(String(row.assistanceState), Number(row.assistanceLevel))}\n\nTryb: ${attempt.mode}; materiał: ${attempt.setRole}; tryb LLM: ${attempt.llmMode}\n${sources?`${sources}\n`:''}Zapis: ${attempt.updatedAt}\n\n## Polecenie\n\n${attempt.promptSnapshot.instruction}\n\n## Własny tekst\n\n${codeBlock(attempt.currentText)}\n${guidedHistory ? `\n## Przebieg ćwiczenia prowadzonego\n\n${guidedHistory}` : ''}`;
   }
   observations(limit = 30, offset = 0) {
     const page = DocumentListQuerySchema.parse({ limit, offset });

@@ -1,8 +1,15 @@
 async function scenario(page) {
+  const nav = async name => {
+    const button = page.getByRole('button', {name, exact: true});
+    if (!await button.isVisible()) {
+      const menu = page.getByRole('button', {name: /^Menu ·/});
+      if (await menu.isVisible() && await menu.getAttribute('aria-expanded') === 'false') await menu.click();
+    }
+    await button.click();
+  };
  const assert=(ok,message)=>{if(!ok)throw new Error(message);};
  const get=url=>page.evaluate(async url=>(await fetch(url)).json(),url);
- if (!await page.locator('details.more-options').evaluate(node => node.open)) await page.getByText('Więcej możliwości', {exact:true}).click();
- await page.getByText('Wybierz ćwiczenie i własne tempo',{exact:true}).click();
+ await nav('Ćwiczenia');
  await page.getByRole('combobox',{name:'Rodzaj ćwiczenia',exact:true}).selectOption('verb');
  await page.getByRole('button',{name:'Otwórz wybrane ćwiczenie',exact:false}).click();
  await page.getByRole('heading',{name:'nieść',exact:true}).waitFor();
@@ -22,7 +29,7 @@ async function scenario(page) {
  await page.getByText('O ćwiczeniu i jego podstawach',{exact:true}).click();
  await page.getByText('Adaptacja inspirowana metodą kliniczną',{exact:true}).waitFor();
  await page.getByRole('button',{name:'Wróć do Dzisiaj',exact:true}).click();
- if (!await page.locator('details.more-options').evaluate(node => node.open)) await page.getByText('Więcej możliwości', {exact:true}).click();
+ await nav('Ćwiczenia');
  await page.getByRole('button',{name:'Zacznij nowy tekst',exact:false}).click();
  await page.getByRole('button',{name:'Potrzebuję pomocy - otwórz osobną wersję',exact:true}).waitFor();
  assert(await page.getByRole('button',{name:'1 · Pytanie naprowadzające',exact:true}).count()===0,'Independent mode leaked hints');
