@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { allCards, methods } from "../../src/server/content.js";
+import { allCards, getCard, methods } from "../../src/server/content.js";
 import { validateContent } from "../../src/domain/content-validation.js";
 
 test("authored package has five base families, optional variants, near transfer and a protected 20-topic reserve", () => {
@@ -71,19 +71,31 @@ test("independent cards cannot carry hints, and E5 must retain its authored sour
 });
 
 test("optional variants cannot inflate the minimum twelve cards per base family", () => {
-  const cards = structuredClone(allCards);
-  const bridge = cards.filter(
+  const bridge = allCards.find(
     (card) => card.family === "bridge" && card.methodId === "E2",
-  );
-  cards.splice(
-    cards.findIndex((card) => card.id === bridge[0].id),
-    1,
-  );
+  )!;
+  const cards = allCards.filter((card) => card.id !== bridge.id);
   expect(
     validateContent(cards, methods).errors.some(
       (error) => error.startsWith("bridge:") && error.includes("bez M2/M3/M5"),
     ),
   ).toBe(true);
+});
+
+test("editorial updates keep old prompts and hints addressable by the attempt's card version", () => {
+  const previous = getCard("property-stone-01", 2)!,
+    current = getCard("property-stone-01")!;
+  expect(current.version).toBeGreaterThan(previous.version);
+  expect(previous.prompt.instruction).toBe(
+    "Pomyśl o kamieniu trzymanym w dłoni. Zauważ do trzech jego cech: dotyk, ciężar, temperaturę. Wybierz jedną i zbuduj z niej krótki obraz w jednym lub dwóch zdaniach.",
+  );
+  expect(previous.hints[2]).toBe(
+    "Kamień powoli oddaje chłód mojej dłoni. Po chwili nie wiem już, po której stronie zaczyna się ciepło.",
+  );
+  expect(current.prompt.instruction).not.toBe(previous.prompt.instruction);
+  expect(current.hints[2]).not.toBe(previous.hints[2]);
+  expect(current.itemFamilyId).toBe(previous.itemFamilyId);
+  expect(current.setRole).toBe(previous.setRole);
 });
 
 test("archived versions do not inflate the count of current exercise cards", () => {

@@ -11,10 +11,15 @@ import {
   type RecoveryDraft,
   type SaveStatus,
 } from "../domain/draft-queue";
-import { api, ApiError } from "./api";
+import {
+  api,
+  isUncertainOutcome,
+  isWriteConflict,
+  responseData,
+  userMessage,
+} from "./api";
 import { clearRecovery, findRecovery, putRecovery } from "./recovery";
 import "./notebook.css";
-import { modelModeLabel, bielikAssistanceLabel } from "./LocalModel";
 
 const DocumentDetailSchema = z.object({
   document: DocumentSchema,
@@ -24,7 +29,9 @@ type DocumentDetail = z.infer<typeof DocumentDetailSchema>;
 const NotebookAttemptSchema = AttemptSchema.extend({
   assistanceState: AssistanceStateSchema,
   assistanceLevel: z.number().int().min(0).max(3),
-  bielikAssistanceState: z.enum(["delivered","prepared","none","unknown"]).default("unknown"),
+  bielikAssistanceState: z
+    .enum(["delivered", "prepared", "none", "unknown"])
+    .default("unknown"),
 });
 const AttemptPageSchema = z.object({
   attempts: z.array(NotebookAttemptSchema),
@@ -48,13 +55,13 @@ const families = {
 const modes = {
   training: "Trening",
   repeat: "Powrót",
-  near_transfer: "Bliskie przeniesienie",
+  near_transfer: "Nowy temat",
   independent: "Samodzielna próba",
   assisted_writing: "Nowe pisanie z pomocą",
 };
 function helpLabel(state: string, level: number) {
   return state === "unknown"
-    ? "Historia pomocy nieznana lub niepewna"
+    ? "Brak pełnej historii podpowiedzi"
     : state === "none_confirmed"
       ? "Bez pomocy w aplikacji"
       : level === 3
@@ -114,7 +121,7 @@ function Pagination({
         disabled={busy || offset === 0}
         onClick={() => onPage(Math.max(0, offset - limit))}
       >
-        ← Poprzednie
+        <span aria-hidden="true">← </span>Poprzednie
       </button>
       <span>
         {total
@@ -126,7 +133,7 @@ function Pagination({
         disabled={busy || offset + limit >= total}
         onClick={() => onPage(offset + limit)}
       >
-        Następne →
+        Następne<span aria-hidden="true"> →</span>
       </button>
     </nav>
   );
@@ -170,6 +177,17 @@ export function Notebook({
   } | null>(null);
   const editing = !!editor || showCreate;
   useEffect(() => {
+    if (showCreate)
+      requestAnimationFrame(() =>
+        globalThis.document.getElementById("new-document-title")?.focus(),
+      );
+  }, [showCreate]);
+  function focusNotebook() {
+    requestAnimationFrame(() =>
+      globalThis.document.getElementById("main")?.focus(),
+    );
+  }
+  useEffect(() => {
     onEditingChange?.(editing);
     return () => onEditingChange?.(false);
   }, [editing, onEditingChange]);
@@ -198,17 +216,14 @@ export function Notebook({
     api(`/${tab === "documents" ? "documents" : "notebook"}?${params}`)
       .then((value) => {
         if (!active) return;
-        if (tab === "documents") setDocuments(DocumentPageSchema.parse(value));
-        else setAttempts(AttemptPageSchema.parse(value));
+        if (tab === "documents")
+          setDocuments(responseData(DocumentPageSchema, value));
+        else setAttempts(responseData(AttemptPageSchema, value));
         setError("");
       })
       .catch((failure) => {
         if (active)
-          setError(
-            failure instanceof Error
-              ? failure.message
-              : "Nie udało się otworzyć zeszytu.",
-          );
+          setError(userMessage(failure, "Nie udało się otworzyć zeszytu."));
       })
       .finally(() => {
         if (active) setBusy(false);
@@ -230,14 +245,12 @@ export function Notebook({
     setBusy(true);
     setError("");
     try {
-      setEditor(DocumentDetailSchema.parse(await api(`/documents/${id}`)));
+      setEditor(
+        responseData(DocumentDetailSchema, await api(`/documents/${id}`)),
+      );
       setEpoch((value) => value + 1);
     } catch (failure) {
-      setError(
-        failure instanceof Error
-          ? failure.message
-          : "Nie udało się otworzyć tekstu.",
-      );
+      setError(userMessage(failure, "Nie udało się otworzyć tekstu."));
     } finally {
       setBusy(false);
     }
@@ -255,11 +268,7 @@ export function Notebook({
           setTitle(file!.name.replace(/\.(txt|md)$/i, "").slice(0, 200));
       }
     } catch (failure) {
-      setError(
-        failure instanceof Error
-          ? failure.message
-          : "Nie udało się odczytać pliku.",
-      );
+      setError(userMessage(failure, "Nie udało się odczytać pliku."));
     } finally {
       setCreating(false);
     }
@@ -274,7 +283,8 @@ export function Notebook({
     };
     setPendingCreate(true);
     try {
-      const created = DocumentSchema.parse(
+      const created = responseData(
+        DocumentSchema,
         await api("/documents", "POST", createRequest.current),
       );
       createRequest.current = null;
@@ -285,11 +295,11 @@ export function Notebook({
       refresh();
       await openDocument(created.id);
     } catch (failure) {
-      setError(
-        failure instanceof Error
-          ? failure.message
-          : "Nie udało się utworzyć tekstu.",
-      );
+      if (!isUncertainOutcome(failure)) {
+        createRequest.current = null;
+        setPendingCreate(false);
+      }
+      setError(userMessage(failure, "Nie udało się utworzyć tekstu."));
     } finally {
       setCreating(false);
     }
@@ -310,9 +320,10 @@ export function Notebook({
           setText("");
           setShowCreate(false);
           refresh();
+          focusNotebook();
         }}
       >
-        ← Porzuć formularz i wróć do zeszytu
+        <span aria-hidden="true">← </span>Porzuć formularz i wróć do zeszytu
       </button>
       <h2>Nowa strona</h2>
       <p className="fine-print">
@@ -367,6 +378,7 @@ export function Notebook({
         onClose={() => {
           setEditor(undefined);
           refresh();
+          focusNotebook();
         }}
         onReload={replaceEditor}
         onTransform={onTransformDocument}
@@ -551,7 +563,7 @@ export function Notebook({
                   {item.currentText.slice(0, 180) || "Jeszcze bez słów."}
                 </p>
                 <p className="fine-print">
-                  {modelModeLabel(item.llmMode)} · {bielikAssistanceLabel(item.bielikAssistanceState)} · {helpLabel(item.assistanceState, item.assistanceLevel)} ·{" "}
+                  {helpLabel(item.assistanceState, item.assistanceLevel)} ·{" "}
                   {item.status === "draft"
                     ? "szkic"
                     : item.status === "completed"
@@ -568,9 +580,10 @@ export function Notebook({
                       void Promise.resolve(onOpenAttempt(item.id)).catch(
                         (failure) =>
                           setError(
-                            failure instanceof Error
-                              ? failure.message
-                              : "Nie udało się otworzyć próby.",
+                            userMessage(
+                              failure,
+                              "Nie udało się otworzyć próby.",
+                            ),
                           ),
                       );
                     }}
@@ -618,7 +631,7 @@ export function Notebook({
 }
 
 type ExtraAction = {
-  kind: "rename" | "replace" | "version" | "recovery";
+  kind: "replace" | "version" | "recovery";
   path: string;
   method: "POST" | "PATCH";
   body: Record<string, unknown>;
@@ -642,31 +655,47 @@ function DocumentEditor({
     [versions, setVersions] = useState(initial.versions);
   const [status, setStatus] = useState<SaveStatus>("saved"),
     [error, setError] = useState(""),
+    [notice, setNotice] = useState(""),
     [busy, setBusy] = useState(false),
     [bufferError, setBufferError] = useState(false),
     [checking, setChecking] = useState(true),
     [recovery, setRecovery] = useState<RecoveryDraft>(),
     [pendingKind, setPendingKind] = useState<ExtraAction["kind"] | null>(null),
     [serverText, setServerText] = useState<string>();
-  const pending = useRef<ExtraAction | null>(null),
-    titleRef = useRef(title),
-    documentRef = useRef(document);
+  const pending = useRef<ExtraAction | null>(null);
+  const recoveryRef = useRef<HTMLElement>(null),
+    conflictRef = useRef<HTMLDivElement>(null),
+    writingRef = useRef<HTMLTextAreaElement>(null);
+  const hasConflict = status === "conflict";
+  useEffect(() => {
+    if (recovery) recoveryRef.current?.focus();
+    else if (hasConflict) conflictRef.current?.focus();
+    else if (!checking) writingRef.current?.focus();
+  }, [recovery, hasConflict, checking]);
   const [queue] = useState(
     () =>
       new DraftQueue<DocumentRecord>({
         attempt: initial.document,
         environmentId,
         send: async (input) =>
-          DocumentSchema.parse(
+          responseData(
+            DocumentSchema,
             await api(`/documents/${initial.document.id}`, "PATCH", {
               text: input.text,
+              title: input.title,
               expectedRevision: input.expectedRevision,
               clientMutationId: input.clientMutationId,
             }),
           ),
         putRecovery,
-        clearRecovery: (confirmed, fields) =>
-          clearRecovery(environmentId, initial.document.id, confirmed, fields),
+        clearRecovery: (confirmed, fields, confirmedTitle) =>
+          clearRecovery(
+            environmentId,
+            initial.document.id,
+            confirmed,
+            fields,
+            confirmedTitle,
+          ),
         onAck: setDocument,
         onStatus: (next, message) => {
           setStatus(next);
@@ -678,46 +707,61 @@ function DocumentEditor({
   );
   useEffect(() => {
     let active = true;
-    findRecovery(environmentId, initial.document.id)
-      .then(async (value) => {
-        if (!active) return;
-        if (value && value.text !== initial.document.currentText)
-          setRecovery(value);
-        else if (value)
-          await clearRecovery(
-            environmentId,
-            initial.document.id,
-            value.text,
-            {},
-          );
-      })
+    (async () => {
+      let value = await findRecovery(environmentId, initial.document.id);
+      while (
+        value &&
+        value.text === initial.document.currentText &&
+        (value.title === undefined || value.title === initial.document.title)
+      ) {
+        await clearRecovery(
+          environmentId,
+          initial.document.id,
+          value.text,
+          {},
+          value.title,
+        );
+        value = await findRecovery(environmentId, initial.document.id);
+      }
+      if (active && value) setRecovery(value);
+    })()
       .catch(() => {
         if (active) setBufferError(true);
       })
       .finally(() => {
         if (active) setChecking(false);
       });
+    const persistOnExit = () => {
+      void queue.settleRecovery();
+    };
     const warn = (event: BeforeUnloadEvent) => {
-      if (
-        queue.dirty ||
-        pending.current ||
-        titleRef.current !== documentRef.current.title
-      ) {
+      persistOnExit();
+      if (queue.dirty || pending.current) {
         event.preventDefault();
         event.returnValue = "";
       }
     };
     window.addEventListener("beforeunload", warn);
+    window.addEventListener("pagehide", persistOnExit);
     return () => {
       active = false;
       queue.dispose();
       window.removeEventListener("beforeunload", warn);
+      window.removeEventListener("pagehide", persistOnExit);
     };
-  }, [environmentId, initial.document.id, initial.document.currentText, queue]);
+  }, [
+    environmentId,
+    initial.document.id,
+    initial.document.currentText,
+    initial.document.title,
+    queue,
+  ]);
   async function copy() {
     try {
-      await navigator.clipboard.writeText(recovery?.text ?? text);
-      setError("Tekst skopiowany.");
+      await navigator.clipboard.writeText(
+        (recovery?.title ?? title) + "\n\n" + (recovery?.text ?? text),
+      );
+      setNotice("Tekst skopiowany.");
     } catch {
       setError("Zaznacz tekst i skopiuj go skrótem ⌘C.");
     }
@@ -751,33 +795,28 @@ function DocumentEditor({
       );
       const detail =
         kind === "version"
-          ? DocumentDetailSchema.parse(value)
-          : { document: DocumentSchema.parse(value), versions };
+          ? responseData(DocumentDetailSchema, value)
+          : { document: responseData(DocumentSchema, value), versions };
       pending.current = null;
       setPendingKind(null);
       queue.acceptRevision(detail.document);
       setText(detail.document.currentText);
       setTitle(detail.document.title);
-      titleRef.current = detail.document.title;
-      documentRef.current = detail.document;
       setVersions(detail.versions);
       if (kind === "replace") {
-        const updated = DocumentDetailSchema.parse(
+        const updated = responseData(
+          DocumentDetailSchema,
           await api(`/documents/${document.id}`),
         );
         setVersions(updated.versions);
       }
       return detail.document;
     } catch (failure) {
-      setError(
-        failure instanceof Error
-          ? failure.message
-          : "Nie udało się wykonać operacji.",
-      );
-      if (failure instanceof ApiError && failure.status === 409) {
+      setError(userMessage(failure, "Nie udało się wykonać operacji."));
+      if (isWriteConflict(failure)) setStatus("conflict");
+      if (!isUncertainOutcome(failure)) {
         pending.current = null;
         setPendingKind(null);
-        setStatus("conflict");
       }
       throw failure;
     } finally {
@@ -789,15 +828,10 @@ function DocumentEditor({
     setError("");
     try {
       await queue.flush();
-      if (title !== document.title) await action("rename");
       await queue.settleRecovery();
       await next();
     } catch (failure) {
-      setError(
-        failure instanceof Error
-          ? failure.message
-          : "Nie udało się zapisać tekstu.",
-      );
+      setError(userMessage(failure, "Nie udało się zapisać tekstu."));
     } finally {
       setBusy(false);
     }
@@ -810,21 +844,19 @@ function DocumentEditor({
       if (imported !== undefined)
         await action("replace", { text: imported, replaceAll: true });
     } catch (failure) {
-      setError(
-        failure instanceof Error
-          ? failure.message
-          : "Nie udało się wczytać tekstu.",
-      );
+      setError(userMessage(failure, "Nie udało się wczytać tekstu."));
     }
   }
   async function preserveSeparate() {
     const local = recovery?.text ?? text;
+    const localTitle = recovery?.title ?? title;
     setBusy(true);
     setError("");
     try {
       await queue.settleRecovery();
       if (!pending.current) {
-        const latest = DocumentDetailSchema.parse(
+        const latest = responseData(
+          DocumentDetailSchema,
           await api(`/documents/${document.id}`),
         );
         pending.current = {
@@ -834,14 +866,18 @@ function DocumentEditor({
           body: {
             expectedRevision: latest.document.revision,
             clientMutationId: crypto.randomUUID(),
-            text: local,
+            text:
+              localTitle !== document.title
+                ? `Tytuł: ${localTitle || "Bez tytułu"}\n\n${local}`
+                : local,
           },
         };
       }
       if (pending.current.kind !== "recovery")
         throw new Error("Najpierw ponów poprzednią operację.");
       setPendingKind("recovery");
-      const detail = DocumentDetailSchema.parse(
+      const detail = responseData(
+        DocumentDetailSchema,
         await api(
           pending.current.path,
           pending.current.method,
@@ -850,15 +886,11 @@ function DocumentEditor({
       );
       pending.current = null;
       setPendingKind(null);
-      await clearRecovery(environmentId, document.id, local, {});
+      await clearRecovery(environmentId, document.id, local, {}, localTitle);
       onReload(detail);
     } catch (failure) {
-      setError(
-        failure instanceof Error
-          ? failure.message
-          : "Nie udało się zachować wersji.",
-      );
-      if (failure instanceof ApiError && failure.status === 409) {
+      setError(userMessage(failure, "Nie udało się zachować wersji."));
+      if (!isUncertainOutcome(failure)) {
         pending.current = null;
         setPendingKind(null);
       }
@@ -869,11 +901,13 @@ function DocumentEditor({
   async function showServer() {
     try {
       setServerText(
-        DocumentDetailSchema.parse(await api(`/documents/${document.id}`))
-          .document.currentText,
+        responseData(
+          DocumentDetailSchema,
+          await api(`/documents/${document.id}`),
+        ).document.currentText,
       );
     } catch (failure) {
-      setError(failure instanceof Error ? failure.message : "Brak połączenia.");
+      setError(userMessage(failure, "Brak połączenia."));
     }
   }
   const blocked =
@@ -895,7 +929,7 @@ function DocumentEditor({
             void finish(onClose);
           }}
         >
-          ← Zapisz i wróć do zeszytu
+          <span aria-hidden="true">← </span>Zapisz i wróć do zeszytu
         </button>
         <span className="eyebrow">WŁASNY TEKST</span>
       </div>
@@ -909,28 +943,17 @@ function DocumentEditor({
           value={title}
           onChange={(event) => {
             setTitle(event.target.value);
-            titleRef.current = event.target.value;
+            queue.setTitle(event.target.value);
           }}
         />
-        <button
-          className="secondary-button"
-          disabled={
-            busy ||
-            checking ||
-            !!recovery ||
-            status === "conflict" ||
-            (!!pendingKind && pendingKind !== "rename") ||
-            (!pendingKind && title === document.title)
-          }
-          onClick={() => {
-            void action("rename").catch(() => {});
-          }}
-        >
-          Zapisz tytuł
-        </button>
       </div>
       {recovery && (
-        <aside className="recovery-panel">
+        <aside
+          className="recovery-panel"
+          ref={recoveryRef}
+          tabIndex={-1}
+          aria-label="Odzyskiwanie tekstu"
+        >
           <h2>Odnaleziono niezapisany tekst</h2>
           <p>
             {recovery.baseRevision === document.revision
@@ -939,6 +962,9 @@ function DocumentEditor({
           </p>
           <details>
             <summary>Pokaż kopię ratunkową</summary>
+            {recovery.title !== undefined && (
+              <p>Tytuł: {recovery.title || "Bez tytułu"}</p>
+            )}
             <p className="preserve-text">{recovery.text}</p>
           </details>
           <div className="button-row">
@@ -949,6 +975,10 @@ function DocumentEditor({
                 onClick={() => {
                   setText(recovery.text);
                   queue.setText(recovery.text);
+                  if (recovery.title !== undefined) {
+                    setTitle(recovery.title);
+                    queue.setTitle(recovery.title);
+                  }
                   setRecovery(undefined);
                 }}
               >
@@ -988,6 +1018,7 @@ function DocumentEditor({
       </div>
       <textarea
         id="document-text"
+        ref={writingRef}
         className="writing-field"
         value={text}
         maxLength={50_000}
@@ -1001,6 +1032,7 @@ function DocumentEditor({
         {text.length.toLocaleString("pl-PL")} / 50 000 znaków. Treść pozostaje
         na Twoim komputerze.
       </p>
+      {notice && <p role="status">{notice}</p>}
       {bufferError && (
         <p className="connection-error">
           Bufor ratunkowy jest niedostępny lub pełny. Skopiuj niepotwierdzone
@@ -1008,7 +1040,12 @@ function DocumentEditor({
         </p>
       )}
       {error && (
-        <div className="connection-error" role="alert">
+        <div
+          className="connection-error"
+          role="alert"
+          ref={conflictRef}
+          tabIndex={-1}
+        >
           <p>{error}</p>
           <div className="button-row">
             <button
@@ -1186,11 +1223,9 @@ function VersionComparison({
         </label>
         <button
           className="secondary-button"
-          onClick={() =>
-            setReverse(crypto.getRandomValues(new Uint8Array(1))[0] % 2 === 0)
-          }
+          onClick={() => setReverse((value) => !value)}
         >
-          Losuj kolejność
+          Zamień kolejność
         </button>
       </div>
       <div className="notebook-comparison-grid">

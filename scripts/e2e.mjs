@@ -16,8 +16,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const cli = path.join(root, "node_modules/.bin/playwright-cli");
 const session = `obrazownik-test-${process.pid}`;
 const data = mkdtempSync(path.join(tmpdir(), "obrazownik-e2e-"));
-const port=Number(process.env.OBRAZOWNIK_TEST_PORT??4318);
-const origin=`http://127.0.0.1:${port}`;
+const port = Number(process.env.OBRAZOWNIK_TEST_PORT ?? 4318);
+const origin = `http://127.0.0.1:${port}`;
 let server;
 function run(args, marker, timeout = 50_000) {
   const output = execFileSync(cli, [`-s=${session}`, ...args], {
@@ -39,7 +39,11 @@ function run(args, marker, timeout = 50_000) {
 async function start() {
   server = spawn(process.execPath, ["dist/server/server/index.js"], {
     cwd: root,
-    env: { ...process.env, OBRAZOWNIK_DATA_DIR: data, OBRAZOWNIK_PORT:String(port) },
+    env: {
+      ...process.env,
+      OBRAZOWNIK_DATA_DIR: data,
+      OBRAZOWNIK_PORT: String(port),
+    },
     stdio: ["ignore", "pipe", "pipe"],
   });
   let output = "";
@@ -54,9 +58,7 @@ async function start() {
     try {
       const response = await fetch(`${origin}/api/health`);
       if (response.ok) {
-        const boot = await (
-          await fetch(`${origin}/api/bootstrap`)
-        ).json();
+        const boot = await (await fetch(`${origin}/api/bootstrap`)).json();
         if (boot.dataDir !== realpathSync(data))
           throw new Error(
             "Test refused a server using another data directory.",
@@ -94,35 +96,86 @@ try {
   await start();
   run(["open", origin]);
   run(["snapshot"]);
-  run(["run-code", "--filename", "tests/e2e/core.js"], "BEFORE_RELOAD_PASS");
-  const navigation = run(["reload"]);
-  if (navigation.includes("### Modal state")) run(["dialog-accept"]);
-  run(["snapshot"]);
-  run(["run-code", "--filename", "tests/e2e/recovery.js"], "CORE_PASS");
-  console.log(
-    "PASS: browser → autosave → hints → final; rescue after reload; two-tab conflict; lost hint response.",
-  );
-  await stop();
-  await start();
-  run(["reload"]);
-  run(["snapshot"]);
-  run(["run-code", "--filename", "tests/e2e/restart.js"], "RESTART_PASS");
-  run(["run-code","--filename","tests/e2e/science.js"],"SCIENCE_PASS");
-  console.log("PASS: Polish verb fields, snapshots, provenance and independent-to-assisted writing.");
-  run(["run-code","--filename","tests/e2e/product.js"],"PRODUCT_PASS");
-  console.log("PASS: own document → E5, all exercise families, settings, backup, JSON export/import, comparison and session.");
-  run(["run-code","--filename","tests/e2e/readability.js"],"READABILITY_PASS");
-  console.log("PASS: two cards per family, optional variants, 320/390px, 200% CSS zoom and keyboard focus.");
-  if(process.env.OBRAZOWNIK_TEST_LLM==='1') {
-    console.log('Optional Bielik QA: allow up to180s for background preparation; keep writing and model disclosure separate.');
-    run(["run-code","--filename","tests/e2e/local-model.js"],"LOCAL_MODEL_PASS",240_000);
-    console.log('PASS: local question buffer, explicit disclosure, model provenance, off mode and independent isolation.');
-    run(["run-code","--filename","tests/e2e/local-model-buffer.js"],"LOCAL_MODEL_BUFFER_PASS",240_000);
-    console.log('PASS: autosave completed while the local question was preparing; disclosure captured the latest text.');
+  const only = process.env.OBRAZOWNIK_TEST_ONLY;
+  if (only) {
+    if (!["buffer-tools", "client-errors", "layout", "readability", "local-model", "local-model-buffer"].includes(only))
+      throw new Error("Unknown focused scenario");
+    run(
+      ["run-code", "--filename", `tests/e2e/${only}.js`],
+      `${only.toUpperCase().replaceAll("-", "_")}_PASS`,
+      120_000,
+    );
+    console.log(`PASS: ${only}`);
+  } else {
+    run(["run-code", "--filename", "tests/e2e/core.js"], "BEFORE_RELOAD_PASS");
+    const navigation = run(["reload"]);
+    if (navigation.includes("### Modal state")) run(["dialog-accept"]);
+    run(["snapshot"]);
+    run(["run-code", "--filename", "tests/e2e/recovery.js"], "CORE_PASS");
+    console.log(
+      "PASS: browser → autosave → hints → final; rescue after reload; two-tab conflict; lost hint response.",
+    );
+    await stop();
+    await start();
+    run(["reload"]);
+    run(["snapshot"]);
+    run(["run-code", "--filename", "tests/e2e/restart.js"], "RESTART_PASS");
+    run(["run-code", "--filename", "tests/e2e/science.js"], "SCIENCE_PASS");
+    console.log(
+      "PASS: Polish verb fields, snapshots, provenance and independent-to-assisted writing.",
+    );
+    run(["run-code", "--filename", "tests/e2e/product.js"], "PRODUCT_PASS");
+    console.log(
+      "PASS: own document → E5, all exercise families, settings, backup, JSON export/import, comparison and session.",
+    );
+    run(
+      ["run-code", "--filename", "tests/e2e/readability.js"],
+      "READABILITY_PASS",
+    );
+    console.log(
+      "PASS: two cards per family, optional variants, 320/390px, 200% CSS zoom and keyboard focus.",
+    );
+    run(
+      ["run-code", "--filename", "tests/e2e/client-errors.js"],
+      "CLIENT_ERRORS_PASS",
+      120_000,
+    );
+    console.log(
+      "PASS: deterministic refusals, uncertain writes, document title recovery and unavailable browser buffer.",
+    );
+    run(
+      ["run-code", "--filename", "tests/e2e/buffer-tools.js"],
+      "BUFFER_TOOLS_PASS",
+      120_000,
+    );
+    console.log(
+      "PASS: recovery copies export/delete, stalled IndexedDB and writing without a model.",
+    );
+    if (process.env.OBRAZOWNIK_TEST_LLM === "1") {
+      console.log(
+        "Optional Bielik QA: allow up to180s for background preparation; keep writing and model disclosure separate.",
+      );
+      run(
+        ["run-code", "--filename", "tests/e2e/local-model.js"],
+        "LOCAL_MODEL_PASS",
+        240_000,
+      );
+      console.log(
+        "PASS: local question buffer, explicit disclosure, model provenance, off mode and independent isolation.",
+      );
+      run(
+        ["run-code", "--filename", "tests/e2e/local-model-buffer.js"],
+        "LOCAL_MODEL_BUFFER_PASS",
+        240_000,
+      );
+      console.log(
+        "PASS: autosave completed while the local question was preparing; disclosure captured the latest text.",
+      );
+    }
+    console.log(
+      "PASS: server restart preserves text, final and help; session/CSRF reconnects.",
+    );
   }
-  console.log(
-    "PASS: server restart preserves text, final and help; session/CSRF reconnects.",
-  );
 } catch (error) {
   try {
     console.error(run(["snapshot"]));

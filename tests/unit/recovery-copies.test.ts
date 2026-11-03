@@ -160,3 +160,30 @@ test("same body with different scaffolding remains unconfirmed; legacy fields ar
     what: "zapach",
   });
 });
+
+test("confirming a body never clears a different document title", () => {
+  const { draft, environmentId, id } = fixture();
+  const first = prepareRecoveryWrite(
+    [],
+    { ...draft, title: "Pierwszy" },
+    randomUUID(),
+  );
+  const second = prepareRecoveryWrite(
+    [first],
+    { ...draft, title: "Drugi" },
+    randomUUID(),
+  );
+  expect(
+    confirmedRecoveryKeys(
+      [first, second],
+      environmentId,
+      id,
+      draft.text,
+      {},
+      "Pierwszy",
+    ),
+  ).toEqual([first.key]);
+  expect(
+    confirmedRecoveryKeys([first, second], environmentId, id, draft.text),
+  ).toEqual([]);
+});

@@ -3,10 +3,11 @@
 Ćwiczenia są autorskimi propozycjami do sprawdzenia, a nie protokołem leczenia.
 Ich mechanizmy inspirują się pracą nad znaczeniami, scenami i twórczym pisaniem.
 
-Każde ma cel, bodziec, instrukcję podstawową, łatwiejszy wariant,
+Każde ćwiczenie z pomocą ma cel, bodziec, instrukcję podstawową, łatwiejszy wariant,
 opcjonalne ograniczenie, 2 pytania pomocnicze i jedno ostatnie,
 wyraźnie oznaczone przykładowe rozwiązanie. Przykład jest treścią aplikacji,
 nie wzorcem do naśladowania ani kryterium poprawności.
+Samodzielna rezerwa E6 nie zawiera pytań, przykładów ani pól pomocniczych.
 
 Pomoc ma trzy poziomy:
 1. Pytanie naprowadzające o cechę, relację, ruch albo zmysł.
@@ -22,6 +23,13 @@ Nie wymuszaj konkretnej poprawnej odpowiedzi. Nie oceniaj semantycznej
 odległości, rzadkości czy liczby przymiotników jako jakości. Ograniczenia
 są dobrowolną konwencją zadania: można je wyłączyć, z zapisem tej informacji.
 Brak spełnienia ograniczenia nie uniemożliwia zachowania tekstu.
+Wariant łatwiejszy skraca pracę do jednego kroku; dodatkowe ograniczenie
+rozwija sposób pracy danej rodziny. Sam limit dwóch zdań nie oznacza
+trudniejszego wariantu. Polecenie nie podaje gotowego połączenia ani obrazu.
+
+Opcjonalny lokalny model jest eksperymentem T17. Obecnie przygotowuje pytanie
+do treści karty, bez otrzymywania tekstu autora. Przydatność pytania ocenia
+autor. Model nie jest wymagany i nie działa w samodzielnej rezerwie E6.
 
 ## E1. Właściwość i obraz
 Cel: odnajdywanie cech i przekładanie ich na konkretne zdanie.
@@ -73,7 +81,7 @@ Nie przypisuj zadania treningowi rzeczywistej zdolności widzenia obrazów.
 
 ## E5. Wybór i przekształcenie
 Cel: świadomie przeorganizować materiał i zachować własny głos.
-Wariant podstawowy używa krótkiego neutralnego tekstu dostarczonego z aplikacją.
+Wariant podstawowy używa krótkiego tekstu o codziennej sytuacji, dostarczonego z aplikacją.
 Po T06 można użyć własnego tekstu. Oryginał zawsze pozostaje niezmieniony.
 
 A. Wybierz kilka słów i ułóż z nich nowy fragment; zachowaj polskie znaki.
@@ -106,16 +114,48 @@ Zmiana cardVersion nie zeruje ekspozycji cardId. Dobór ma również wykluczać
 karty już zarezerwowane przez aktywną próbę w innej karcie przeglądarki.
 
 ## E7. Pakiet treści
-MVP: co najmniej 60 kart treningowych, po 12 na rodzinę, oraz 20 niezależnych
-bodźców rezerwowych. Podział train/transfer jest zapisany w danych.
+MVP: co najmniej 60 bazowych kart treningowych, po 12 na rodzinę, oraz
+20 niezależnych bodźców rezerwowych. Obecny pakiet zawiera też 6 osobno
+włączanych kart M2/M3/M5 i 5 kart `near_transfer`. Wersje archiwalne nie
+zwiększają liczby kart. Podział zbiorów jest jawny w danych.
 Dwie przykładowe karty danej rodziny z tego dokumentu są inspiracją;
 uzupełnij różnorodne bodźce, nie 60 podmian jednego rzeczownika.
 
-Każda karta: id, version, family, partition, themeTags, instruction,
-stimulus, easier, optionalConstraint, hints[2], optionalExample, license,
-sourceNote. W transfer: bez hints i optionalExample. Walidator ma to egzekwować.
-Pakiet: własne krótkie treści, żadnych danych użytkownika ani cudzych tekstów
-bez zweryfikowanych praw. Zachowaj plik licencji i pochodzenia.
+Obowiązujące nazwy pól są zgodne z kodem i dodatkiem naukowym
+(`docs/science/03-integration.md`, sekcja 3):
+
+- `id`, `version`: identyfikator i wersja karty; w próbie odpowiadają im
+  `cardId`, `cardVersion`. `family` określa rodzinę ćwiczenia.
+- `methodId`, `methodVersion`, `language`, `responseMode`: wersja metody,
+  język i rodzaj odpowiedzi. Pochodzenie naukowe jest przy wersji metody.
+- `itemFamilyId`: wspólne pochodzenie treści i parafraz, zachowywane między
+  wersjami. `difficultyTags` opisuje zadanie, nie zdolności autora.
+- `prompt.title`, `prompt.stimulus`, `prompt.instruction`: tytuł, bodziec
+  i polecenie. `easierInstruction` to prostszy krok, `optionalConstraint`
+  to dobrowolne rozwinięcie; `constraints` przechowuje pozostałe uwagi.
+- `hints`: trzy poziomy pomocy, z przykładem jako trzecim elementem.
+  `sourceText` zachowuje autorski fragment E5, a opcjonalne `slots` opisują
+  pola pomocnicze. `contentOrigin`, `licenseStatus` i `editorialStatus`
+  zapisują pochodzenie, stan praw i przegląd redakcyjny.
+
+`partition` ma wartości `training` albo `reserve`. Dokładną rolę określa
+`setRole`: `training`, `near_transfer` albo `independent_writing`.
+`near_transfer` sprawdza podobny sposób pracy na innym materiale, dopuszcza
+trzy poziomy pomocy i należy do partycji `training`. Nie jest chronioną
+próbą samodzielną. `independent_writing` należy wyłącznie do `reserve`:
+ma puste `hints`, bez przykładu, tekstu źródłowego i pól pomocniczych.
+Walidator egzekwuje te granice. Dawne nazwy `themeTags`, `easier`,
+`optionalExample`, `license` i `sourceNote` nie są polami obecnego schematu.
+
+Redakcja treści tworzy nową `version` tego samego `id`. Poprzednia wersja
+pozostaje niezmieniona w tym samym pliku, aby dawna próba nadal odczytywała
+własne polecenie, warianty i pomoc. Nie zmieniaj `itemFamilyId` ani `setRole`
+przy poprawce językowej; nowa wersja nie przywraca statusu niewidzianej karty.
+
+Pakiet zawiera własne krótkie treści, bez danych użytkownika i cudzych tekstów
+o nieustalonych prawach. `contentOrigin` i `licenseStatus` opisują bieżący
+stan. Licencję publicznego wydania i prawa do materiałów trzeba ustalić przed
+publikacją; nie blokuje to prywatnego używania aplikacji (D08).
 
 Przed akceptacją sprawdź wszystkie polecenia: jednoznaczność, naturalny
 polski, brak wbudowanej diagnozy, brak oceny w stylu dziwne = lepsze,

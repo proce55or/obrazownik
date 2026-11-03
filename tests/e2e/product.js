@@ -33,7 +33,7 @@ async function scenario(page) {
   await nav('Pobierz Markdown');
   assert((await download).suggestedFilename().endsWith('.md'), 'Markdown download missing');
   await nav('Przekształć w ćwiczeniu');
-  await page.getByRole('heading', { name: 'Tekst źródłowy — pozostaje zachowany', exact: true }).waitFor();
+  await page.getByRole('heading', { name: 'Tekst źródłowy - pozostaje zachowany', exact: true }).waitFor();
   assert(await page.evaluate(() => window.e2eInjected) === undefined, 'HTML executed');
   await page.getByText('Wybierz słowa z fragmentu', { exact: true }).click();
   await page.locator('.word-bank button').first().click();
@@ -41,14 +41,16 @@ async function scenario(page) {
   await complete('Nowy własny fragment. Liść przemierza kamienną drogę.');
   assert((await get(`/api/documents/${doc.id}`)).document.currentText === source, 'E5 overwrote source');
   for (const family of ['bridge', 'sense', 'transform']) {
-    await page.getByText('Wybierz rodzinę i własne tempo', { exact: true }).click();
-    await page.getByRole('combobox', { name: 'Rodzina ćwiczeń', exact: true }).selectOption(family);
-    await page.getByRole('checkbox', { name: 'Łatwiejszy wariant — jeden szczegół', exact: true }).check();
-    await page.getByRole('button', { name: 'Otwórz wybraną kartę', exact: false }).click();
+    if (!await page.locator('details.more-options').evaluate(node => node.open)) await page.getByText('Więcej możliwości', {exact:true}).click();
+    await page.getByText('Wybierz ćwiczenie i własne tempo', { exact: true }).click();
+    await page.getByRole('combobox', { name: 'Rodzaj ćwiczenia', exact: true }).selectOption(family);
+    await page.getByRole('checkbox', { name: 'Łatwiejszy wariant', exact: true }).check();
+    await page.getByRole('button', { name: 'Otwórz wybrane ćwiczenie', exact: false }).click();
     await complete(`Własny tekst rodziny ${family}: żółty promień opiera się o próg.`);
   }
   await nav('Ustawienia i kopie');
-  await page.getByRole('combobox', { name: 'Wielkość tekstu', exact: true }).selectOption('26');
+  await page.getByRole('combobox', { name: 'Wielkość tekstu w całej aplikacji', exact: true }).selectOption('26');
+  await page.getByText('Dodatkowe rodzaje ćwiczeń',{exact:true}).click();
   for (const label of ['Jedno słowo, kilka dróg', 'Pojęcie w sytuacji', 'Wspólna cecha i metafora']) {
     await page.getByRole('checkbox', { name: label, exact: true }).check();
     await nav('Zapisz ustawienia');
@@ -61,17 +63,17 @@ async function scenario(page) {
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Settings overflow at ${width}`);
   }
   await nav('Utwórz i sprawdź kopię');
-  await page.getByText('Utworzono i sprawdzono kopię:', { exact: false }).waitFor();
+  await page.getByText('Kopia została utworzona i sprawdzona.', { exact: false }).waitFor();
   const exported = page.waitForEvent('download');
   await nav('Eksportuj wszystkie dane JSON');
   assert((await exported).suggestedFilename().endsWith('.json'), 'JSON download missing');
   const bundle = await get('/api/export');
   const file = { name: 'obrazownik-test.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(bundle)) };
   for (let i = 0; i < 2; i++) {
-    await page.getByLabel('Plik Obrazownika JSON (do 25 MiB)', { exact: true }).setInputFiles(file);
+    await page.getByLabel('Plik Obrazownika JSON (do 25 MB)', { exact: true }).setInputFiles(file);
     await page.getByRole('heading', { name: 'Podgląd importu', exact: true }).waitFor();
     await nav('Utwórz kopię i scal dane');
-    await page.getByText(i ? 'Ten plik został już scalony. Nie dodano duplikatów.' : 'Scalono plik:', { exact: false }).waitFor();
+    await page.getByText(i ? 'Ten plik został już dodany. Nie utworzono duplikatów.' : 'Dane z pliku zostały dodane.', { exact: false }).waitFor();
   }
   await page.screenshot({ path: 'output/playwright/e2e-settings.png', fullPage: true });
   await nav('Obserwacje');
@@ -88,7 +90,7 @@ async function scenario(page) {
   await page.locator('.session-panel .draft-link').first().click();
   await complete('Własny tekst krótkiej sesji — słowa zostały zachowane.');
   await nav('Zakończ sesję na dziś');
-  await page.getByText('Sesja zakończona. Teksty zachowane; kopia dnia sprawdzona.', { exact: true }).waitFor();
+  await page.getByText('Sesja zakończona. Twoje teksty są zapisane. Kopia dnia została sprawdzona.', { exact: true }).waitFor();
   assert((await get('/api/backups')).backups.some(b => b.name.startsWith('auto-')), 'Daily backup missing');
   await page.keyboard.press('Tab');
   assert(await page.evaluate(() => document.activeElement instanceof HTMLButtonElement || document.activeElement instanceof HTMLAnchorElement || document.activeElement instanceof HTMLSelectElement), 'Keyboard focus missing');

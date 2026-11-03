@@ -5,7 +5,11 @@ import {
   type RecoveryDraft,
   type SaveStatus,
 } from "../../src/domain/draft-queue.js";
-import { AttemptSchema, type Attempt, type SaveAttempt } from "../../src/shared/schemas.js";
+import {
+  AttemptSchema,
+  type Attempt,
+  type SaveAttempt,
+} from "../../src/shared/schemas.js";
 function sample(): Attempt {
   return AttemptSchema.parse({
     id: randomUUID(),
@@ -120,5 +124,92 @@ test("conflict preserves the rescue draft and prevents automatic overwriting", a
   await expect(f.queue.flush()).rejects.toThrow(/wersję/);
   expect(f.transport).toHaveBeenCalledTimes(1);
   expect(f.statuses.at(-1)).toBe("conflict");
+  f.queue.dispose();
+});
+
+test("typing coalesces recovery writes and explicit settling keeps the latest text", async () => {
+  vi.useFakeTimers();
+  const f = fixture();
+  for (let i = 0; i < 100; i++) f.queue.setText("x".repeat(i + 1));
+  expect(f.buffer()).toBeUndefined();
+  await f.queue.settleRecovery();
+  expect(f.buffer()?.text).toBe("x".repeat(100));
+  expect(f.transport).not.toHaveBeenCalled();
+  f.queue.dispose();
+});
+
+test("title edits share autosave revision and recovery with the document body", async () => {
+  const document = {
+    id: randomUUID(),
+    revision: 2,
+    currentText: "Treść",
+    title: "Stary tytuł",
+  };
+  let copy: RecoveryDraft | undefined;
+  const send = vi.fn(async (input: SaveAttempt & { title?: string }) => ({
+    ...document,
+    currentText: input.text,
+    title: input.title!,
+    revision: input.expectedRevision + 1,
+  }));
+  const queue = new DraftQueue({
+    attempt: document,
+    environmentId: randomUUID(),
+    send,
+    putRecovery: async (draft) => {
+      copy = draft;
+    },
+    clearRecovery: async () => {
+      copy = undefined;
+    },
+    onStatus: () => {},
+    onAck: () => {},
+    onBufferError: () => {},
+  });
+  queue.setTitle("Nowy tytuł");
+  await queue.settleRecovery();
+  expect(copy).toMatchObject({ text: "Treść", title: "Nowy tytuł" });
+  await queue.flush();
+  await queue.settleRecovery();
+  expect(send.mock.calls[0][0]).toMatchObject({
+    text: "Treść",
+    title: "Nowy tytuł",
+    expectedRevision: 2,
+  });
+  expect(queue.dirty).toBe(false);
+  expect(copy).toBeUndefined();
+  queue.dispose();
+});
+
+test("a deterministic refusal releases the mutation so newer edits can be saved", async () => {
+  const f = fixture();
+  f.transport.mockRejectedValueOnce(
+    Object.assign(new Error("Refused"), {
+      uncertain: false,
+      code: "card_version",
+    }),
+  );
+  f.queue.setText("Pierwszy");
+  await expect(f.queue.flush()).rejects.toThrow("Refused");
+  const refused = f.transport.mock.calls[0][0];
+  f.queue.setText("Poprawiony");
+  await f.queue.flush();
+  expect(f.transport.mock.calls[1][0].text).toBe("Poprawiony");
+  expect(f.transport.mock.calls[1][0].clientMutationId).not.toBe(
+    refused.clientMutationId,
+  );
+  f.queue.dispose();
+});
+
+test("continuous typing cannot postpone the rescue buffer indefinitely", async () => {
+  vi.useFakeTimers();
+  const f = fixture();
+  for (let i = 0; i < 10; i++) {
+    f.queue.setText(String(i));
+    await vi.advanceTimersByTimeAsync(100);
+    if (i === 4) expect(f.buffer()?.text).toBe("4");
+  }
+  expect(f.buffer()?.text).toBe("9");
+  expect(f.transport).not.toHaveBeenCalled();
   f.queue.dispose();
 });

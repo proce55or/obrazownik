@@ -4,16 +4,16 @@ import {
   type AttemptDetail,
   type Ratings,
 } from "../shared/schemas";
-import { api } from "./api";
+import { api, isUncertainOutcome, responseData, userMessage } from "./api";
 import { AboutExercise } from "./AboutExercise";
 import { assistanceLabel, Versions } from "./AttemptNotes";
 import { modelModeLabel, ModelSources } from "./LocalModel";
 interface Props {
   detail: AttemptDetail;
   onHome: () => Promise<void>;
-  onRevise?:(id:string)=>Promise<void>;
+  onRevise?: (id: string) => Promise<void>;
 }
-export function Completed({ detail, onHome,onRevise }: Props) {
+export function Completed({ detail, onHome, onRevise }: Props) {
   const [attempt, setAttempt] = useState(detail.attempt),
     [ratings, setRatings] = useState<Ratings>(detail.attempt.selfRatings ?? {});
   const [message, setMessage] = useState(""),
@@ -23,7 +23,7 @@ export function Completed({ detail, onHome,onRevise }: Props) {
     clientMutationId: string;
     selfRatings: Ratings;
   }>();
-  async function saveRatings():Promise<boolean> {
+  async function saveRatings(): Promise<boolean> {
     setBusy(true);
     setMessage("");
     const input = pending ?? {
@@ -33,7 +33,8 @@ export function Completed({ detail, onHome,onRevise }: Props) {
     };
     setPending(input);
     try {
-      const saved = AttemptSchema.parse(
+      const saved = responseData(
+        AttemptSchema,
         await api(`/attempts/${attempt.id}/ratings`, "POST", input),
       );
       setAttempt(saved);
@@ -41,17 +42,24 @@ export function Completed({ detail, onHome,onRevise }: Props) {
       setMessage("Zapisano Twoją obserwację.");
       return true;
     } catch (error) {
-      setMessage(
-        error instanceof Error ? error.message : "Nie udało się zapisać.",
-      );
+      if (!isUncertainOutcome(error)) setPending(undefined);
+      setMessage(userMessage(error, "Nie udało się zapisać."));
       return false;
     } finally {
       setBusy(false);
     }
   }
-  async function leave(){if(attempt.status==='completed'&&JSON.stringify(ratings)!==JSON.stringify(attempt.selfRatings??{})){if(!await saveRatings())return;}await onHome();}
+  async function leave() {
+    if (
+      attempt.status === "completed" &&
+      JSON.stringify(ratings) !== JSON.stringify(attempt.selfRatings ?? {})
+    ) {
+      if (!(await saveRatings())) return;
+    }
+    await onHome();
+  }
   const skipped = attempt.status === "skipped";
-  const archived=attempt.status==='abandoned';
+  const archived = attempt.status === "abandoned";
   return (
     <section className="completed">
       <span className="eyebrow">
@@ -59,7 +67,13 @@ export function Completed({ detail, onHome,onRevise }: Props) {
           ? "MOŻESZ ZACZĄĆ OD CZEGOŚ INNEGO"
           : "TWOJE SŁOWA ZOSTAJĄ TUTAJ"}
       </span>
-      <h1>{archived?"Zachowany szkic.":skipped ? "Innym razem też dobrze." : "Jest Twój ślad."}</h1>
+      <h1>
+        {archived
+          ? "Zachowany szkic."
+          : skipped
+            ? "Innym razem też dobrze."
+            : "Jest Twój ślad."}
+      </h1>
       <p className="intro">
         {skipped
           ? "Ćwiczenie pominięte. Wpisany tekst został zachowany."
@@ -74,10 +88,13 @@ export function Completed({ detail, onHome,onRevise }: Props) {
         <p className="assistance-label">
           {assistanceLabel(detail.assistanceEvents, attempt)}
         </p>
-        <p className="fine-print">{modelModeLabel(attempt.llmMode)}</p>
-        <ModelSources events={detail.assistanceEvents}/>
+        <details>
+          <summary>O użytej pomocy</summary>
+          <p>{modelModeLabel(attempt.llmMode)}</p>
+          <ModelSources events={detail.assistanceEvents} />
+        </details>
       </article>
-      {attempt.status==='completed' && (
+      {attempt.status === "completed" && (
         <details className="reflection">
           <summary>
             Jak Ci się pisało? <span>Opcjonalna chwila obserwacji</span>
@@ -106,7 +123,12 @@ export function Completed({ detail, onHome,onRevise }: Props) {
                   low: "bez zmęczenia",
                   high: "duże zmęczenie",
                 },
-                {key:'intention',label:'Wyrażenie intencji',low:'nie udało się',high:'udało się w pełni'},
+                {
+                  key: "intention",
+                  label: "Wyrażenie intencji",
+                  low: "nie udało się",
+                  high: "udało się w pełni",
+                },
               ] as const
             ).map((field) => (
               <label key={field.key}>
@@ -128,9 +150,9 @@ export function Completed({ detail, onHome,onRevise }: Props) {
                     <option value={n} key={n}>
                       {n}
                       {n === 1
-                        ? ` — ${field.low}`
+                        ? ` - ${field.low}`
                         : n === 5
-                          ? ` — ${field.high}`
+                          ? ` - ${field.high}`
                           : ""}
                     </option>
                   ))}
@@ -165,18 +187,47 @@ export function Completed({ detail, onHome,onRevise }: Props) {
           </p>
         </details>
       )}
-      {attempt.sourceText!==null&&<details className="versions"><summary>Zachowany tekst źródłowy</summary><p className="preserve-text">{attempt.sourceText}</p></details>}{onRevise&&<button className="secondary-button" disabled={busy} onClick={()=>{void(async()=>{if(attempt.status==='completed'&&JSON.stringify(ratings)!==JSON.stringify(attempt.selfRatings??{})){if(!await saveRatings())return;}await onRevise(attempt.id);})().catch(error=>setMessage(error instanceof Error?error.message:'Nie udało się otworzyć wersji.'));}}>Napisz nową wersję — zachowaj oryginał</button>}<AboutExercise attempt={attempt}/><Versions versions={detail.versions} slots={attempt.scaffoldSlots}/>
+      {attempt.sourceText !== null && (
+        <details className="versions">
+          <summary>Zachowany tekst źródłowy</summary>
+          <p className="preserve-text">{attempt.sourceText}</p>
+        </details>
+      )}
+      {onRevise && (
+        <button
+          className="secondary-button"
+          disabled={busy}
+          onClick={() => {
+            void (async () => {
+              if (
+                attempt.status === "completed" &&
+                JSON.stringify(ratings) !==
+                  JSON.stringify(attempt.selfRatings ?? {})
+              ) {
+                if (!(await saveRatings())) return;
+              }
+              await onRevise(attempt.id);
+            })().catch((error) =>
+              setMessage(
+                error instanceof Error
+                  ? error.message
+                  : "Nie udało się otworzyć wersji.",
+              ),
+            );
+          }}
+        >
+          Napisz nową wersję - zachowaj oryginał
+        </button>
+      )}
+      <AboutExercise attempt={attempt} />
+      <Versions versions={detail.versions} slots={attempt.scaffoldSlots} />
       <div className="button-row">
         <button
           className="primary-button"
           disabled={busy}
           onClick={() => {
             void leave().catch((error) =>
-              setMessage(
-                error instanceof Error
-                  ? error.message
-                  : "Nie udało się wrócić.",
-              ),
+              setMessage(userMessage(error, "Nie udało się wrócić.")),
             );
           }}
         >

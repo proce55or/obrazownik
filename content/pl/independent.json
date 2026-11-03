@@ -1,6 +1,586 @@
 [
   {
     "id": "iw-0001",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Ślad po czymś, co przesunięto z półki",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0001",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0002",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Dwa różne kroki na tej samej klatce schodowej",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0002",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0003",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Podwórko tuż po wyjeździe wozu z węglem",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0003",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0004",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Brak jednego krzesła w znajomym pomieszczeniu",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0004",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0005",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Szczelina światła w drzwiach magazynu",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0005",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0006",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Przystanek, na którym zatrzymał się tylko rowerzysta",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0006",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0007",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Ostatnia śliwka na gałęzi",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0007",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0008",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Cień anteny na innym budynku",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0008",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0009",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Pies, który zatrzymał się przed pustą furtką",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0009",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0010",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Kurz na opakowaniu dawnego zakupu",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0010",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0011",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Dźwięk rolety z sąsiedniego mieszkania",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0011",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0012",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Niedopasowane kafelki przy progu",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0012",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0013",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Rzeka oglądana spod mostu",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0013",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0014",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Chwila przed otwarciem sali gimnastycznej",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0014",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0015",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Wstążka zaczepiona o krzew",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0015",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0016",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Osoba licząca schody w obcym budynku",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0016",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0017",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Ruch powietrza po odsunięciu ciężkiej zasłony",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0017",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0018",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Puste miejsce na tablicy ogłoszeń",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0018",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0019",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Pierwszy dźwięk z warsztatu przed świtem",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0019",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0020",
+    "version": 2,
+    "family": "property",
+    "partition": "reserve",
+    "prompt": {
+      "title": "Nowe pisanie",
+      "stimulus": "Mała zmiana na znanej trasie spaceru",
+      "instruction": "Napisz własny tekst na podany temat. Może to być wiersz, proza albo krótki fragment. Wybierz dowolną długość i pisz we własnym tempie."
+    },
+    "constraints": [],
+    "hints": [],
+    "methodId": "M8",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "iw-group-0020",
+    "setRole": "independent_writing",
+    "difficultyTags": [
+      "nowy-temat",
+      "otwarte-pisanie"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Możesz zachować tekst dowolnej długości.",
+    "optionalConstraint": null,
+    "sourceText": null
+  },
+  {
+    "id": "iw-0001",
     "version": 1,
     "family": "property",
     "partition": "reserve",

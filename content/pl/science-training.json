@@ -1,6 +1,957 @@
 [
   {
     "id": "m1-extra-01",
+    "version": 2,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Klucz w użyciu",
+      "stimulus": "Klucz",
+      "instruction": "Pomyśl o kluczu. Wybierz jedną jego cechę i pokaż ją w krótkim zdarzeniu."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-01",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Zapisz jedną cechę klucza, którą można wyczuć dłonią.",
+    "optionalConstraint": "Jeśli chcesz, pokaż tę cechę podczas używania klucza.",
+    "hints": [
+      "Co klucz robi lub zmienia, gdy dotyka zamka?",
+      "Wybierz dotyk, metaliczny dźwięk albo sytuację powrotu.",
+      "Klucz ogrzany dłonią zatrzymał się pod zimnym zamkiem."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m1-extra-02",
+    "version": 2,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Ślad mieszania",
+      "stimulus": "Drewniana łyżka",
+      "instruction": "Pomyśl o drewnianej łyżce. Wybierz jeden szczegół i napisz o nim krótki tekst."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-02",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz jedno zdanie o wybranym szczególe drewnianej łyżki.",
+    "optionalConstraint": "Jeśli chcesz, pokaż cechę łyżki przez jej ruch w garnku.",
+    "hints": [
+      "Które miejsce jest gładsze od pozostałych?",
+      "Możesz opisać brzeg, ciężar lub ruch w pustym garnku.",
+      "Łyżka obiega pusty garnek i zbiera z dna ostatni zapach."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m1-extra-03",
+    "version": 2,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Małe połączenie",
+      "stimulus": "Guzik",
+      "instruction": "Przyjrzyj się guzikowi. Wybierz jedną jego cechę i pokaż ją w krótkiej scenie."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-03",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz, jaki jest guzik. Możesz wybrać tylko jedną cechę.",
+    "optionalConstraint": "Jeśli chcesz, pokaż tę cechę, gdy ktoś zapina ubranie.",
+    "hints": [
+      "Co trzyma się razem dzięki temu przedmiotowi?",
+      "Wybierz nitkę, dziurkę albo krawędź materiału.",
+      "Guzik pociągnął dwie strony płaszcza ku sobie."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m1-extra-04",
+    "version": 2,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Zagięcie papieru",
+      "stimulus": "Koperta",
+      "instruction": "Pomyśl o pustej kopercie. Wybierz jeden szczegół i opisz go własnymi słowami."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-04",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Zapisz jedno słowo o papierze koperty. Potem możesz dodać zdanie.",
+    "optionalConstraint": "Jeśli chcesz, pokaż cechę koperty przez to, co dzieje się przy jej otwieraniu.",
+    "hints": [
+      "Co słychać, kiedy rozkładasz zagięcie?",
+      "Możesz zostać przy rogu, fałdzie lub pustym wnętrzu.",
+      "Róg koperty zaszeleścił, zanim wydostało się z niej powietrze."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m1-extra-05",
+    "version": 2,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Ślad włosia",
+      "stimulus": "Szczotka",
+      "instruction": "Pomyśl o szczotce. Wybierz jedną jej cechę i pokaż ją w krótkiej scenie."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-05",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Wybierz jedną część szczotki i napisz, jaka jest w dotyku.",
+    "optionalConstraint": "Jeśli chcesz, opisz ruch szczotki tak, żeby dało się rozpoznać jej cechę.",
+    "hints": [
+      "Co zmienia kierunek, gdy przesuniesz dłonią po włosiu?",
+      "Wybierz pojedynczy ruch albo opór włosia.",
+      "Włosie ugięło się pod palcem i natychmiast wróciło na miejsce."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m1-extra-06",
+    "version": 2,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Przez szkło",
+      "stimulus": "Słoik",
+      "instruction": "Przyjrzyj się pustemu słoikowi. Wybierz jedną jego cechę i pokaż ją w krótkim zdaniu."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-06",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz jedno zdanie o słoiku, który ktoś trzyma w ręku.",
+    "optionalConstraint": "Jeśli chcesz, pokaż tę samą cechę słoika w dwóch różnych czynnościach.",
+    "hints": [
+      "Co zmienia się, kiedy podnosisz go ze stołu?",
+      "Zacznij od odbicia światła, dna albo krótkiego stuknięcia.",
+      "Dno słoika stuknęło w blat i zostawiło w kuchni krótki dźwięk."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m1-extra-07",
+    "version": 2,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Między włóknami",
+      "stimulus": "Szalik",
+      "instruction": "Przyjrzyj się szalikowi. Wybierz jedną jego cechę i napisz krótki tekst."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-07",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Nazwij jedną cechę szalika i zapisz ją własnymi słowami.",
+    "optionalConstraint": "Jeśli chcesz, pokaż wybraną cechę przez to, jak ktoś układa szalik.",
+    "hints": [
+      "Gdzie materiał zatrzymuje ciepło?",
+      "Możesz pokazać cechę przez złożenie lub rozwinięcie.",
+      "W zagięciu szalika zostało jeszcze ciepło karku."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m1-extra-08",
+    "version": 2,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Kruchy ślad",
+      "stimulus": "Kreda",
+      "instruction": "Pomyśl o kawałku kredy. Wybierz jedną jego cechę i pokaż ją przez zdarzenie."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-08",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Zapisz jedną rzecz, którą zauważasz podczas używania kredy.",
+    "optionalConstraint": "Jeśli chcesz, opisz działanie kredy bez używania słów nazywających jej cechy.",
+    "hints": [
+      "Co zostaje po przesunięciu kredy?",
+      "Wybierz ślad na palcu albo odgłos tarcia.",
+      "Kreda skróciła się o biały pył na moim kciuku."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m1-extra-09",
+    "version": 2,
+    "family": "property",
+    "partition": "training",
+    "prompt": {
+      "title": "Mały ruch czasu",
+      "stimulus": "Zegar kuchenny",
+      "instruction": "Pomyśl o zegarze kuchennym. Wybierz jeden szczegół jego działania i opisz go w krótkim tekście."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M1",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m1-extra-09",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Zapisz jedno zdanie o tym, co robi zegar kuchenny.",
+    "optionalConstraint": "Jeśli chcesz, połącz działanie zegara z czyjąś czynnością w kuchni.",
+    "hints": [
+      "Który szczegół powraca, choć wszystko wydaje się stać?",
+      "Zacznij od jednego tyknięcia lub ruchu cienia.",
+      "Wskazówka przeszła nad cyfrą, a cień został odrobinę z tyłu."
+    ],
+    "sourceText": null
+  },
+  {
+    "id": "m4-verb-01",
+    "version": 2,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Nieść - mała scena",
+      "stimulus": "nieść",
+      "instruction": "Użyj słowa \"nieść\" w krótkiej scenie. Napisz, kto lub co niesie, co i dokąd. Pola poniżej możesz pominąć."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-01",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz tylko, kto co niesie.",
+    "optionalConstraint": "Jeśli chcesz, pokaż tę samą czynność w dwóch różnych miejscach.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? co? dokąd? Zostań przy jednej sytuacji.",
+      "Wiatr niesie zapach chleba przez podwórze."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Co?"
+      },
+      {
+        "id": "where",
+        "label": "Dokąd?"
+      },
+      {
+        "id": "other",
+        "label": "Inna wersja (jeśli chcesz)"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-02",
+    "version": 2,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Szukać - mała scena",
+      "stimulus": "szukać",
+      "instruction": "Użyj słowa \"szukać\" w krótkiej scenie. Napisz, kto szuka, czego i gdzie. Pola poniżej możesz pominąć."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-02",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz tylko, kto czego szuka.",
+    "optionalConstraint": "Jeśli chcesz, napisz drugą scenę z kimś innym, kto szuka tej samej rzeczy.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? czego? gdzie? Zostań przy jednej sytuacji.",
+      "Dziecko szuka klucza w kieszeni płaszcza."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Czego?"
+      },
+      {
+        "id": "where",
+        "label": "Gdzie?"
+      },
+      {
+        "id": "other",
+        "label": "Inna wersja (jeśli chcesz)"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-03",
+    "version": 2,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Przyglądać się - mała scena",
+      "stimulus": "przyglądać się",
+      "instruction": "Użyj słowa \"przyglądać się\" w krótkiej scenie. Napisz, kto przygląda się, komu lub czemu i skąd. Pola poniżej możesz pominąć."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-03",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz jedno zdanie: kto komu lub czemu się przygląda.",
+    "optionalConstraint": "Jeśli chcesz, dodaj reakcję osoby lub zwierzęcia, które jest obserwowane.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? czemu? skąd lub w jakiej sytuacji? Zostań przy jednej sytuacji.",
+      "Kot przygląda się oknu z oparcia fotela."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Komu lub czemu?"
+      },
+      {
+        "id": "where",
+        "label": "Skąd lub w jakiej sytuacji?"
+      },
+      {
+        "id": "other",
+        "label": "Inna wersja (jeśli chcesz)"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-04",
+    "version": 2,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Opiekować się - mała scena",
+      "stimulus": "opiekować się",
+      "instruction": "Użyj słowa \"opiekować się\" w krótkiej scenie. Napisz, kto opiekuje się, kim lub czym i kiedy. Pola poniżej możesz pominąć."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-04",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz tylko, kto kim lub czym się opiekuje.",
+    "optionalConstraint": "Jeśli chcesz, pokaż opiekę przez dwie kolejne czynności.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? kim lub czym? w jakiej sytuacji? Zostań przy jednej sytuacji.",
+      "Sąsiadka opiekuje się ogrodem podczas suchego lata."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Kim lub czym?"
+      },
+      {
+        "id": "where",
+        "label": "W jakiej sytuacji?"
+      },
+      {
+        "id": "other",
+        "label": "Inna wersja (jeśli chcesz)"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-05",
+    "version": 2,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Tęsknić za - mała scena",
+      "stimulus": "tęsknić za",
+      "instruction": "Użyj słowa \"tęsknić za\" w krótkiej scenie. Napisz, kto tęskni, za kim lub za czym i w jakiej chwili. Pola poniżej możesz pominąć."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-05",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz jedno zdanie: kto za kim lub za czym tęskni.",
+    "optionalConstraint": "Jeśli chcesz, pokaż tęsknotę przez czynność, bez używania słowa \"tęsknić\".",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? za kim lub za czym? w jakiej sytuacji? Zostań przy jednej sytuacji.",
+      "Na urlopie tęsknię za psem. Przy śniadaniu odruchowo patrzę pod stół."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Za kim lub za czym?"
+      },
+      {
+        "id": "where",
+        "label": "W jakiej sytuacji?"
+      },
+      {
+        "id": "other",
+        "label": "Inna wersja (jeśli chcesz)"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-06",
+    "version": 2,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Czekać na - mała scena",
+      "stimulus": "czekać na",
+      "instruction": "Użyj słowa \"czekać na\" w krótkiej scenie. Napisz, kto czeka, na kogo lub na co i gdzie. Pola poniżej możesz pominąć."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-06",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz tylko, kto na kogo lub na co czeka.",
+    "optionalConstraint": "Jeśli chcesz, pokaż upływ czasu przez dwie zmiany w tej scenie.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? na kogo lub na co? gdzie? Zostań przy jednej sytuacji.",
+      "Dzieci czekają na autobus. Jedno sprawdza, czy zmieści się pod daszkiem razem z plecakiem."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Na kogo lub na co?"
+      },
+      {
+        "id": "where",
+        "label": "Gdzie?"
+      },
+      {
+        "id": "other",
+        "label": "Inna wersja (jeśli chcesz)"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-07",
+    "version": 2,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Pomagać - mała scena",
+      "stimulus": "pomagać",
+      "instruction": "Użyj słowa \"pomagać\" w krótkiej scenie. Napisz, kto pomaga, komu i w czym. Pola poniżej możesz pominąć."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-07",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz jedno zdanie: kto komu pomaga.",
+    "optionalConstraint": "Jeśli chcesz, opisz tę samą sytuację z punktu widzenia osoby, która otrzymuje pomoc.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? komu lub czemu? w czym? Zostań przy jednej sytuacji.",
+      "Dziewczyna pomaga bratu w składaniu papierowej łodzi."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Komu lub czemu?"
+      },
+      {
+        "id": "where",
+        "label": "W czym?"
+      },
+      {
+        "id": "other",
+        "label": "Inna wersja (jeśli chcesz)"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-08",
+    "version": 2,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Wracać - mała scena",
+      "stimulus": "wracać",
+      "instruction": "Użyj słowa \"wracać\" w krótkiej scenie. Napisz, kto wraca, dokąd i skąd. Pola poniżej możesz pominąć."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-08",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz tylko, kto dokąd wraca.",
+    "optionalConstraint": "Jeśli chcesz, pokaż zmianę miejsca podczas powrotu bez nazywania nastroju.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? dokąd lub do czego? skąd? Zostań przy jednej sytuacji.",
+      "Kucharz wraca z targu z pełną torbą. Marchewka wystaje mu spod łokcia."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Dokąd lub do czego?"
+      },
+      {
+        "id": "where",
+        "label": "Skąd?"
+      },
+      {
+        "id": "other",
+        "label": "Inna wersja (jeśli chcesz)"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-09",
+    "version": 2,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Rozmawiać z - mała scena",
+      "stimulus": "rozmawiać z",
+      "instruction": "Użyj słowa \"rozmawiać z\" w krótkiej scenie. Napisz, kto rozmawia, z kim i o czym. Pola poniżej możesz pominąć."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-09",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz jedno zdanie: kto z kim rozmawia.",
+    "optionalConstraint": "Jeśli chcesz, dodaj gest, który zmienia przebieg rozmowy.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? z kim? o czym? Zostań przy jednej sytuacji.",
+      "Ogrodnik rozmawia z sąsiadem o pierwszych liściach."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Z kim?"
+      },
+      {
+        "id": "where",
+        "label": "O czym?"
+      },
+      {
+        "id": "other",
+        "label": "Inna wersja (jeśli chcesz)"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-10",
+    "version": 2,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Wyciągać - mała scena",
+      "stimulus": "wyciągać",
+      "instruction": "Użyj słowa \"wyciągać\" w krótkiej scenie. Napisz, kto wyciąga, co i skąd. Pola poniżej możesz pominąć."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-10",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz tylko, kto co wyciąga.",
+    "optionalConstraint": "Jeśli chcesz, opisz dwa kolejne ruchy potrzebne do wyciągnięcia rzeczy.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? co? skąd? Zostań przy jednej sytuacji.",
+      "Babcia wyciąga wałek z szuflady. Zaraz zagoni wszystkich do lepienia pierogów."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Co?"
+      },
+      {
+        "id": "where",
+        "label": "Skąd?"
+      },
+      {
+        "id": "other",
+        "label": "Inna wersja (jeśli chcesz)"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-11",
+    "version": 2,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Chronić - mała scena",
+      "stimulus": "chronić",
+      "instruction": "Użyj słowa \"chronić\" w krótkiej scenie. Napisz, kto lub co chroni, kogo lub co i przed czym. Pola poniżej możesz pominąć."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-11",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz jedno zdanie: kto lub co kogoś chroni.",
+    "optionalConstraint": "Jeśli chcesz, pokaż ochronę przez działanie, bez używania słowa \"chronić\".",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? kogo lub co? przed czym? Zostań przy jednej sytuacji.",
+      "Płaszcz chroni ramiona przed chłodnym wiatrem."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Kogo lub co?"
+      },
+      {
+        "id": "where",
+        "label": "Przed czym?"
+      },
+      {
+        "id": "other",
+        "label": "Inna wersja (jeśli chcesz)"
+      }
+    ]
+  },
+  {
+    "id": "m4-verb-12",
+    "version": 2,
+    "family": "verb",
+    "partition": "training",
+    "prompt": {
+      "title": "Odsuwać - mała scena",
+      "stimulus": "odsuwać",
+      "instruction": "Użyj słowa \"odsuwać\" w krótkiej scenie. Napisz, kto odsuwa, co i dokąd. Pola poniżej możesz pominąć."
+    },
+    "constraints": [
+      "Możesz pominąć pola pomocnicze i zostać przy jednym zdaniu."
+    ],
+    "methodId": "M4",
+    "methodVersion": 1,
+    "language": "pl",
+    "responseMode": "open_writing",
+    "itemFamilyId": "m4-verb-12",
+    "setRole": "training",
+    "difficultyTags": [
+      "otwarte-pisanie",
+      "bez-limitu-czasu"
+    ],
+    "contentOrigin": "Autorska karta Obrazownika; bez zewnętrznego korpusu.",
+    "licenseStatus": "Materiał autorski do prywatnego używania. Licencja publicznego wydania do ustalenia.",
+    "editorialStatus": "reviewed",
+    "easierInstruction": "Napisz tylko, kto co odsuwa.",
+    "optionalConstraint": "Jeśli chcesz, pokaż, co zmienia się po odsunięciu rzeczy.",
+    "hints": [
+      "Kto lub co może tu wystąpić? Co się z nim dzieje?",
+      "Pomyśl kolejno: kto? co? od czego lub dokąd? Zostań przy jednej sytuacji.",
+      "Dziewczynka odsuwa krzesło od stołu."
+    ],
+    "sourceText": null,
+    "slots": [
+      {
+        "id": "who",
+        "label": "Kto lub co?"
+      },
+      {
+        "id": "object",
+        "label": "Co?"
+      },
+      {
+        "id": "where",
+        "label": "Od czego lub dokąd?"
+      },
+      {
+        "id": "other",
+        "label": "Inna wersja (jeśli chcesz)"
+      }
+    ]
+  },
+  {
+    "id": "m1-extra-01",
     "version": 1,
     "family": "property",
     "partition": "training",

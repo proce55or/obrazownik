@@ -11,7 +11,7 @@
   display: block;
   width: 100%;
   max-width: 100%;
-  border: 1px solid #b8c3b0;
+  border: 1px solid var(--border);
   background: #fffdf8;
   border-radius: 5px;
   color: #293c35;
@@ -21,7 +21,7 @@
 }
 .notebook label {
   display: block;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 .notebook label input[type="checkbox"] {
   margin-right: 8px;
@@ -78,12 +78,12 @@
   margin: 25px 0;
 }
 .notebook-pagination span {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: #5b6b59;
 }
 .notebook-empty {
   padding: 28px;
-  border: 1px dashed #b8c3b0;
+  border: 1px dashed var(--border);
   border-radius: 6px;
   color: #526a54;
 }
@@ -182,7 +182,7 @@
   margin-bottom: 10px;
 }
 .observation-groups dl {
-  font-size: 0.82rem;
+  font-size: 1rem;
   margin: 18px 0;
 }
 .observation-groups dl > div {
@@ -198,7 +198,7 @@
 .observation-groups summary {
   min-height: 44px;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: #30554a;
 }
 .observation-rating {
@@ -207,7 +207,7 @@
   margin: 15px 0;
 }
 .observation-rating h3 {
-  font-size: 0.95rem;
+  font-size: 1rem;
   margin-bottom: 6px;
 }
 .observation-rating ol {
@@ -227,12 +227,12 @@
   border-radius: 4px;
 }
 .observation-rating li > span {
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: #5f725c;
 }
 .observation-rating strong {
   font-weight: 550;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 .notebook .fine-print {
   color: #5d6b58;
@@ -265,11 +265,11 @@
     gap: 10px;
   }
   .notebook-pagination .secondary-button {
-    font-size: 0.76rem;
+    font-size: 1rem;
     padding: 8px 11px;
   }
   .notebook-pagination span {
-    font-size: 0.72rem;
+    font-size: 1rem;
   }
   .notebook .button-row .primary-button {
     max-width: 100%;

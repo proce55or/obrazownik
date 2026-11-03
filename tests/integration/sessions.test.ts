@@ -220,3 +220,55 @@ test("first completed session per local day creates only one automatic backup ev
       .filter((file) => file.name.startsWith("auto-2026-03-29-")),
   ).toHaveLength(1);
 });
+
+test("empty abandoned sessions remain usable after all fresh cards are reserved", async () => {
+  const { store, clock } = await fixture();
+  const pool = cards.filter(
+    (card) => !["M2", "M3", "M5"].includes(card.methodId),
+  );
+  expect(pool).toHaveLength(60);
+  for (let i = 0; i < 30; i++) {
+    const session = store.createSession(pool, {
+      clientRequestId: randomUUID(),
+    });
+    expect(session.attemptIds).toHaveLength(2);
+    await store.endSession(session.id, {
+      clientMutationId: randomUUID(),
+      status: "abandoned",
+    });
+    clock.now = new Date(clock.now.getTime() + 1000);
+  }
+  const before = store.exportData();
+  const session = store.createSession(pool, { clientRequestId: randomUUID() });
+  const attempts = session.attemptIds.map((id) => store.getAttempt(id));
+  expect(attempts).toHaveLength(2);
+  expect(
+    attempts.every(
+      (a) =>
+        a.mode === "repeat" && a.noveltyStatus === "seen" && a.sourceAttemptId,
+    ),
+  ).toBe(true);
+  expect(attempts.map((a) => a.cardId).sort()).toEqual(
+    before.attempts
+      .slice(0, 2)
+      .map((a) => a.cardId)
+      .sort(),
+  );
+  expect(store.exportData().exposures).toEqual(before.exposures);
+  expect(attempts.every((a) => a.setRole === "training")).toBe(true);
+  complete(store, attempts[0]);
+  expect(store.exportData().reviews).toHaveLength(3);
+});
+
+test("injected clock controls writing timestamps as well as session scheduling", async () => {
+  const { store, clock } = await fixture("2020-01-02T12:00:00.000Z");
+  const attempt = original(store);
+  expect(attempt.createdAt).toBe(clock.now.toISOString());
+  clock.now = new Date("2020-01-03T12:00:00.000Z");
+  const saved = store.saveAttempt(attempt.id, {
+    text: "Tekst testowy",
+    expectedRevision: attempt.revision,
+    clientMutationId: randomUUID(),
+  });
+  expect(saved.updatedAt).toBe(clock.now.toISOString());
+});

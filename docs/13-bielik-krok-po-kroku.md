@@ -14,7 +14,8 @@ Wyniki pomiarów i ograniczenia: [benchmark](14-bielik-benchmark.md).
    lokalną aplikację. Pierwszy start wymaga kilkudziesięciu sekund.
 3. Poczekaj na przeglądarkę. Adres aplikacji to **http://127.0.0.1:4317**.
    Jeśli strona już była otwarta, odśwież ją po zapisaniu swojego szkicu.
-4. Otwórz **Ustawienia i kopie**. Kliknij **Sprawdź połączenie z Bielikiem**.
+4. Otwórz **Ustawienia i kopie → Jak włączyć i sprawdzić Bielika**.
+   Kliknij **Sprawdź połączenie z Bielikiem**.
    Powinien pojawić się komunikat o dostępności lokalnego modelu.
 5. Poniżej wybierz tryb opisany w następnym rozdziale i kliknij
    **Zapisz ustawienia**. Zmiana dotyczy nowych prób. Wcześniej otwarty szkic
@@ -27,16 +28,18 @@ Mac musi działać; po jego uśpieniu aplikacja i obliczenia nie pracują normal
 
 ## Pierwsze porównanie: bez modelu i z modelem
 
-1. W **Ustawienia i kopie → Pomoc w nowych próbach** wybierz
-   **Bez LLM — gotowa pomoc aplikacji** i zapisz ustawienia.
-2. W Dzisiaj otwórz nową kartę. Napisz swój tekst i wybierz **Zapisz i zakończ**.
+1. W **Ustawienia i kopie → Pomoc w nowych ćwiczeniach** wybierz
+   **Gotowe podpowiedzi aplikacji** i zapisz ustawienia.
+2. W Dzisiaj rozwiń **Więcej możliwości → Wybierz ćwiczenie i własne tempo**
+   i otwórz nowe ćwiczenie. Napisz swój tekst i wybierz **Zapisz i zakończ**.
    Zapisz dobrowolną samoocenę łatwości i zmęczenia. Jeśli chcesz próbę zupełnie
    bez pomocy, nie otwieraj też gotowych pytań, kroków ani przykładów.
-3. W ustawieniach wybierz **Lokalny Bielik**. Zostaw zaznaczone
-   **Przygotuj pytanie Bielika w tle po otwarciu ćwiczenia**. Zapisz ustawienia.
+3. W ustawieniach wybierz **Bielik - pomoc na tym komputerze**. Zostaw zaznaczone
+   **Przygotuj pytanie w tle po otwarciu ćwiczenia** w rozwijanej sekcji
+   **Przygotowywanie dodatkowego pytania**. Zapisz ustawienia.
 4. Otwórz nową kartę z tej samej rodziny, ale z innym tematem. Zacznij pisać.
    Komunikat poinformuje, że pytanie jest przygotowywane. Możesz pisać przez cały czas.
-5. Gdy chcesz pomocy, kliknij **Pokaż pytanie Bielika**. Dopiero ten krok
+5. Gdy chcesz pomocy, kliknij **Pokaż dodatkowe pytanie**. Dopiero ten krok
    ujawnia pytanie i zapisuje użycie pomocy. Tekst sprzed pytania zostaje zachowany.
    Możesz też wcale nie otwierać pytania. Model nie pisze do Twojego edytora.
 6. Zakończ próbę i wpisz samoocenę. W **Zeszycie** i **Obserwacjach** sprawdź
@@ -45,7 +48,7 @@ Mac musi działać; po jego uśpieniu aplikacja i obliczenia nie pracują normal
 
 To test wygody i własnych odczuć. Jeden wynik może zależeć także od tematu,
 kolejności i zmęczenia. Innym razem warto odwrócić kolejność. Aby sprawdzić
-samodzielne pisanie na nowym temacie, wybierz **Zacznij nowy tekst**.
+samodzielne pisanie na nowym temacie, rozwiń **Więcej możliwości** i wybierz **Zacznij nowy tekst**.
 W tej próbie LLM i pozostałe podpowiedzi są wyłączone. Poproszenie o pomoc
 otwiera osobną wersję, zachowując pierwotną próbę.
 
@@ -71,7 +74,7 @@ aplikacji pozostaje dostępna i jest oznaczona jako osobne źródło.
    Launcher zatrzymuje tylko procesy, które sam uruchomił. Jeśli wykrył już
    działającą aplikację lub model, ich właścicielem pozostaje wcześniejsze okno.
 3. Aby pracować wyłącznie bez modelu, uruchom **Start-Obrazownik.command**,
-   wybierz **Bez LLM** i otwórz nową próbę. Samo wyłączenie opcji w ustawieniach
+   wybierz **Gotowe podpowiedzi aplikacji** i otwórz nową próbę. Samo wyłączenie opcji w ustawieniach
    nie zamyka procesu modelu ani nie zmienia trybu starych szkiców.
 
 Jeżeli model jest niedostępny, możesz nadal pisać, zapisywać i używać gotowej

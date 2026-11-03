@@ -35,7 +35,7 @@ async function scenario(page) {
       .waitFor();
   }
   await page
-    .getByRole("button", { name: /Ślad po herbacie.*Kontynuuj szkic/ })
+    .getByRole("button", { name: /Kontynuuj szkic: Ślad po herbacie/ })
     .click();
   await page
     .getByRole("heading", { name: "Został tu niezapisany tekst", exact: true })
@@ -55,7 +55,7 @@ async function scenario(page) {
   const second = await page.context().newPage();
   await second.goto(origin+"/");
   await second
-    .getByRole("button", { name: /Ślad po herbacie.*Kontynuuj szkic/ })
+    .getByRole("button", { name: /Kontynuuj szkic: Ślad po herbacie/ })
     .click();
   await second
     .getByRole("textbox", { name: "Twoje słowa", exact: true })

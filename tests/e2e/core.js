@@ -34,6 +34,7 @@ async function scenario(page) {
       .filter({ hasText: "Zapisano na Macu" })
       .waitFor();
   }
+  if (!await page.locator('details.more-options').evaluate(node => node.open)) await page.getByText('Więcej możliwości', {exact:true}).click();
   await page
     .getByRole("button", { name: "Zużyta rękawiczka", exact: true })
     .click();
@@ -68,7 +69,7 @@ async function scenario(page) {
     .filter({ hasText: "Po obejrzeniu przykładu" })
     .waitFor();
   await page
-    .getByRole("button", { name: "Schowaj pomoc", exact: true })
+    .getByRole("button", { name: "Schowaj podpowiedzi", exact: true })
     .click();
   assert(
     (await page.locator(".hint-content").count()) === 0,
@@ -126,6 +127,7 @@ async function scenario(page) {
     path: "output/playwright/e2e-desktop.png",
     fullPage: true,
   });
+  if (!await page.locator('details.more-options').evaluate(node => node.open)) await page.getByText('Więcej możliwości', {exact:true}).click();
   await page
     .getByRole("button", { name: "Pusta filiżanka", exact: true })
     .click();

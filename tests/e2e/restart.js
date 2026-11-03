@@ -2,7 +2,8 @@ async function scenario(page) {
   const assert = (value, message) => {
     if (!value) throw new Error(message);
   };
-  await page.getByRole("button", { name: /Pamięć materiału.*Otwórz/ }).click();
+  await page.getByText('Więcej możliwości', {exact:true}).click();
+  await page.getByRole("button", { name: /Ślad pracy.*Otwórz/ }).click();
   await page
     .getByRole("heading", { name: "Jest Twój ślad.", exact: true })
     .waitFor();
@@ -34,7 +35,7 @@ async function scenario(page) {
     .getByRole("button", { name: "Wróć do Dzisiaj", exact: true })
     .click();
   await page
-    .getByRole("button", { name: /Ślad po herbacie.*Kontynuuj szkic/ })
+    .getByRole("button", { name: /Kontynuuj szkic: Ślad po herbacie/ })
     .click();
   const saved = page.waitForResponse(
     (r) =>
@@ -47,7 +48,7 @@ async function scenario(page) {
     .fill("Zapis po ponownym uruchomieniu — żółć.");
   await saved;
   await page
-    .getByRole("button", { name: "← Zapisz szkic i wróć", exact: true })
+    .getByRole("button", { name: "Zapisz szkic i wróć", exact: true })
     .click();
   return "RESTART_PASS";
 }

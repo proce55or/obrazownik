@@ -1,15 +1,23 @@
 async function scenario(page) {
   const assert = (ok, message) => { if (!ok) throw new Error(message); };
   const nav = name => page.getByRole('button', { name, exact: true }).click();
+  await page.evaluate(async()=>{
+    const boot=await(await fetch('/api/bootstrap')).json();
+    if(!boot.dataDir.includes('obrazownik-e2e-'))throw new Error('Refusing non-test data');
+    await fetch('/api/settings',{method:'PATCH',headers:{'Content-Type':'application/json','X-CSRF-Token':boot.csrfToken},body:JSON.stringify({...boot.settings,fontSize:26,optionalMethods:['M2','M3','M5']})});
+  });
+  await page.reload();
+  await page.getByRole('button',{name:'Dzisiaj',exact:true}).waitFor();
   const catalogue = await page.evaluate(async () => (await (await fetch('/api/cards')).json()).cards);
   const selections = ['property', 'bridge', 'verb', 'sense', 'transform'].flatMap(family => catalogue.filter(c => c.family === family && !['M2','M3','M5'].includes(c.methodId)).slice(0,2));
   selections.push(...['M2','M3','M5'].map(method => catalogue.find(c => c.methodId === method)));
   assert(selections.every(Boolean) && selections.length === 13, 'Missing families or optional methods');
   for (const card of selections) {
-    await page.getByText('Wybierz rodzinę i własne tempo', { exact: true }).click();
-    await page.getByRole('combobox', { name: 'Rodzina ćwiczeń', exact: true }).selectOption(card.family);
-    await page.getByRole('combobox', { name: 'Karta', exact: true }).selectOption(card.id);
-    await page.getByRole('button', { name: 'Otwórz wybraną kartę', exact: false }).click();
+    if (!await page.locator('details.more-options').evaluate(node => node.open)) await page.getByText('Więcej możliwości', {exact:true}).click();
+    await page.getByText('Wybierz ćwiczenie i własne tempo', { exact: true }).click();
+    await page.getByRole('combobox', { name: 'Rodzaj ćwiczenia', exact: true }).selectOption(card.family);
+    await page.getByRole('combobox', { name: 'Temat ćwiczenia', exact: true }).selectOption(card.id);
+    await page.getByRole('button', { name: 'Otwórz wybrane ćwiczenie', exact: false }).click();
     const field = page.getByRole('textbox', { name: 'Twoje słowa', exact: true });
     await field.fill(`Syntetyczna próba ${card.id}: na parapecie szeleści cień.`);
     await page.setViewportSize({ width: 320, height: 850 });
@@ -31,15 +39,29 @@ async function scenario(page) {
     await page.screenshot({ path: `output/playwright/e2e-zoom-${view === 'Dzisiaj' ? 'home' : view === 'Zeszyt' ? 'notebook' : view === 'Obserwacje' ? 'observations' : 'settings'}.png`, fullPage: true });
     await page.evaluate(() => { document.documentElement.style.zoom = ''; });
   }
+  await nav('Ustawienia i kopie');
+  await page.getByRole('combobox', { name: 'Wielkość tekstu w całej aplikacji', exact: true }).selectOption('16');
+  await nav('Zapisz ustawienia');
+  await page.getByText('Ustawienia zapisane.', {exact:true}).waitFor();
+  const tooSmall=await page.evaluate(()=>Array.from(document.querySelectorAll('button,label,legend,summary,p,.save-status')).filter(node=>node.getClientRects().length&&node.textContent.trim()&&parseFloat(getComputedStyle(node).fontSize)<15.99).map(node=>node.textContent.slice(0,60)));
+  assert(tooSmall.length===0, `Visible text below16px: ${JSON.stringify(tooSmall)}`);
+  await page.getByRole('combobox', { name: 'Wielkość tekstu w całej aplikacji', exact: true }).selectOption('26');
+  await nav('Zapisz ustawienia');
+  await page.getByText('Ustawienia zapisane.', {exact:true}).waitFor();
+  assert(await page.evaluate(()=>parseFloat(getComputedStyle(document.documentElement).fontSize))===26,'Global font setting not applied');
   await nav('Dzisiaj');
   await page.locator('body').click({ position: { x: 1, y: 1 } });
   await page.keyboard.press('Control+Home');
-  for (let i=0;i<12;i++) {
-    await page.keyboard.press('Tab');
+  const tabStops=await page.locator('a[href]:visible,button:visible:not(:disabled),summary:visible,input:visible:not(:disabled),select:visible:not(:disabled),textarea:visible:not(:disabled)').count();
+  await page.getByRole('link',{name:'Przejdź do treści',exact:true}).focus();
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Shift+Tab');
+  for (let i=0;i<tabStops;i++) {
     assert(await page.evaluate(() => {
       const element = document.activeElement;
       return element && element !== document.body && getComputedStyle(element).outlineStyle !== 'none';
     }), 'Tab focus not visible');
+    if(i<tabStops-1)await page.keyboard.press('Tab');
   }
   return 'READABILITY_PASS';
 }

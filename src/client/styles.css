@@ -7,7 +7,7 @@
   line-height: 1.6;
   --green: #30554a;
   --muted: #586653;
-  --border: #dedfd4;
+  --border: #75836d;
 }
 * {
   box-sizing: border-box;
@@ -37,6 +37,7 @@ a {
 }
 button:focus-visible,
 a:focus-visible,
+summary:focus-visible,
 textarea:focus-visible,
 input:focus-visible,
 select:focus-visible {
@@ -82,9 +83,10 @@ h3 {
   letter-spacing: -0.02em;
 }
 .site-header {
-  height: 100px;
+  min-height: 100px;
+  flex-wrap: wrap;
   max-width: 1328px;
-  padding: 0 56px;
+  padding: 18px 56px;
   margin: auto;
   display: flex;
   align-items: center;
@@ -109,14 +111,14 @@ h3 {
   margin-left: -10px;
 }
 .header-note {
-  font-size: 0.82rem;
+  font-size: 1rem;
   color: var(--muted);
   border-left: 1px solid #d6d7cb;
   padding-left: 28px;
 }
 .local-status {
   margin-left: auto;
-  font-size: 0.77rem;
+  font-size: 1rem;
   color: var(--muted);
   display: flex;
   gap: 8px;
@@ -135,6 +137,7 @@ main {
 }
 .page-top {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 20px;
   align-items: center;
@@ -142,19 +145,20 @@ main {
 }
 .eyebrow,
 .note-number {
-  font-size: 0.66rem;
-  letter-spacing: 0.14em;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
   font-weight: 600;
 }
 .eyebrow {
   color: #596b50;
 }
 .version {
-  font-size: 0.7rem;
+  font-size: 1rem;
   color: #606b58;
 }
 .small-heading {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #596b50;
   margin-bottom: 18px;
 }
@@ -169,7 +173,7 @@ main {
 }
 .invitation {
   background: #e9ecdf;
-  border: 1px solid #dde2d0;
+  border: 1px solid var(--border);
   border-radius: 9px;
   display: grid;
   grid-template-columns: 1fr 300px;
@@ -188,7 +192,7 @@ main {
 }
 .invitation p {
   color: #56684e;
-  font-size: 0.91rem;
+  font-size: 1rem;
   line-height: 1.8;
   margin-bottom: 26px;
 }
@@ -198,7 +202,7 @@ main {
   border-radius: 5px;
   padding: 13px 23px;
   color: #fff;
-  font-size: 0.86rem;
+  font-size: 1rem;
   display: inline-flex;
   align-items: center;
   gap: 40px;
@@ -214,7 +218,7 @@ main {
 }
 .button-note {
   display: block;
-  font-size: 0.71rem;
+  font-size: 1rem;
   color: #56684e;
   margin-top: 12px;
 }
@@ -276,13 +280,13 @@ main {
   left: 22px;
   color: #f7f5ef;
   font:
-    italic 0.88rem Georgia,
+    italic 1rem Georgia,
     serif;
   letter-spacing: 0.02em;
 }
 .quiet-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 46px;
   margin-top: 48px;
 }
@@ -292,13 +296,13 @@ main {
 }
 .note-number {
   color: #606b58;
-  font-size: 0.6rem;
+  font-size: 1rem;
 }
 .quiet-grid h3 {
   margin: 13px 0 9px;
 }
 .quiet-grid p {
-  font-size: 0.83rem;
+  font-size: 1rem;
   color: #606b58;
   line-height: 1.8;
   margin: 0;
@@ -309,13 +313,13 @@ footer {
   margin: auto;
   border-top: 1px solid var(--border);
   color: #606b58;
-  font-size: 0.68rem;
+  font-size: 1rem;
   display: flex;
   justify-content: space-between;
   gap: 20px;
 }
 .fine-print {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--muted);
 }
 .connection-error {
@@ -330,7 +334,7 @@ footer {
   background: none;
   color: var(--green);
   padding: 10px 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 .welcome label {
   display: block;
@@ -345,8 +349,10 @@ footer {
   background: #fffdf8;
   color: #293c35;
   font:
-    1.2rem/1.9 Georgia,
-    serif;
+    1rem/1.8 -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   resize: vertical;
 }
 .skip-link {
@@ -372,14 +378,15 @@ footer {
 @media (max-width: 760px) {
   .site-header {
     padding: 0 24px;
-    height: 80px;
+    min-height: 80px;
+    padding-block: 14px;
     gap: 15px;
   }
   .header-note {
     display: none;
   }
   .local-status {
-    font-size: 0.65rem;
+    font-size: 1rem;
   }
   main {
     padding: 26px 24px 42px;
@@ -388,10 +395,10 @@ footer {
     margin-bottom: 32px;
   }
   .version {
-    font-size: 0.6rem;
+    font-size: 1rem;
   }
   .eyebrow {
-    font-size: 0.59rem;
+    font-size: 1rem;
   }
   h1 {
     font-size: 2.8rem;
@@ -472,7 +479,7 @@ footer {
     text-align: right;
   }
   .intro {
-    font-size: 0.92rem;
+    font-size: 1rem;
   }
   .brand {
     font-size: 1.35rem;
@@ -482,7 +489,7 @@ footer {
     height: 28px;
   }
   .local-status {
-    font-size: 0.6rem;
+    font-size: 1rem;
     gap: 5px;
   }
   h1 {
@@ -507,12 +514,12 @@ footer {
   flex-wrap: wrap;
 }
 .secondary-button {
-  border: 1px solid #c9d1c1;
+  border: 1px solid var(--border);
   background: transparent;
   color: #30554a;
   border-radius: 5px;
   padding: 9px 17px;
-  font-size: 0.84rem;
+  font-size: 1rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -536,6 +543,9 @@ footer {
   font-size: 1.5rem;
   margin-bottom: 12px;
 }
+.draft-preview {
+  overflow-wrap: anywhere;
+}
 .draft-link {
   display: flex;
   width: 100%;
@@ -554,7 +564,7 @@ footer {
 }
 .draft-link strong {
   font-weight: 550;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 .draft-link small {
   display: block;
@@ -562,11 +572,11 @@ footer {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 .draft-link > span:last-child {
   white-space: nowrap;
-  font-size: 0.75rem;
+  font-size: 1rem;
 }
 .exercise,
 .completed {
@@ -587,7 +597,7 @@ footer {
 }
 .prompt-card {
   background: #e9ecdf;
-  border: 1px solid #dde2d0;
+  border: 1px solid var(--border);
   padding: 26px 30px;
   border-radius: 7px;
   margin-bottom: 30px;
@@ -597,13 +607,13 @@ footer {
   margin: 8px 0 14px;
 }
 .prompt-card p {
-  font-size: 0.95rem;
+  font-size: 1rem;
   line-height: 1.9;
   max-width: 700px;
   margin-bottom: 10px;
 }
 .prompt-card .fine-print {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: #5d6e58;
   margin-bottom: 0;
 }
@@ -616,10 +626,10 @@ footer {
 }
 .editor-label label {
   font-weight: 550;
-  font-size: 0.95rem;
+  font-size: 1rem;
 }
 .save-status {
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: #62715e;
 }
 .writing-field {
@@ -627,14 +637,16 @@ footer {
   width: 100%;
   min-height: 300px;
   resize: vertical;
-  border: 1px solid #cfd4c7;
+  border: 1px solid var(--border);
   background: #fffdf8;
   border-radius: 7px;
   padding: 26px 30px;
   color: #293c35;
   font:
-    1.22rem/1.95 Georgia,
-    serif;
+    1rem/1.8 -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 }
 .writing-field:disabled {
   opacity: 1;
@@ -649,7 +661,7 @@ footer {
   justify-content: space-between;
   gap: 25px;
   color: #586653;
-  font-size: 0.68rem;
+  font-size: 1rem;
   margin: 10px 0 30px;
 }
 .writing-meta p {
@@ -670,16 +682,16 @@ footer {
   align-items: start;
 }
 .hint-panel h3 {
-  font-size: 0.95rem;
+  font-size: 1rem;
   margin: 0 0 6px;
 }
 .hint-panel p {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: #687261;
   margin-bottom: 0;
 }
 .hint-top .text-button {
-  font-size: 0.73rem;
+  font-size: 1rem;
   text-align: right;
   min-width: 100px;
 }
@@ -687,7 +699,7 @@ footer {
   margin-top: 16px;
 }
 .hint-panel .secondary-button {
-  font-size: 0.75rem;
+  font-size: 1rem;
   min-height: 44px;
 }
 .hint-content {
@@ -696,13 +708,13 @@ footer {
   margin-top: 20px;
 }
 .hint-content p {
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: #3f5547;
   line-height: 1.9;
   margin-top: 10px;
 }
 .assistance-label {
-  font-size: 0.7rem;
+  font-size: 1rem;
   color: #66755f;
   margin-top: 20px !important;
 }
@@ -724,7 +736,7 @@ footer {
 .recovery-panel summary {
   cursor: pointer;
   min-height: 44px;
-  font-size: 0.86rem;
+  font-size: 1rem;
   color: #42634c;
 }
 .versions article {
@@ -732,7 +744,7 @@ footer {
   border-bottom: 1px solid var(--border);
 }
 .versions h3 {
-  font-size: 0.95rem;
+  font-size: 1rem;
   margin-bottom: 8px;
 }
 .preserve-text {
@@ -740,8 +752,10 @@ footer {
   overflow-wrap: anywhere;
   word-break: normal;
   font:
-    1.12rem/1.95 Georgia,
-    serif;
+    1rem/1.8 -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 }
 .saved-text {
   margin: 30px 0;
@@ -756,29 +770,29 @@ footer {
 }
 .reflection summary span {
   display: block;
-  font-size: 0.7rem;
+  font-size: 1rem;
   color: #586653;
   margin: 4px 0 18px;
 }
 .ratings-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
 }
 .ratings-grid label,
 .note-label {
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 .ratings-grid select {
   display: block;
   max-width: 100%;
   width: 100%;
-  border: 1px solid #c9d1c1;
+  border: 1px solid var(--border);
   background: #fffdf8;
   padding: 10px;
   border-radius: 5px;
   color: #293c35;
-  font-size: 0.8rem;
+  font-size: 1rem;
   margin: 8px 0;
 }
 .note-label {
@@ -789,7 +803,7 @@ footer {
   width: 100%;
   min-height: 100px;
   resize: vertical;
-  border: 1px solid #c9d1c1;
+  border: 1px solid var(--border);
   background: #fffdf8;
   border-radius: 5px;
   padding: 12px;
@@ -806,7 +820,7 @@ footer {
   font-size: 1.6rem;
 }
 .recovery-panel p {
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 .connection-error p {
   margin-bottom: 10px;
@@ -817,9 +831,6 @@ footer {
 .completed > .eyebrow {
   display: block;
   margin-bottom: 20px;
-}
-.large-type .writing-field {
-  font-size: 1.5rem;
 }
 @media (max-width: 600px) {
   .editor-top {
@@ -836,7 +847,7 @@ footer {
   .writing-field {
     padding: 20px;
     min-height: 300px;
-    font-size: 1.15rem;
+    font-size: 1rem;
   }
   .hint-panel {
     padding: 20px;
@@ -849,7 +860,7 @@ footer {
   }
   .writing-meta {
     display: block;
-    font-size: 0.7rem;
+    font-size: 1rem;
   }
   .writing-meta span {
     display: block;
@@ -899,20 +910,255 @@ footer {
   overflow: hidden;
   white-space: nowrap;
 }
-.scaffold{border:1px solid var(--border);padding:22px;border-radius:6px;margin:26px 0}.scaffold h3{margin-bottom:8px}.scaffold-field{display:block;margin-top:18px;font-size:.86rem}.scaffold-field textarea{display:block;width:100%;min-height:85px;border:1px solid #c9d1c1;border-radius:5px;background:#fffdf8;padding:12px;color:inherit;resize:vertical;margin-top:8px}.about-exercise{margin:18px 0;font-size:.86rem}.about-exercise p{max-width:750px}.other-starts{margin-bottom:32px}
-.choice{display:flex;align-items:flex-start;gap:12px;font-size:.88rem;margin:14px 0;min-height:44px}.choice input{width:20px;height:20px;margin-top:4px;flex-shrink:0}.card-catalog{margin-bottom:34px}.card-catalog .ratings-grid{grid-template-columns:1fr 1fr}.card-catalog p{font-size:.9rem;margin-top:18px}@media(max-width:600px){.card-catalog .ratings-grid{grid-template-columns:1fr}}
-.new-writing{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:28px 0;margin-top:32px}.new-writing h2{font-size:1.9rem;margin:12px 0}.new-writing p{font-size:.9rem;color:var(--muted);max-width:700px}
-.word-bank{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}.word-bank button{min-height:44px;padding:6px 10px}.source-workshop .preserve-text{font-size:1rem}.source-workshop summary{cursor:pointer;min-height:44px}
-.site-nav{display:flex;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:18px;margin-bottom:30px}.site-nav button[aria-current=page]{background:var(--green);color:white}.settings h2{font-size:1.8rem}.settings input:not([type=checkbox]),.settings select{display:block;padding:10px;border:1px solid #c9d1c1;background:#fffdf8;border-radius:5px;width:100%;font:inherit;color:inherit;margin-top:8px;min-width:0}.settings label{display:block;font-size:.85rem}.settings fieldset{border:1px solid var(--border);border-radius:6px;margin:20px 0;padding:15px}.settings legend{font-size:.85rem}.settings .choice{display:flex}.data-path{overflow-wrap:anywhere;font-size:.9rem}.backup-row{display:grid;gap:5px;border-bottom:1px solid var(--border);padding:10px 0;font-size:.75rem;overflow-wrap:anywhere}.session-panel{padding:24px;background:#eef0e6;border:1px solid var(--border);border-radius:6px;margin:30px 0}.session-panel h2{font-size:1.7rem}.session-panel label{font-size:.85rem}.session-panel select{display:block;min-height:44px;background:#fffdf8;border:1px solid var(--border);border-radius:5px;padding:9px;color:inherit}.session-panel .draft-link{font-size:.85rem}
+.scaffold {
+  border: 1px solid var(--border);
+  padding: 22px;
+  border-radius: 6px;
+  margin: 26px 0;
+}
+.scaffold h3 {
+  margin-bottom: 8px;
+}
+.scaffold-field {
+  display: block;
+  margin-top: 18px;
+  font-size: 1rem;
+}
+.scaffold-field textarea {
+  display: block;
+  width: 100%;
+  min-height: 85px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: #fffdf8;
+  padding: 12px;
+  color: inherit;
+  resize: vertical;
+  margin-top: 8px;
+}
+.about-exercise {
+  margin: 18px 0;
+  font-size: 1rem;
+}
+.about-exercise p {
+  max-width: 750px;
+}
+.other-starts {
+  margin-bottom: 32px;
+}
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 1rem;
+  margin: 14px 0;
+  min-height: 44px;
+}
+.choice input {
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+.card-catalog {
+  margin-bottom: 34px;
+}
+.card-catalog .ratings-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.card-catalog p {
+  font-size: 1rem;
+  margin-top: 18px;
+}
+@media (max-width: 600px) {
+  .card-catalog .ratings-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.new-writing {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 28px 0;
+  margin-top: 32px;
+}
+.new-writing h2 {
+  font-size: 1.9rem;
+  margin: 12px 0;
+}
+.new-writing p {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 700px;
+}
+.word-bank {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+.word-bank button {
+  min-height: 44px;
+  padding: 6px 10px;
+}
+.source-workshop .preserve-text {
+  font-size: 1rem;
+}
+.source-workshop summary {
+  cursor: pointer;
+  min-height: 44px;
+}
+.site-nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 18px;
+  margin-bottom: 30px;
+}
+.site-nav button[aria-current="page"] {
+  background: var(--green);
+  color: white;
+}
+.settings h2 {
+  font-size: 1.8rem;
+}
+.settings input:not([type="checkbox"]),
+.settings select {
+  display: block;
+  padding: 10px;
+  border: 1px solid var(--border);
+  background: #fffdf8;
+  border-radius: 5px;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  margin-top: 8px;
+  min-width: 0;
+}
+.settings label {
+  display: block;
+  font-size: 1rem;
+}
+.settings fieldset {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin: 20px 0;
+  padding: 15px;
+}
+.settings legend {
+  font-size: 1rem;
+}
+.settings .choice {
+  display: flex;
+}
+.data-path {
+  overflow-wrap: anywhere;
+  font-size: 1rem;
+}
+.backup-row {
+  display: grid;
+  gap: 5px;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 0;
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+.session-panel {
+  padding: 24px;
+  background: #eef0e6;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin: 30px 0;
+}
+.session-panel h2 {
+  font-size: 1.7rem;
+}
+.session-panel label {
+  font-size: 1rem;
+}
+.session-panel select {
+  display: block;
+  min-height: 44px;
+  background: #fffdf8;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 9px;
+  color: inherit;
+}
+.session-panel .draft-link {
+  font-size: 1rem;
+}
 
-.font-16 .writing-field,.font-16 .preserve-text,.font-16 .prompt-card p,.font-16 .notebook-editor textarea{font-size:16px}
-.font-17 .writing-field,.font-17 .preserve-text,.font-17 .prompt-card p,.font-17 .notebook-editor textarea{font-size:17px}
-.font-18 .writing-field,.font-18 .preserve-text,.font-18 .prompt-card p,.font-18 .notebook-editor textarea{font-size:18px}
-.font-19 .writing-field,.font-19 .preserve-text,.font-19 .prompt-card p,.font-19 .notebook-editor textarea{font-size:19px}
-.font-20 .writing-field,.font-20 .preserve-text,.font-20 .prompt-card p,.font-20 .notebook-editor textarea{font-size:20px}
-.font-21 .writing-field,.font-21 .preserve-text,.font-21 .prompt-card p,.font-21 .notebook-editor textarea{font-size:21px}
-.font-22 .writing-field,.font-22 .preserve-text,.font-22 .prompt-card p,.font-22 .notebook-editor textarea{font-size:22px}
-.font-23 .writing-field,.font-23 .preserve-text,.font-23 .prompt-card p,.font-23 .notebook-editor textarea{font-size:23px}
-.font-24 .writing-field,.font-24 .preserve-text,.font-24 .prompt-card p,.font-24 .notebook-editor textarea{font-size:24px}
-.font-25 .writing-field,.font-25 .preserve-text,.font-25 .prompt-card p,.font-25 .notebook-editor textarea{font-size:25px}
-.font-26 .writing-field,.font-26 .preserve-text,.font-26 .prompt-card p,.font-26 .notebook-editor textarea{font-size:26px}
+/* Text size follows the root preference, including instructions and actions. */
+button,
+input,
+textarea,
+select,
+summary {
+  font-size: 1rem;
+}
+input,
+textarea,
+select {
+  min-width: 0;
+  max-width: 100%;
+}
+button,
+summary {
+  overflow-wrap: anywhere;
+}
+summary {
+  cursor: pointer;
+  min-height: 44px;
+}
+.status-message {
+  margin-top: 20px;
+}
+.notice-success {
+  background: #e5eddf;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 20px;
+  margin-top: 20px;
+  color: #30554a;
+}
+.more-options {
+  margin: 32px 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.more-options > summary {
+  color: var(--green);
+  font-weight: 600;
+}
+.more-options[open] > summary {
+  margin-bottom: 24px;
+}
+.session-preferences {
+  margin: 18px 0;
+}
+@media (max-width: 520px) {
+  .site-header {
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .local-status {
+    flex-basis: 100%;
+    margin-left: 0;
+  }
+  .editor-label {
+    flex-wrap: wrap;
+  }
+  .save-status {
+    max-width: 100%;
+    text-align: left;
+  }
+}
+
+/* Long Polish titles and local paths must fit at the largest text setting. */
+h1, h2, h3, code { overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  .editor-top { display: block; }
+  .editor-top > .eyebrow { display: block; max-width: none; text-align: left; margin-top: 12px; padding-top: 0; }
+}
+.skip-link:focus-visible { outline: 3px solid #8b5a2b; outline-offset: 4px; }

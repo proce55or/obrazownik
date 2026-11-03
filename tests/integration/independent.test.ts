@@ -277,3 +277,19 @@ test("requesting help creates a separate working copy and preserves the original
     }),
   ).toThrow();
 });
+
+test("new independent work selects the latest card version while preserving theme history", async () => {
+  const store = await open();
+  const old = reserve(91, { version: 1 });
+  const current = {
+    ...old,
+    version: 2,
+    prompt: { ...old.prompt, instruction: "Nowe proste polecenie." },
+  };
+  const attempt = store.createIndependent([old, current], randomUUID());
+  expect(attempt.cardVersion).toBe(2);
+  expect(attempt.promptSnapshot.instruction).toBe(current.prompt.instruction);
+  expect(() => store.createIndependent([old, current], randomUUID())).toThrow(
+    /Wyczerpano/,
+  );
+});

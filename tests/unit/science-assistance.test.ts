@@ -114,7 +114,7 @@ test("fields-only autosave persists and clears only the acknowledged text-and-fi
     scaffolding: fields,
     expectedRevision: 0,
   });
-  expect(clear).toHaveBeenCalledWith("", fields);
+  expect(clear).toHaveBeenCalledWith("", fields, undefined);
   expect(recovery.mock.calls[0][0]).toMatchObject({
     text: "",
     scaffolding: fields,
@@ -163,7 +163,7 @@ test("changes to helper fields during a pending request form a separate revision
     scaffolding: nextFields,
     expectedRevision: 1,
   });
-  expect(clear).toHaveBeenCalledExactlyOnceWith("", nextFields);
+  expect(clear).toHaveBeenCalledExactlyOnceWith("", nextFields, undefined);
   expect(queue.currentRevision).toBe(2);
   expect(queue.dirty).toBe(false);
   queue.dispose();

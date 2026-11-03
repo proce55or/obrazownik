@@ -1,9 +1,10 @@
 async function scenario(page) {
  const assert=(ok,message)=>{if(!ok)throw new Error(message);};
  const get=url=>page.evaluate(async url=>(await fetch(url)).json(),url);
- await page.getByText('Wybierz rodzinę i własne tempo',{exact:true}).click();
- await page.getByRole('combobox',{name:'Rodzina ćwiczeń',exact:true}).selectOption('verb');
- await page.getByRole('button',{name:'Otwórz wybraną kartę',exact:false}).click();
+ if (!await page.locator('details.more-options').evaluate(node => node.open)) await page.getByText('Więcej możliwości', {exact:true}).click();
+ await page.getByText('Wybierz ćwiczenie i własne tempo',{exact:true}).click();
+ await page.getByRole('combobox',{name:'Rodzaj ćwiczenia',exact:true}).selectOption('verb');
+ await page.getByRole('button',{name:'Otwórz wybrane ćwiczenie',exact:false}).click();
  await page.getByRole('heading',{name:'nieść',exact:true}).waitFor();
  await page.getByRole('button',{name:'Kto lub co? +',exact:true}).click();
  await page.getByRole('textbox',{name:'Kto lub co?',exact:true}).fill('Wiatr');
@@ -11,7 +12,7 @@ async function scenario(page) {
  await page.getByRole('textbox',{name:'Co?',exact:true}).fill('zapach chleba');
  await page.getByRole('textbox',{name:'Twoje słowa',exact:true}).fill('Wiatr niesie zapach chleba przez podwórze.');
  await page.getByRole('button',{name:'1 · Pytanie naprowadzające',exact:true}).click();
- await page.getByRole('button',{name:'Schowaj pomoc',exact:true}).waitFor();
+ await page.getByRole('button',{name:'Schowaj podpowiedzi',exact:true}).waitFor();
  await page.getByRole('button',{name:'Zapisz i zakończ',exact:true}).click();
  await page.getByRole('heading',{name:'Jest Twój ślad.',exact:true}).waitFor();
  const completed=await get('/api/attempts?status=completed&limit=1');
@@ -21,11 +22,12 @@ async function scenario(page) {
  await page.getByText('O ćwiczeniu i jego podstawach',{exact:true}).click();
  await page.getByText('Adaptacja inspirowana metodą kliniczną',{exact:true}).waitFor();
  await page.getByRole('button',{name:'Wróć do Dzisiaj',exact:true}).click();
+ if (!await page.locator('details.more-options').evaluate(node => node.open)) await page.getByText('Więcej możliwości', {exact:true}).click();
  await page.getByRole('button',{name:'Zacznij nowy tekst',exact:false}).click();
- await page.getByRole('button',{name:'Potrzebuję pomocy — otwórz osobną wersję',exact:true}).waitFor();
+ await page.getByRole('button',{name:'Potrzebuję pomocy - otwórz osobną wersję',exact:true}).waitFor();
  assert(await page.getByRole('button',{name:'1 · Pytanie naprowadzające',exact:true}).count()===0,'Independent mode leaked hints');
  await page.getByRole('textbox',{name:'Twoje słowa',exact:true}).fill('Własne zdanie przed jakąkolwiek podpowiedzią.');
- await page.getByRole('button',{name:'Potrzebuję pomocy — otwórz osobną wersję',exact:true}).click();
+ await page.getByRole('button',{name:'Potrzebuję pomocy - otwórz osobną wersję',exact:true}).click();
  await page.getByText('WERSJA WSPOMAGANA',{exact:true}).waitFor();
  const drafts=await get('/api/attempts?status=draft&limit=100');
  const copy=drafts.attempts.find(a=>a.setRole==='independent_writing'&&a.mode==='training');
@@ -34,7 +36,7 @@ async function scenario(page) {
  assert(source.attempt.mode==='independent'&&source.attempt.currentText==='Własne zdanie przed jakąkolwiek podpowiedzią.','Original independent text lost');
  assert(copy.noveltyStatus==='seen','Assisted copy is no longer unseen');
  await page.getByRole('button',{name:'1 · Pytanie naprowadzające',exact:true}).click();
- await page.getByRole('button',{name:'Schowaj pomoc',exact:true}).waitFor();
+ await page.getByRole('button',{name:'Schowaj podpowiedzi',exact:true}).waitFor();
  await page.getByRole('button',{name:'Zapisz i zakończ',exact:true}).click();
  await page.getByRole('heading',{name:'Jest Twój ślad.',exact:true}).waitFor();
  await page.getByRole('button',{name:'Wróć do Dzisiaj',exact:true}).click();
