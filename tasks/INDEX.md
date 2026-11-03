@@ -39,6 +39,7 @@ publikacja źródeł. Zobacz docs/08-later.md. Nie implementuj ich wyprzedzając
 | T17 | Lokalny Bielik 7B i buforowane pytania | DONE |
 | T18 | Nocny odbiór po bezczynności (jedna kontrola) | DONE |
 | T19 | Poprawki po zewnętrznym przeglądzie | DONE |
+| T20 | Research i projekt UX/UI | DONE |
 
 Odbiór lokalny: docs/11-release-verification.md. T08/T09 wymagają jeszcze
 rzeczywistego Safari i ręcznego startu z Findera. T10: instrukcja gotowa

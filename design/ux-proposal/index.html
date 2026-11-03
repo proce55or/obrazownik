@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Obrazownik — propozycja nowego interfejsu</title>
+    <link rel="icon" href="favicon.svg" />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Przejdź do treści</a>
+    <div class="preview">
+      Projekt nowego interfejsu <span>Podgląd · bez zapisu do aplikacji</span>
+    </div>
+    <div class="shell">
+      <aside class="sidebar">
+        <a class="brand" href="#start"
+          ><img src="favicon.svg" alt="" />obrazownik.</a
+        >
+        <p class="brand-caption">Miejsce na własne słowa</p>
+        <button
+          id="mobile-menu"
+          class="secondary"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+        >
+          Menu
+        </button>
+        <nav id="primary-nav" aria-label="Główna nawigacja">
+          <a href="#start" data-nav="start">Start</a>
+          <a href="#exercises" data-nav="exercises">Ćwiczenia</a>
+          <a href="#texts" data-nav="texts">Moje teksty</a>
+          <a href="#settings" data-nav="settings">Ustawienia</a>
+          <a href="#help" data-nav="help" class="help-nav">Jak korzystać</a>
+        </nav>
+        <p class="local-note">Twoje tempo.<br />Twoje słowa.</p>
+      </aside>
+      <div class="workspace">
+        <header class="toolbar">
+          <span id="location">Start</span>
+          <label class="help-toggle"
+            ><input type="checkbox" id="hints-enabled" checked /> Objaśnienia
+            interfejsu</label
+          >
+        </header>
+        <main id="main" tabindex="-1"></main>
+      </div>
+    </div>
+  </body>
+</html>
